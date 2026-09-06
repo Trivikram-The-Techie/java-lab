@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 04: Inheritance, Method Overriding & 'super' Keyword</title>
+    <style>
+        :root {
+            --bg-canvas: #f8faf8;
+            --surface: #ffffff;
+            --border: #e2e8e2;
+            --text-title: #132a1e;
+            --text-body: #2d3748;
+            --text-muted: #5f6e63;
+            --brand-primary: #15803d;
+            --brand-soft: #f0fdf4;
+            --brand-pill-bg: #eaf5ee;
+            --brand-pill-text: #166534;
+            --code-bg: #f7faf7;
+            --terminal-bg: #0f172a;
+            --terminal-text: #22c55e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+            background: var(--bg-canvas);
+            color: var(--text-body);
+            line-height: 1.6;
+            padding: 24px 20px;
+        }
+        .lab-document {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 34px 38px;
+            box-shadow: 0 4px 16px rgba(19, 42, 30, 0.04);
+        }
+        .doc-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+        .doc-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .student-strip {
+            display: inline-flex;
+            gap: 16px;
+            background: var(--brand-pill-bg);
+            color: var(--brand-pill-text);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid rgba(21, 128, 61, 0.12);
+        }
+        .section {
+            margin-bottom: 22px;
+        }
+        .section-header {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        p {
+            font-size: 14.5px;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            overflow-x: auto;
+            font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 13px;
+            color: #1e3a2f;
+            line-height: 1.5;
+        }
+        .terminal-box {
+            background: var(--terminal-bg);
+            color: var(--terminal-text);
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 12.5px;
+            white-space: pre-wrap;
+            line-height: 1.45;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+            color: #15803d;
+        }
+    </style>
+</head>
+<body>
+    <div class="lab-document">
+        <div class="doc-header">
+            <div class="doc-topline">
+                <span>Advanced Java Lab (23AI5351)</span>
+                <span>Siddhartha Academy of Higher Education (Deemed to be University) &bull; Department of AI &bull; Batch 2025–2029</span>
+            </div>
+            <h1>Week 04: Inheritance, Method Overriding & 'super' Keyword</h1>
+            <div class="student-strip">
+                <span>Student: <strong>Trivikram</strong></span>
+                <span>Roll No: <strong>25EU02067</strong></span>
+                <span class="verified-badge">&bull; Lab Record Verified</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">1. Objective / Aim</div>
+            <p>To demonstrate Single and Multilevel Inheritance, method overriding, dynamic method dispatch, and runtime polymorphism.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">2. Concept & Theory</div>
+            <p>Inheritance enables a new class to inherit fields and methods from an existing class. Dynamic method dispatch is the mechanism by which a call to an overridden method is resolved at runtime rather than compile time.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">3. Java Source Implementation</div>
+            <pre><code>// Advanced Java Lab - Experiment 04
+// Student: Trivikram | Roll No: 25EU02067
+class Employee {
+    String name;
+    double baseSalary;
+
+    Employee(String name, double baseSalary) {
+        this.name = name;
+        this.baseSalary = baseSalary;
+    }
+
+    void displayRole() {
+        System.out.println(name + " | General Role | Salary: Rs." + baseSalary);
+    }
+}
+
+class SoftwareEngineer extends Employee {
+    String techStack;
+
+    SoftwareEngineer(String name, double baseSalary, String techStack) {
+        super(name, baseSalary);
+        this.techStack = techStack;
+    }
+
+    @Override
+    void displayRole() {
+        super.displayRole();
+        System.out.println("Specialization: " + techStack);
+    }
+}
+
+public class Week4Demo {
+    public static void main(String[] args) {
+        Employee emp = new SoftwareEngineer("Trivikram", 80000.0, "Java Spring Boot &amp; Microservices");
+        emp.displayRole();
+    }
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <div class="section-header">4. Compilation & Execution Output</div>
+            <div class="terminal-box">Trivikram | General Role | Salary: Rs.80000.0
+Specialization: Java Spring Boot & Microservices</div>
+        </div>
+    </div>
+</body>
+</html>

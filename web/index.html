@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Java Lab (23IT5351) – Trivikram</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Status Bar -->
+    <div class="top-bar">
+        <div class="system-status">
+            <span class="status-dot"></span>
+            <span>Department of AI &bull; Batch 2025&ndash;2029</span>
+        </div>
+        <div style="font-size: 13px; color: var(--text-muted); font-weight: 500;">
+            Weeks 01 &ndash; 08 &bull; Lab Record Portal
+        </div>
+    </div>
+
+    <!-- Main Header Card -->
+    <header>
+        <div class="header-card">
+            <div class="header-left">
+                <div class="lab-badge">Department of AI &bull; Batch 2025&ndash;2029</div>
+                <h1>Advanced Java Programming Lab</h1>
+                <div class="college-subtitle">Siddhartha Academy of Higher Education (Deemed to be University)</div>
+            </div>
+
+            <div class="student-profile-card">
+                <div class="student-avatar">TR</div>
+                <div class="student-info-meta">
+                    <span class="student-info-name">Trivikram</span>
+                    <span class="student-info-roll">
+                        Roll No: <span class="roll-pill">25EU02067</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Interactive Weeks Navigation (Weeks 1 to 8) -->
+    <div class="weeks-container">
+        <!-- Generated dynamically via script.js -->
+        <noscript>
+            <div class="week-box">Week 01</div>
+            <div class="week-box">Week 02</div>
+            <div class="week-box">Week 03</div>
+            <div class="week-box">Week 04</div>
+            <div class="week-box">Week 05</div>
+            <div class="week-box">Week 06</div>
+            <div class="week-box">Week 07</div>
+            <div class="week-box">Week 08</div>
+        </noscript>
+    </div>
+
+    <!-- Document Content Viewer -->
+    <div id="content-viewer">
+        <div class="viewer-card">
+            <div class="viewer-header">
+                <div class="viewer-title-group">
+                    <h2 id="week-title">Week 1 Content</h2>
+                </div>
+
+                <div class="viewer-actions">
+                    <div class="view-mode-group">
+                        <button id="btnViewManual" class="segmented-btn active" onclick="setViewMode('manual')" title="View formatted lab experiment sheet">
+                            📄 Lab Sheet
+                        </button>
+                        <button id="btnViewPdf" class="segmented-btn" onclick="setViewMode('pdf')" title="View PDF document preview">
+                            📑 PDF Document
+                        </button>
+                        <button id="btnAttachPdf" class="segmented-btn" onclick="triggerPdfUpload()" title="Attach or preview your own assignment PDF">
+                            📎 Attach PDF
+                        </button>
+                        <input type="file" id="userPdfInput" accept="application/pdf" style="display: none;" onchange="handleUserPdf(event)">
+                    </div>
+
+                    <button class="btn-secondary" onclick="openInNewTab()" title="Open document in a new tab">
+                        ↗ Open Tab
+                    </button>
+
+                    <a id="downloadLink" class="download-btn" href="docs/week-1 adv.pdf" download="week-1 adv.pdf">
+                        ⬇ Download Original File
+                    </a>
+                </div>
+            </div>
+
+            <!-- Frame with loader -->
+            <div class="iframe-wrapper">
+                <div id="frameLoader" class="frame-loader">
+                    <div class="spinner"></div>
+                    <div style="font-size: 13.5px; color: var(--text-muted); font-weight: 500;">Loading experiment document...</div>
+                </div>
+                <iframe id="frame" src="converted/week1.html"></iframe>
+            </div>
+
+            <div class="viewer-footer-note">
+                <span>📁 Current View: <strong id="currentDocName" style="color: var(--brand-dark);">converted/week1.html (Lab Sheet)</strong></span>
+                <span>💡 You can review the code directly or click "Download Original File" to save the PDF.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Advanced Java Lab</strong> &bull; Student: <strong>Trivikram</strong> &bull; Roll No: <strong>25EU02067</strong></p>
+        <p style="margin-top: 6px; font-size: 12px; color: var(--text-muted);">Department of AI &bull; Siddhartha Academy of Higher Education (Deemed to be University), Vijayawada &bull; Batch 2025&ndash;2029</p>
+    </footer>
+
+    <!-- Logic -->
+    <script src="script.js"></script>
+</body>
+</html>

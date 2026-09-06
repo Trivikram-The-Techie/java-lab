@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 08: Collections Framework & File Streams I/O</title>
+    <style>
+        :root {
+            --bg-canvas: #f8faf8;
+            --surface: #ffffff;
+            --border: #e2e8e2;
+            --text-title: #132a1e;
+            --text-body: #2d3748;
+            --text-muted: #5f6e63;
+            --brand-primary: #15803d;
+            --brand-soft: #f0fdf4;
+            --brand-pill-bg: #eaf5ee;
+            --brand-pill-text: #166534;
+            --code-bg: #f7faf7;
+            --terminal-bg: #0f172a;
+            --terminal-text: #22c55e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+            background: var(--bg-canvas);
+            color: var(--text-body);
+            line-height: 1.6;
+            padding: 24px 20px;
+        }
+        .lab-document {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 34px 38px;
+            box-shadow: 0 4px 16px rgba(19, 42, 30, 0.04);
+        }
+        .doc-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+        .doc-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .student-strip {
+            display: inline-flex;
+            gap: 16px;
+            background: var(--brand-pill-bg);
+            color: var(--brand-pill-text);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid rgba(21, 128, 61, 0.12);
+        }
+        .section {
+            margin-bottom: 22px;
+        }
+        .section-header {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        p {
+            font-size: 14.5px;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            overflow-x: auto;
+            font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 13px;
+            color: #1e3a2f;
+            line-height: 1.5;
+        }
+        .terminal-box {
+            background: var(--terminal-bg);
+            color: var(--terminal-text);
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 12.5px;
+            white-space: pre-wrap;
+            line-height: 1.45;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+            color: #15803d;
+        }
+    </style>
+</head>
+<body>
+    <div class="lab-document">
+        <div class="doc-header">
+            <div class="doc-topline">
+                <span>Advanced Java Lab (23AI5351)</span>
+                <span>Siddhartha Academy of Higher Education (Deemed to be University) &bull; Department of AI &bull; Batch 2025–2029</span>
+            </div>
+            <h1>Week 08: Collections Framework & File Streams I/O</h1>
+            <div class="student-strip">
+                <span>Student: <strong>Trivikram</strong></span>
+                <span>Roll No: <strong>25EU02067</strong></span>
+                <span class="verified-badge">&bull; Lab Record Verified</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">1. Objective / Aim</div>
+            <p>To implement the Java Collections Framework (ArrayList, LinkedHashMap) and demonstrate character and byte file streams.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">2. Concept & Theory</div>
+            <p>The Java Collections Framework provides standardized data structure abstractions. The java.io package enables stream-oriented reading and writing of binary and textual data.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">3. Java Source Implementation</div>
+            <pre><code>// Advanced Java Lab - Experiment 08
+// Student: Trivikram | Roll No: 25EU02067
+import java.util.*;
+import java.io.*;
+
+public class CollectionsAndIODemo {
+    public static void main(String[] args) {
+        // Collections Framework Demonstration
+        Map&lt;String, String&gt; registry = new LinkedHashMap&lt;&gt;();
+        registry.put("25EU02067", "Trivikram");
+        registry.put("25EU02068", "Venkatesh");
+
+        System.out.println("=== Student Lab Registry ===");
+        registry.forEach((roll, name) -&gt; System.out.println("Roll: " + roll + " | Student: " + name));
+
+        // Stream I/O Operations
+        String message = "Advanced Java Lab 23AI5351 - Experiment 8 Completed.";
+        try (ByteArrayInputStream in = new ByteArrayInputStream(message.getBytes());
+             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            
+            int c;
+            while ((c = in.read()) != -1) {
+                out.write(Character.toUpperCase(c));
+            }
+            System.out.println("\nProcessed Stream Output:");
+            System.out.println(out.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <div class="section-header">4. Compilation & Execution Output</div>
+            <div class="terminal-box">=== Student Lab Registry ===
+Roll: 25EU02067 | Student: Trivikram
+Roll: 25EU02068 | Student: Venkatesh
+
+Processed Stream Output:
+ADVANCED JAVA LAB 23AI5351 - EXPERIMENT 8 COMPLETED.</div>
+        </div>
+    </div>
+</body>
+</html>

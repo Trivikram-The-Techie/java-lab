@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 01: Comparative Study of Programming Languages</title>
+    <style>
+        :root {
+            --bg-canvas: #f8faf8;
+            --surface: #ffffff;
+            --border: #e2e8e2;
+            --text-title: #132a1e;
+            --text-body: #2d3748;
+            --text-muted: #5f6e63;
+            --brand-primary: #15803d;
+            --brand-dark: #14532d;
+            --brand-soft: #f0fdf4;
+            --brand-pill-bg: #eaf5ee;
+            --brand-pill-text: #166534;
+            --code-bg: #f7faf7;
+            --terminal-bg: #0f172a;
+            --terminal-text: #22c55e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+            background: var(--bg-canvas);
+            color: var(--text-body);
+            line-height: 1.6;
+            padding: 24px 20px;
+        }
+        .lab-document {
+            max-width: 980px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 36px 40px;
+            box-shadow: 0 4px 16px rgba(19, 42, 30, 0.04);
+        }
+        .doc-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 26px;
+        }
+        .doc-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 23px;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+        .student-strip {
+            display: inline-flex;
+            gap: 16px;
+            background: var(--brand-pill-bg);
+            color: var(--brand-pill-text);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid rgba(21, 128, 61, 0.12);
+        }
+        .section {
+            margin-bottom: 28px;
+        }
+        .section-header {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        p {
+            font-size: 14.5px;
+            color: var(--text-body);
+            line-height: 1.65;
+            margin-bottom: 12px;
+        }
+
+        /* Comparative Table Styles */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-top: 14px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            text-align: left;
+        }
+        thead {
+            background: #f0fdf4;
+            border-bottom: 2px solid #bbf7d0;
+        }
+        th {
+            padding: 13px 14px;
+            color: var(--brand-dark);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+        }
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #edf2ed;
+            color: var(--text-body);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        tr:nth-child(even) {
+            background: #fafcfa;
+        }
+        tr:hover {
+            background: #f4fbf5;
+        }
+        td:first-child {
+            font-weight: 600;
+            color: var(--text-title);
+            background: #fbfdfb;
+            white-space: nowrap;
+        }
+
+        .lang-tag {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 11px;
+            margin-right: 4px;
+        }
+        .tag-java { background: #e0f2fe; color: #0369a1; }
+        .tag-c { background: #f1f5f9; color: #475569; }
+        .tag-cpp { background: #fce7f3; color: #be185d; }
+        .tag-python { background: #fef3c7; color: #b45309; }
+        .tag-js { background: #fef9c3; color: #854d0e; }
+
+        /* Code Comparison Grid */
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .code-card {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+        }
+        .code-card-header {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--brand-dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        pre {
+            font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 12.5px;
+            color: #1e3a2f;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.45;
+        }
+        .highlight-feature {
+            background: #ecfdf5;
+            border-left: 3px solid var(--brand-primary);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 14px;
+            font-size: 14px;
+            color: var(--brand-dark);
+        }
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+            color: #15803d;
+        }
+    </style>
+</head>
+<body>
+    <div class="lab-document">
+        <div class="doc-header">
+            <div class="doc-topline">
+                <span>Advanced Java Programming Lab</span>
+                <span>Siddhartha Academy of Higher Education (Deemed to be University) &bull; Department of AI &bull; Batch 2025–2029</span>
+            </div>
+            <h1>Week 01: Comparative Study of Programming Languages (Java, C, C++, Python, JavaScript)</h1>
+            <div class="student-strip">
+                <span>Student: <strong>Trivikram</strong></span>
+                <span>Roll No: <strong>25EU02067</strong></span>
+                <span class="verified-badge">&bull; Lab Record Verified</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">1. Objective & Scope</div>
+            <p>
+                To perform a detailed comparative analysis of five foundational programming languages: 
+                <strong>Java</strong>, <strong>C</strong>, <strong>C++</strong>, <strong>Python</strong>, and <strong>JavaScript</strong>. 
+                This study evaluates programming paradigms, memory architecture, translation mechanisms, type systems, performance trade-offs, and industrial application domains.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">2. Comprehensive Comparative Table</div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter / Feature</th>
+                            <th><span class="lang-tag tag-java">Java</span> Java</th>
+                            <th><span class="lang-tag tag-c">C</span> C</th>
+                            <th><span class="lang-tag tag-cpp">C++</span> C++</th>
+                            <th><span class="lang-tag tag-python">Py</span> Python</th>
+                            <th><span class="lang-tag tag-js">JS</span> JavaScript</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Programming Paradigm</td>
+                            <td>Object-Oriented (Strict Class-based), Concurrent</td>
+                            <td>Procedural, Structured, Imperative</td>
+                            <td>Multi-paradigm (Procedural, OOP, Generic, Functional)</td>
+                            <td>Multi-paradigm (OOP, Functional, Imperative, Scripting)</td>
+                            <td>Multi-paradigm (Event-driven, Functional, Prototype-based OOP)</td>
+                        </tr>
+                        <tr>
+                            <td>Platform Independence</td>
+                            <td><strong>Yes</strong> (Platform Independent via Bytecode &amp; JVM - "WORA")</td>
+                            <td><strong>No</strong> (Platform dependent; source must be recompiled for each OS/CPU)</td>
+                            <td><strong>No</strong> (Platform dependent; compiled directly to native machine code)</td>
+                            <td><strong>Yes</strong> (Platform independent via bytecode interpreter)</td>
+                            <td><strong>Yes</strong> (Runs in any standards-compliant browser or Node.js runtime)</td>
+                        </tr>
+                        <tr>
+                            <td>Translation / Execution</td>
+                            <td>Compiled to Bytecode (`.class`), then executed via JVM + JIT Compiler</td>
+                            <td>Compiled directly to native binary/machine code (`.exe` / `.o`)</td>
+                            <td>Compiled directly to native binary/machine code</td>
+                            <td>Interpreted (Compiled to bytecode `.pyc`, executed on CPython VM)</td>
+                            <td>Interpreted &amp; JIT-compiled dynamically (V8, SpiderMonkey)</td>
+                        </tr>
+                        <tr>
+                            <td>Memory Management</td>
+                            <td>Automatic Garbage Collection (GC); No manual free/delete</td>
+                            <td>Manual (`malloc()`, `calloc()`, `free()`)</td>
+                            <td>Manual (`new`, `delete`), RAII &amp; Smart Pointers (`std::unique_ptr`)</td>
+                            <td>Automatic Garbage Collection (Reference Counting + Cyclical GC)</td>
+                            <td>Automatic Garbage Collection (Mark-and-sweep algorithm)</td>
+                        </tr>
+                        <tr>
+                            <td>Type System</td>
+                            <td>Statically Typed &amp; Strongly Typed</td>
+                            <td>Statically Typed &amp; Weakly Typed</td>
+                            <td>Statically Typed &amp; Strongly Typed</td>
+                            <td>Dynamically Typed &amp; Strongly Typed</td>
+                            <td>Dynamically Typed &amp; Weakly Typed</td>
+                        </tr>
+                        <tr>
+                            <td>Pointers &amp; Memory Safety</td>
+                            <td>Pointers supported internally; Explicit pointer arithmetic <strong>restricted</strong> for security</td>
+                            <td>Full explicit pointer support and raw pointer arithmetic allowed</td>
+                            <td>Full raw pointers, pointer arithmetic, and reference types</td>
+                            <td>No explicit pointers; All variables are object references</td>
+                            <td>No pointers; Memory addresses inaccessible from JS</td>
+                        </tr>
+                        <tr>
+                            <td>Concurrency &amp; Threading</td>
+                            <td>Built-in Thread class, Runnable, synchronization primitives, Virtual Threads</td>
+                            <td>POSIX Threads (`pthread.h`), OS-level threading libraries</td>
+                            <td>Standard library `std::thread`, `std::async`, mutexes</td>
+                            <td>Threading library (bound by Global Interpreter Lock / GIL), multiprocessing, asyncio</td>
+                            <td>Single-threaded event loop, asynchronous non-blocking I/O, Web Workers</td>
+                        </tr>
+                        <tr>
+                            <td>Syntax Complexity</td>
+                            <td>Moderate, strict, verbose, structured</td>
+                            <td>Low complexity, concise, lower-level primitives</td>
+                            <td>High complexity (Templates, multiple inheritance, operator overloading)</td>
+                            <td>Minimal, clean, indentation-based readability</td>
+                            <td>Flexible, C-like syntax, dynamic coercion rules</td>
+                        </tr>
+                        <tr>
+                            <td>Performance &amp; Speed</td>
+                            <td>Very Fast (JIT optimization approaches native speeds)</td>
+                            <td>Fastest (Direct hardware access, zero runtime overhead)</td>
+                            <td>Near fastest (Zero-cost abstractions, inline assembly)</td>
+                            <td>Slower (Interpreted overhead; offloads intensive work to C extensions)</td>
+                            <td>Fast (Optimized JIT engine in modern runtimes)</td>
+                        </tr>
+                        <tr>
+                            <td>Primary Industry Applications</td>
+                            <td>Enterprise Systems, Android, Cloud Microservices (Spring), FinTech</td>
+                            <td>Operating Systems (Linux/Unix), Embedded Systems, Drivers, IoT</td>
+                            <td>Game Engines (Unreal), High-Frequency Trading, Graphic Systems</td>
+                            <td>Artificial Intelligence, Machine Learning, Data Science, Automation</td>
+                            <td>Full-Stack Web Development, Frontend (React/Vue), Node.js Backends</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">3. Syntax &amp; Implementation Comparison ("Hello World" &amp; Variables)</div>
+            <p>A quick comparative overview of how each language defines entry points, variables, and output:</p>
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-card-header">
+                        <span>Java (Strict OOP)</span>
+                        <span class="lang-tag tag-java">Java</span>
+                    </div>
+                    <pre><code>public class Demo {
+    public static void main(String[] args) {
+        String name = "Trivikram";
+        System.out.println("Hello, " + name);
+    }
+}</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-card-header">
+                        <span>C (Procedural)</span>
+                        <span class="lang-tag tag-c">C</span>
+                    </div>
+                    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    char name[] = "Trivikram";
+    printf("Hello, %s\n", name);
+    return 0;
+}</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-card-header">
+                        <span>C++ (Multi-paradigm)</span>
+                        <span class="lang-tag tag-cpp">C++</span>
+                    </div>
+                    <pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string name = "Trivikram";
+    std::cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; "\n";
+    return 0;
+}</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-card-header">
+                        <span>Python (Dynamic)</span>
+                        <span class="lang-tag tag-python">Python</span>
+                    </div>
+                    <pre><code>name = "Trivikram"
+print(f"Hello, {name}")</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-card-header">
+                        <span>JavaScript (Event-Driven)</span>
+                        <span class="lang-tag tag-js">JavaScript</span>
+                    </div>
+                    <pre><code>const name = "Trivikram";
+console.log(`Hello, ${name}`);</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">4. Key Observations for Java Programming</div>
+            <div class="highlight-feature">
+                <strong>Why Java for Enterprise &amp; AI Systems?</strong>
+                <ul style="margin-top: 8px; margin-left: 20px;">
+                    <li><strong>Write Once, Run Anywhere (WORA):</strong> Java source files compile to bytecode (`.class`) executed uniformly across any OS with a compatible Java Virtual Machine (JVM).</li>
+                    <li><strong>Robust Memory Protection:</strong> Disallowing explicit pointer arithmetic eliminates memory corruption, buffer overflows, and segmentation faults prevalent in C/C++.</li>
+                    <li><strong>Enterprise Concurrency:</strong> Standard multi-threading and modern Virtual Threads (Project Loom) deliver exceptional throughput for large distributed web services.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
