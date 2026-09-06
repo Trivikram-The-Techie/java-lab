@@ -1,4 +1,4 @@
-// Advanced Java Lab (23IT5351) - Trivikram (25EU02067)
+// Java Programming Lab - Trivikram (25EU02067)
 const TOTAL_WEEKS = 8;
 
 const fileMap = {
