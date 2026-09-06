@@ -53,6 +53,8 @@ const userUploadedPdfs = {};
 
 // Initialize on page load
 document.addEventListener("DOMContentLoaded", () => {
+    const mainTitle = document.querySelector("header h1");
+    if (mainTitle) mainTitle.textContent = "Java Programming Lab";
     renderWeekBoxes();
     loadWeek(1);
 });
