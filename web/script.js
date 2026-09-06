@@ -123,14 +123,14 @@ function updateFrameContent() {
 
     let targetUri = "";
     if (currentViewMode === "manual") {
-        targetUri = `converted/week${currentWeek}.html`;
+        targetUri = `converted/week${currentWeek}.html?v=2.1`;
         if (currentDocEl) currentDocEl.innerText = `converted/week${currentWeek}.html (Lab Sheet)`;
     } else {
         if (userUploadedPdfs[currentWeek]) {
             targetUri = userUploadedPdfs[currentWeek].url;
             if (currentDocEl) currentDocEl.innerText = `Uploaded File: ${userUploadedPdfs[currentWeek].name}`;
         } else {
-            targetUri = `docs/${fileName}`;
+            targetUri = `docs/${fileName}?v=2.1`;
             if (currentDocEl) currentDocEl.innerText = fileName;
         }
     }
