@@ -451,8 +451,28 @@ class HelloWorld {
 
 
   // =========================================================
+  // WEEK 4
+  // =========================================================
+  {
+    id: 4,
+    title: "Week 04",
+    subtitle: "Viva Examination",
+    programs: []
+  },
+
+
+  // =========================================================
+  // WEEK 5
+  // =========================================================
+  {
+    id: 5,
+    title: "Week 05",
+    subtitle: "Viva Examination",
+    programs: []
+  },
+
+
+  // =========================================================
   
 ];
 const generatedOutputs = {};
-
-// Verified type conversion, character ASCII, and control flow programs
