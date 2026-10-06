@@ -2591,6 +2591,554 @@ public class Main {
 
 
   // =========================================================
+  // WEEK 9
+  // =========================================================
+  {
+    id: 9,
+    title: "Week 09",
+    subtitle: "Packages and Interfaces",
+    programs: [
+
+      {
+        title: "Creating and Using a User-Defined Package",
+        description:
+          "Create a user-defined package named mypackage containing a Student class, and access it from another Java program outside the package.",
+        code: `// File: mypackage/Student.java
+package mypackage;
+
+public class Student {
+    String name;
+    int rollNo;
+    double marks;
+
+    public Student(String name, int rollNo, double marks) {
+        this.name = name;
+        this.rollNo = rollNo;
+        this.marks = marks;
+    }
+
+    public void display() {
+        System.out.println("Name : " + name);
+        System.out.println("Roll Number : " + rollNo);
+        System.out.println("Marks : " + marks);
+    }
+}
+
+// File: TestStudent.java
+import mypackage.Student;
+
+public class TestStudent {
+    public static void main(String[] args) {
+        Student s = new Student("Sathwika", 101, 92.5);
+        s.display();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Importing Packages",
+        description:
+          "Demonstrate different ways of importing and accessing classes (Student and Faculty) from a package named college, using both a specific import and a wildcard import.",
+        code: `// File: college/Student.java
+package college;
+
+public class Student {
+    public void show() {
+        System.out.println("Student class from college package");
+    }
+}
+
+// File: college/Faculty.java
+package college;
+
+public class Faculty {
+    public void show() {
+        System.out.println("Faculty class from college package");
+    }
+}
+
+// File: TestSpecificImport.java
+import college.Student;
+
+public class TestSpecificImport {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.show();
+    }
+}
+
+// File: TestWildcardImport.java
+import college.*;
+
+public class TestWildcardImport {
+    public static void main(String[] args) {
+        Student s = new Student();
+        Faculty f = new Faculty();
+
+        s.show();
+        f.show();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Packages and Member Access",
+        description:
+          "Demonstrate the accessibility of public, private, protected and default members of a class from the same class, another class in the same package, and a class in a different package.",
+        code: `// File: pkgone/Access.java
+package pkgone;
+
+public class Access {
+    public int publicVar = 10;
+    private int privateVar = 20;
+    protected int protectedVar = 30;
+    int defaultVar = 40;
+
+    void display() {
+        System.out.println("Accessing from same class:");
+        System.out.println("Public : " + publicVar);
+        System.out.println("Private : " + privateVar);
+        System.out.println("Protected : " + protectedVar);
+        System.out.println("Default : " + defaultVar);
+    }
+}
+
+// File: pkgone/SamePackageTest.java
+package pkgone;
+
+public class SamePackageTest {
+    public static void main(String[] args) {
+        Access a = new Access();
+        a.display();
+
+        System.out.println();
+        System.out.println("Accessing from another class in same package:");
+        System.out.println("Public : " + a.publicVar);
+        System.out.println("Protected : " + a.protectedVar);
+        System.out.println("Default : " + a.defaultVar);
+        // a.privateVar is NOT accessible here
+    }
+}
+
+// File: pkgtwo/DifferentPackageTest.java
+package pkgtwo;
+
+import pkgone.Access;
+
+public class DifferentPackageTest extends Access {
+    public static void main(String[] args) {
+        DifferentPackageTest obj = new DifferentPackageTest();
+
+        System.out.println();
+        System.out.println("Accessing from a class in a different package:");
+        System.out.println("Public : " + obj.publicVar);
+        System.out.println("Protected (via inheritance) : " + obj.protectedVar);
+        // obj.privateVar and obj.defaultVar are NOT accessible here
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Demonstrate CLASSPATH",
+        description:
+          "Demonstrate how Java uses the CLASSPATH to locate a user-defined package (utilities) containing a Calculator class, and access it from another program compiled and executed using the configured CLASSPATH.",
+        code: `// File: utilities/Calculator.java
+package utilities;
+
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+}
+
+// File: TestCalculator.java
+import utilities.Calculator;
+
+public class TestCalculator {
+    public static void main(String[] args) {
+        Calculator c = new Calculator();
+
+        System.out.println("Addition : " + c.add(15, 25));
+        System.out.println("Multiplication : " + c.multiply(6, 7));
+    }
+}
+
+/*
+ Steps to compile and run using CLASSPATH:
+
+ 1. javac -d . utilities/Calculator.java
+    (creates utilities/Calculator.class in the current folder)
+
+ 2. Set the CLASSPATH:
+    Windows : set CLASSPATH=.;C:\\JavaPrograms
+    Linux   : export CLASSPATH=.:/home/user/JavaPrograms
+
+ 3. javac TestCalculator.java
+ 4. java TestCalculator
+*/`,
+        output: null
+      },
+
+      {
+        title: "Package Containing Multiple Classes",
+        description:
+          "Create and use a package named bank containing three classes — Account, Customer and Transaction — accessed together from a main class outside the package.",
+        code: `// File: bank/Account.java
+package bank;
+
+public class Account {
+    int accountNumber;
+    double balance;
+
+    public Account(int accountNumber, double balance) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+
+    public void showAccount() {
+        System.out.println("Account Number : " + accountNumber);
+        System.out.println("Balance : " + balance);
+    }
+}
+
+// File: bank/Customer.java
+package bank;
+
+public class Customer {
+    String name;
+    int customerId;
+
+    public Customer(String name, int customerId) {
+        this.name = name;
+        this.customerId = customerId;
+    }
+
+    public void showCustomer() {
+        System.out.println("Customer ID : " + customerId);
+        System.out.println("Customer Name : " + name);
+    }
+}
+
+// File: bank/Transaction.java
+package bank;
+
+public class Transaction {
+    String type;
+    double amount;
+
+    public Transaction(String type, double amount) {
+        this.type = type;
+        this.amount = amount;
+    }
+
+    public void showTransaction() {
+        System.out.println("Transaction Type : " + type);
+        System.out.println("Amount : " + amount);
+    }
+}
+
+// File: BankTest.java
+import bank.Account;
+import bank.Customer;
+import bank.Transaction;
+
+public class BankTest {
+    public static void main(String[] args) {
+        Customer cust = new Customer("Sathwika", 501);
+        Account acc = new Account(1001, 25000);
+        Transaction txn = new Transaction("Deposit", 5000);
+
+        cust.showCustomer();
+        acc.showAccount();
+        txn.showTransaction();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Defining and Implementing an Interface",
+        description:
+          "Create an interface Shape containing a method area(), and implement it using Circle and Rectangle classes.",
+        code: `interface Shape {
+    double area();
+}
+
+class Circle implements Shape {
+    double radius;
+
+    Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Rectangle implements Shape {
+    double length, width;
+
+    Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    public double area() {
+        return length * width;
+    }
+}
+
+public class ShapeDemo {
+    public static void main(String[] args) {
+        Shape c = new Circle(5);
+        Shape r = new Rectangle(4, 6);
+
+        System.out.println("Area of Circle : " + c.area());
+        System.out.println("Area of Rectangle : " + r.area());
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Implementing Multiple Interfaces",
+        description:
+          "Demonstrate how a class can implement multiple interfaces, Printable and Showable, using a single Demo class.",
+        code: `interface Printable {
+    void print();
+}
+
+interface Showable {
+    void show();
+}
+
+class Demo implements Printable, Showable {
+    public void print() {
+        System.out.println("Printing...");
+    }
+
+    public void show() {
+        System.out.println("Showing...");
+    }
+}
+
+public class MultipleInterfaceDemo {
+    public static void main(String[] args) {
+        Demo d = new Demo();
+
+        d.print();
+        d.show();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Interface-Based Polymorphism",
+        description:
+          "Demonstrate polymorphism using an interface reference Vehicle, assigning objects of Car and Bike to it.",
+        code: `interface Vehicle {
+    void start();
+}
+
+class Car implements Vehicle {
+    public void start() {
+        System.out.println("Car starts with a key");
+    }
+}
+
+class Bike implements Vehicle {
+    public void start() {
+        System.out.println("Bike starts with a kick");
+    }
+}
+
+public class VehicleDemo {
+    public static void main(String[] args) {
+        Vehicle v;
+
+        v = new Car();
+        v.start();
+
+        v = new Bike();
+        v.start();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Variables in Interfaces",
+        description:
+          "Demonstrate variables declared inside an interface named Constants (MAX_MARKS and PI), accessed from a class that implements the interface and directly using the interface name.",
+        code: `interface Constants {
+    int MAX_MARKS = 100;
+    double PI = 3.14159;
+}
+
+class Circle implements Constants {
+    double radius;
+
+    Circle(double radius) {
+        this.radius = radius;
+    }
+
+    void showConstants() {
+        System.out.println("Max Marks : " + MAX_MARKS);
+        System.out.println("PI : " + PI);
+        System.out.println("Area : " + (PI * radius * radius));
+    }
+}
+
+public class ConstantsDemo {
+    public static void main(String[] args) {
+        Circle c = new Circle(3);
+        c.showConstants();
+
+        System.out.println("Accessed using interface name:");
+        System.out.println("Max Marks : " + Constants.MAX_MARKS);
+        System.out.println("PI : " + Constants.PI);
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Nested Interfaces",
+        description:
+          "Demonstrate the concept of a nested interface Department declared inside an outer class University, implemented and used in another class.",
+        code: `class University {
+    interface Department {
+        void showDepartment();
+    }
+}
+
+class CSEDepartment implements University.Department {
+    public void showDepartment() {
+        System.out.println("Department : Computer Science and Engineering");
+    }
+}
+
+public class NestedInterfaceDemo {
+    public static void main(String[] args) {
+        University.Department dept = new CSEDepartment();
+        dept.showDepartment();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Interface Inheritance",
+        description:
+          "Demonstrate inheritance between interfaces, where interface Dog extends interface Animal, and both methods are implemented in class Labrador.",
+        code: `interface Animal {
+    void eat();
+}
+
+interface Dog extends Animal {
+    void bark();
+}
+
+class Labrador implements Dog {
+    public void eat() {
+        System.out.println("Labrador eats food");
+    }
+
+    public void bark() {
+        System.out.println("Labrador barks");
+    }
+}
+
+public class InterfaceInheritanceDemo {
+    public static void main(String[] args) {
+        Labrador l = new Labrador();
+
+        l.eat();
+        l.bark();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Real-World Application Using Interfaces",
+        description:
+          "Develop a Payment Processing System using an interface Payment with a pay(double amount) method, implemented by CreditCardPayment, UPIPayment and NetBankingPayment. The main program lets the user select a payment method and processes the payment.",
+        code: `import java.util.Scanner;
+
+interface Payment {
+    void pay(double amount);
+}
+
+class CreditCardPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid Rs. " + amount + " using Credit Card");
+    }
+}
+
+class UPIPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid Rs. " + amount + " using UPI");
+    }
+}
+
+class NetBankingPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid Rs. " + amount + " using Net Banking");
+    }
+}
+
+public class PaymentDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Select Payment Method:");
+        System.out.println("1. Credit Card");
+        System.out.println("2. UPI");
+        System.out.println("3. Net Banking");
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+
+        System.out.print("Enter amount: ");
+        double amount = sc.nextDouble();
+
+        Payment payment;
+
+        switch (choice) {
+            case 1:
+                payment = new CreditCardPayment();
+                break;
+            case 2:
+                payment = new UPIPayment();
+                break;
+            case 3:
+                payment = new NetBankingPayment();
+                break;
+            default:
+                System.out.println("Invalid choice");
+                sc.close();
+                return;
+        }
+
+        payment.pay(amount);
+        sc.close();
+    }
+}`,
+        output: null
+      }
+    ]
+  },
+
+  // =========================================================
   
 ];
 const generatedOutputs = {};
