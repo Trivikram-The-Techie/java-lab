@@ -1739,8 +1739,858 @@ class StudentArray {
 
 
   // =========================================================
+  // WEEK 7
+  // =========================================================
+  {
+    id: 7,
+    title: "Week 07",
+    subtitle: "String Handling",
+    programs: [
+
+      {
+        title: "String Constructors",
+        description:
+          "Demonstrate different ways of creating and initializing String objects using String constructors, including literals, new String(), character arrays and byte arrays.",
+        code: `class StringConstructorsDemo {
+
+    public static void main(String[] args) {
+
+        // String using literal
+        String s1 = "Hello Java";
+
+        // String using new
+        String s2 = new String("Hello Java");
+
+        // String using character array
+        char[] chars = {'J', 'a', 'v', 'a'};
+        String s3 = new String(chars);
+
+        // String using byte array
+        byte[] bytes = {65, 66, 67};
+        String s4 = new String(bytes);
+
+        System.out.println("String Literal : " + s1);
+        System.out.println("Using new String : " + s2);
+        System.out.println("Character Array : " + s3);
+        System.out.println("Byte Array : " + s4);
+
+        // Difference between literal and new
+        System.out.println(
+            "s1 == s2 : " + (s1 == s2)
+        );
+
+        System.out.println(
+            "s1.equals(s2) : " + s1.equals(s2)
+        );
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "StringBuffer Class",
+        description:
+          "Demonstrate mutable string operations using StringBuffer including append, insert, replace, delete and reverse.",
+        code: `class StringBufferDemo {
+
+    public static void main(String[] args) {
+
+        StringBuffer sb =
+            new StringBuffer("Hello");
+
+        // Append
+        sb.append(" Java");
+
+        // Insert
+        sb.insert(6, "World ");
+
+        // Replace
+        sb.replace(6, 12, "Beautiful");
+
+        // Delete
+        sb.delete(6, 16);
+
+        // Reverse
+        sb.reverse();
+
+        System.out.println(
+            "StringBuffer : " + sb
+        );
+
+        System.out.println(
+            "Length : " + sb.length()
+        );
+
+        System.out.println(
+            "Capacity : " + sb.capacity()
+        );
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "StringTokenizer Class",
+        description:
+          "Tokenize a sentence using StringTokenizer, display individual tokens, count the tokens and repeat the operation using a specified delimiter.",
+        code: `import java.util.Scanner;
+import java.util.StringTokenizer;
+
+class StringTokenizerDemo {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a sentence: ");
+        String sentence = sc.nextLine();
+
+        StringTokenizer st =
+            new StringTokenizer(sentence);
+
+        System.out.println("Tokens:");
+
+        while (st.hasMoreTokens()) {
+            System.out.println(st.nextToken());
+        }
+
+        System.out.println(
+            "Total Tokens: " +
+            new StringTokenizer(sentence).countTokens()
+        );
+
+        System.out.print(
+            "Enter delimiter: "
+        );
+
+        String delimiter = sc.nextLine();
+
+        StringTokenizer custom =
+            new StringTokenizer(
+                sentence,
+                delimiter
+            );
+
+        System.out.println(
+            "Tokens using delimiter:"
+        );
+
+        while (custom.hasMoreTokens()) {
+            System.out.println(custom.nextToken());
+        }
+
+        sc.close();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Basic Inheritance",
+        description:
+          "Demonstrate basic inheritance by creating a child class that inherits methods from a parent class.",
+        code: `class Animal {
+    void eat() {
+        System.out.println("Animal eats");
+    }
+}
+
+class Dog extends Animal {
+    void bark() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class InheritanceDemo {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+
+        d.eat();
+        d.bark();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Using super Keyword",
+        description:
+          "Demonstrate the use of the super keyword to access parent class variables and methods.",
+        code: `class Animal {
+    String name = "Animal";
+
+    void display() {
+        System.out.println("Animal class");
+    }
+}
+
+class Dog extends Animal {
+    String name = "Dog";
+
+    void display() {
+        System.out.println("Dog class");
+    }
+
+    void show() {
+        System.out.println("Child name: " + name);
+        System.out.println("Parent name: " + super.name);
+
+        super.display();
+        display();
+    }
+}
+
+public class SuperDemo {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.show();
+    }
+}`,
+        output: null
+      }
+    ]
+  },
+
+
+  // =========================================================
+  // WEEK 8
+  // =========================================================
+  {
+    id: 8,
+    title: "Week 08",
+    subtitle: "Inheritance",
+    programs: [
+
+      {
+        title: "Single Inheritance",
+        description:
+          "Demonstrate single inheritance using a Person superclass and Student subclass.",
+        code: `class Person {
+
+    String name;
+    int age;
+
+    void displayPersonDetails() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+
+class Student extends Person {
+
+    int rollNo;
+    String branch;
+
+    void displayStudentDetails() {
+
+        displayPersonDetails();
+
+        System.out.println(
+            "Roll Number: " + rollNo
+        );
+
+        System.out.println(
+            "Branch: " + branch
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Student s = new Student();
+
+        s.name = "Rahul";
+        s.age = 20;
+        s.rollNo = 101;
+        s.branch = "Computer Science";
+
+        System.out.println("Student Details:");
+
+        s.displayStudentDetails();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Using super Keyword",
+        description:
+          "Demonstrate super for accessing superclass variables and methods.",
+        code: `class Vehicle {
+
+    int speed = 80;
+
+    void display() {
+        System.out.println(
+            "Vehicle speed: " + speed
+        );
+    }
+}
+
+class Car extends Vehicle {
+
+    String model = "Toyota";
+
+    @Override
+    void display() {
+
+        System.out.println(
+            "Car model: " + model
+        );
+
+        System.out.println(
+            "Vehicle speed using super: " +
+            super.speed
+        );
+
+        super.display();
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Car c = new Car();
+
+        c.display();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Multilevel Inheritance",
+        description:
+          "Demonstrate multilevel inheritance using Person, Employee and Manager classes.",
+        code: `class Person {
+
+    String name;
+    int age;
+
+    void displayPersonDetails() {
+
+        System.out.println(
+            "Name: " + name
+        );
+
+        System.out.println(
+            "Age: " + age
+        );
+    }
+}
+
+class Employee extends Person {
+
+    int employeeId;
+    double salary;
+
+    void displayEmployeeDetails() {
+
+        System.out.println(
+            "Employee ID: " + employeeId
+        );
+
+        System.out.println(
+            "Salary: " + salary
+        );
+    }
+}
+
+class Manager extends Employee {
+
+    String department;
+
+    void displayManagerDetails() {
+
+        displayPersonDetails();
+        displayEmployeeDetails();
+
+        System.out.println(
+            "Department: " + department
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Manager m = new Manager();
+
+        m.name = "Anil";
+        m.age = 35;
+        m.employeeId = 1001;
+        m.salary = 75000;
+        m.department = "IT";
+
+        m.displayManagerDetails();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Method Overriding",
+        description:
+          "Demonstrate method overriding using Animal, Dog and Cat classes.",
+        code: `class Animal {
+
+    void sound() {
+        System.out.println(
+            "Animal makes a sound"
+        );
+    }
+}
+
+class Dog extends Animal {
+
+    @Override
+    void sound() {
+        System.out.println(
+            "Dog barks"
+        );
+    }
+}
+
+class Cat extends Animal {
+
+    @Override
+    void sound() {
+        System.out.println(
+            "Cat meows"
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Dog d = new Dog();
+        Cat c = new Cat();
+
+        d.sound();
+        c.sound();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Dynamic Method Dispatch",
+        description:
+          "Demonstrate dynamic method dispatch using Shape as the superclass and Circle, Rectangle and Triangle as subclasses.",
+        code: `class Shape {
+
+    void draw() {
+        System.out.println(
+            "Drawing a shape"
+        );
+    }
+}
+
+class Circle extends Shape {
+
+    @Override
+    void draw() {
+        System.out.println(
+            "Drawing a circle"
+        );
+    }
+}
+
+class Rectangle extends Shape {
+
+    @Override
+    void draw() {
+        System.out.println(
+            "Drawing a rectangle"
+        );
+    }
+}
+
+class Triangle extends Shape {
+
+    @Override
+    void draw() {
+        System.out.println(
+            "Drawing a triangle"
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Shape s;
+
+        s = new Circle();
+        s.draw();
+
+        s = new Rectangle();
+        s.draw();
+
+        s = new Triangle();
+        s.draw();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "super with Method Overriding",
+        description:
+          "Demonstrate super.display() to invoke the superclass implementation before displaying subclass details.",
+        code: `class Employee {
+
+    void display() {
+        System.out.println(
+            "Employee details"
+        );
+    }
+}
+
+class Manager extends Employee {
+
+    @Override
+    void display() {
+
+        super.display();
+
+        System.out.println(
+            "Manager details"
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Manager m = new Manager();
+
+        m.display();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Multilevel Inheritance for Salary Calculation",
+        description:
+          "Calculate total salary using Employee, Developer and SeniorDeveloper classes.",
+        code: `class Employee {
+
+    double basicSalary = 30000;
+
+    void displayBasicSalary() {
+
+        System.out.println(
+            "Basic Salary: " + basicSalary
+        );
+    }
+}
+
+class Developer extends Employee {
+
+    double programmingAllowance = 10000;
+
+    void displayProgrammingAllowance() {
+
+        System.out.println(
+            "Programming Allowance: " +
+            programmingAllowance
+        );
+    }
+}
+
+class SeniorDeveloper extends Developer {
+
+    double projectAllowance = 15000;
+
+    void calculateSalary() {
+
+        double totalSalary =
+            basicSalary +
+            programmingAllowance +
+            projectAllowance;
+
+        displayBasicSalary();
+        displayProgrammingAllowance();
+
+        System.out.println(
+            "Project Allowance: " +
+            projectAllowance
+        );
+
+        System.out.println(
+            "Total Salary: " +
+            totalSalary
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        SeniorDeveloper sd =
+            new SeniorDeveloper();
+
+        sd.calculateSalary();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Dynamic Method Dispatch for Bank Accounts",
+        description:
+          "Demonstrate dynamic method dispatch using BankAccount, SavingsAccount and CurrentAccount.",
+        code: `class BankAccount {
+
+    void calculateInterest() {
+
+        System.out.println(
+            "Calculating bank account interest"
+        );
+    }
+}
+
+class SavingsAccount extends BankAccount {
+
+    @Override
+    void calculateInterest() {
+
+        System.out.println(
+            "Savings Account Interest: 6%"
+        );
+    }
+}
+
+class CurrentAccount extends BankAccount {
+
+    @Override
+    void calculateInterest() {
+
+        System.out.println(
+            "Current Account Interest: 2%"
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        BankAccount account;
+
+        account = new SavingsAccount();
+        account.calculateInterest();
+
+        account = new CurrentAccount();
+        account.calculateInterest();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Constructor Execution in Multilevel Inheritance",
+        description:
+          "Demonstrate the order of constructor execution in multilevel inheritance.",
+        code: `class Person {
+
+    Person() {
+        System.out.println(
+            "Person constructor executed"
+        );
+    }
+}
+
+class Student extends Person {
+
+    Student() {
+        System.out.println(
+            "Student constructor executed"
+        );
+    }
+}
+
+class GraduateStudent extends Student {
+
+    GraduateStudent() {
+        System.out.println(
+            "GraduateStudent constructor executed"
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        GraduateStudent gs =
+            new GraduateStudent();
+    }
+}`,
+        output: null
+      },
+
+      {
+        title: "Banking Application Using Inheritance",
+        description:
+          "Develop a simple banking application using inheritance with deposit, withdrawal and interest calculation.",
+        code: `class BankAccount {
+
+    String accountNumber;
+    double balance;
+
+    BankAccount(
+        String accountNumber,
+        double balance
+    ) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+
+    void deposit(double amount) {
+
+        balance += amount;
+
+        System.out.println(
+            "Deposited: " + amount
+        );
+    }
+
+    void withdraw(double amount) {
+
+        if (amount <= balance) {
+
+            balance -= amount;
+
+            System.out.println(
+                "Withdrawn: " + amount
+            );
+
+        } else {
+
+            System.out.println(
+                "Insufficient balance"
+            );
+        }
+    }
+
+    void calculateInterest() {
+
+        System.out.println(
+            "General bank account interest"
+        );
+    }
+
+    void displayBalance() {
+
+        System.out.println(
+            "Account Number: " +
+            accountNumber
+        );
+
+        System.out.println(
+            "Balance: " + balance
+        );
+    }
+}
+
+class SavingsAccount extends BankAccount {
+
+    SavingsAccount(
+        String accountNumber,
+        double balance
+    ) {
+        super(accountNumber, balance);
+    }
+
+    @Override
+    void calculateInterest() {
+
+        double interest =
+            balance * 0.06;
+
+        System.out.println(
+            "Savings Interest: " + interest
+        );
+    }
+}
+
+class CurrentAccount extends BankAccount {
+
+    CurrentAccount(
+        String accountNumber,
+        double balance
+    ) {
+        super(accountNumber, balance);
+    }
+
+    @Override
+    void calculateInterest() {
+
+        double interest =
+            balance * 0.02;
+
+        System.out.println(
+            "Current Interest: " + interest
+        );
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        SavingsAccount savings =
+            new SavingsAccount(
+                "SA101",
+                10000
+            );
+
+        System.out.println(
+            "Savings Account:"
+        );
+
+        savings.deposit(2000);
+        savings.withdraw(1000);
+        savings.calculateInterest();
+        savings.displayBalance();
+
+        System.out.println();
+
+        CurrentAccount current =
+            new CurrentAccount(
+                "CA101",
+                20000
+            );
+
+        System.out.println(
+            "Current Account:"
+        );
+
+        current.deposit(5000);
+        current.withdraw(3000);
+        current.calculateInterest();
+        current.displayBalance();
+    }
+}`,
+        output: null
+      }
+    ]
+  },
+
+
+  // =========================================================
   
 ];
 const generatedOutputs = {};
-
-// Added constructors, chaining, and garbage collection
