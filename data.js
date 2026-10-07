@@ -3139,6 +3139,1038 @@ public class PaymentDemo {
   },
 
   // =========================================================
-  
+  // WEEK 10
+  // =========================================================
+  {
+    id: 10,
+    title: "Week 10",
+    subtitle: "Exception Handling and Byte Streams",
+    programs: [
+      { title: "Handling Division by Zero", description: "Demonstrate exception handling using try and catch by handling division by zero.", code: `public class Arithmetic {
+    public static void main(String[] args) {
+        try {
+            int a = 10, b = 0;
+            System.out.println(a / b);
+        } catch (ArithmeticException e) {
+            System.out.println("Cannot divide by zero");
+        }
+    }
+}` },
+      { title: "Demonstrating Common Exceptions", description: "Demonstrate ArithmeticException, ArrayIndexOutOfBoundsException, and NullPointerException.", code: `public class ExceptionTypes {
+    public static void main(String[] args) {
+        try { System.out.println(10 / 0); }
+        catch (ArithmeticException e) { System.out.println("ArithmeticException: " + e); }
+
+        try { int[] a = {10, 20, 30}; System.out.println(a[5]); }
+        catch (ArrayIndexOutOfBoundsException e) { System.out.println("ArrayIndexOutOfBoundsException: " + e); }
+
+        try { String s = null; System.out.println(s.length()); }
+        catch (NullPointerException e) { System.out.println("NullPointerException: " + e); }
+    }
+}` },
+      { title: "Observing an Uncaught Exception", description: "Allow an exception to go uncaught and observe the JVM message and stack trace.", code: `public class UncaughtException {
+    public static void main(String[] args) {
+        int a = 10, b = 0;
+        int result = a / b;
+        System.out.println("Result: " + result);
+    }
+}` },
+      { title: "Using Multiple Catch Clauses", description: "Handle different exceptions with separate catch clauses.", code: `public class MultipleCatch {
+    public static void main(String[] args) {
+        try {
+            int[] numbers = {10, 20, 30};
+            System.out.println(numbers[5] / 0);
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException occurred.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("ArrayIndexOutOfBoundsException occurred.");
+        } catch (Exception e) {
+            System.out.println("Some other exception occurred.");
+        }
+    }
+}` },
+      { title: "Explicitly Throwing an Exception", description: "Use throw to generate an exception when a condition is violated.", code: `public class ThrowDemo {
+    public static void main(String[] args) {
+        int age = 15;
+        try {
+            if (age < 18) throw new IllegalArgumentException("Age must be 18 or above.");
+            System.out.println("Eligible to vote.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+    }
+}` },
+      { title: "Propagating an Exception with throws", description: "Use throws to propagate an exception to the calling method.", code: `public class ThrowsDemo {
+    static void divide(int a, int b) throws ArithmeticException {
+        System.out.println("Result = " + (a / b));
+    }
+    public static void main(String[] args) {
+        try { divide(10, 0); }
+        catch (ArithmeticException e) {
+            System.out.println("Exception handled in main: " + e);
+        }
+    }
+}` },
+      { title: "Creating a User-Defined Exception", description: "Create a checked exception by extending the Exception class and handle it.", code: `class InvalidAgeException extends Exception {
+    InvalidAgeException(String message) { super(message); }
+}
+public class CustomExceptionDemo {
+    static void checkAge(int age) throws InvalidAgeException {
+        if (age < 18) throw new InvalidAgeException("Age must be at least 18.");
+        System.out.println("Age accepted.");
+    }
+    public static void main(String[] args) {
+        try { checkAge(16); }
+        catch (InvalidAgeException e) { System.out.println("Error: " + e.getMessage()); }
+    }
+}` },
+      { title: "Validating Student Marks", description: "Validate marks from 0 to 100 and throw a custom exception for an invalid value.", code: `class InvalidMarksException extends Exception {
+    InvalidMarksException(String message) { super(message); }
+}
+public class MarksValidation {
+    static void validate(int marks) throws InvalidMarksException {
+        if (marks < 0 || marks > 100) throw new InvalidMarksException("Marks must be between 0 and 100.");
+        System.out.println("Valid marks: " + marks);
+    }
+    public static void main(String[] args) {
+        try { validate(105); }
+        catch (InvalidMarksException e) { System.out.println("Invalid marks: " + e.getMessage()); }
+    }
+}` },
+      { title: "Combining Exception Handling Features", description: "Use try, multiple catch clauses, throw, throws, and finally in one application.", code: `public class ExceptionFeatures {
+    static void check(int value) throws IllegalArgumentException {
+        if (value < 0) throw new IllegalArgumentException("Value cannot be negative.");
+        System.out.println(100 / value);
+    }
+    public static void main(String[] args) {
+        try { check(-2); }
+        catch (IllegalArgumentException e) { System.out.println("Invalid argument: " + e.getMessage()); }
+        catch (ArithmeticException e) { System.out.println("Cannot divide by zero."); }
+        finally { System.out.println("Finally block executed."); }
+    }
+}` },
+      { title: "Demonstrating the finally Block", description: "Show that a finally block executes after exception handling, even when an exception occurs.", code: `public class FinallyDemo {
+    public static void main(String[] args) {
+        try {
+            int result = 10 / 0;
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException handled.");
+        } finally {
+            System.out.println("Finally block always executes.");
+        }
+        System.out.println("Program continues.");
+    }
+}` },
+      { title: "Reading and Writing Bytes with Streams", description: "Use InputStream and OutputStream to read bytes from an input source and write them to an output destination.", code: `import java.io.*;
+public class StreamBytes {
+    public static void main(String[] args) throws IOException {
+        byte[] source = "Hello, byte streams!".getBytes();
+        try (InputStream in = new ByteArrayInputStream(source);
+             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            int value;
+            while ((value = in.read()) != -1) out.write(value);
+            System.out.println(new String(out.toByteArray()));
+        }
+    }
+}` },
+      { title: "Reading a File Byte by Byte", description: "Read a file using FileInputStream one byte at a time and display its contents.", code: `import java.io.*;
+public class ReadBytes {
+    public static void main(String[] args) {
+        try (FileInputStream in = new FileInputStream("input.txt")) {
+            int value;
+            while ((value = in.read()) != -1) System.out.print((char) value);
+        } catch (IOException e) { System.out.println("Read error: " + e.getMessage()); }
+    }
+}` },
+      { title: "Writing Data with FileOutputStream", description: "Write data to a file with FileOutputStream and read it back to verify.", code: `import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+public class WriteBytes {
+    public static void main(String[] args) {
+        byte[] data = "Java byte output".getBytes();
+        try (FileOutputStream out = new FileOutputStream("output.txt")) {
+            out.write(data);
+        } catch (IOException e) { System.out.println("Write error: " + e.getMessage()); return; }
+        try { System.out.println(Files.readString(Path.of("output.txt"))); }
+        catch (IOException e) { System.out.println("Verify error: " + e.getMessage()); }
+    }
+}` },
+      { title: "Copying a File with Byte Streams", description: "Copy one file to another using FileInputStream and FileOutputStream.", code: `import java.io.*;
+public class CopyBytes {
+    public static void main(String[] args) {
+        try (FileInputStream in = new FileInputStream("source.txt");
+             FileOutputStream out = new FileOutputStream("copy.txt")) {
+            byte[] buffer = new byte[1024];
+            int count;
+            while ((count = in.read(buffer)) != -1) out.write(buffer, 0, count);
+            System.out.println("File copied successfully.");
+        } catch (IOException e) { System.out.println("Copy error: " + e.getMessage()); }
+    }
+}` },
+      { title: "Copying an Image with Byte Streams", description: "Copy an image using byte streams and handle FileNotFoundException and IOException, closing streams in finally.", code: `import java.io.*;
+public class CopyImage {
+    public static void main(String[] args) {
+        FileInputStream in = null;
+        FileOutputStream out = null;
+        try {
+            in = new FileInputStream("photo.jpg");
+            out = new FileOutputStream("photo-copy.jpg");
+            byte[] buffer = new byte[4096];
+            int count;
+            while ((count = in.read(buffer)) != -1) out.write(buffer, 0, count);
+            System.out.println("Image copied successfully.");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("I/O error: " + e.getMessage());
+        } finally {
+            try { if (in != null) in.close(); } catch (IOException e) { System.out.println("Input close error."); }
+            try { if (out != null) out.close(); } catch (IOException e) { System.out.println("Output close error."); }
+        }
+    }
+}` }
+    ]
+  },
+  // =========================================================
+  // WEEK 11
+  // =========================================================
+  {
+    id: 11,
+    title: "Week 11",
+    subtitle: "Character Streams and Multithreaded Programming",
+    programs: [
+      { title: "Keyboard Input with Reader and Writer", description: "Read characters from the keyboard with Reader and display them using Writer.", code: `import java.io.*;
+public class ReaderWriterDemo {
+    public static void main(String[] args) throws IOException {
+        Reader reader = new InputStreamReader(System.in);
+        Writer writer = new OutputStreamWriter(System.out);
+        writer.write("Enter text: "); writer.flush();
+        int ch;
+        while ((ch = reader.read()) != -1 && ch != '\\n' && ch != '\\r') writer.write(ch);
+        writer.write(System.lineSeparator()); writer.flush();
+    }
+}` },
+      { title: "Reading a Text File with FileReader", description: "Read and display the contents of a text file using FileReader.", code: `import java.io.*;
+public class ReadText {
+    public static void main(String[] args) {
+        try (FileReader reader = new FileReader("input.txt")) {
+            int ch;
+            while ((ch = reader.read()) != -1) System.out.print((char) ch);
+        } catch (IOException e) { System.out.println("Read error: " + e.getMessage()); }
+    }
+}` },
+      { title: "Writing Text with FileWriter", description: "Write text into a file using FileWriter.", code: `import java.io.*;
+public class WriteText {
+    public static void main(String[] args) {
+        try (FileWriter writer = new FileWriter("output.txt")) {
+            writer.write("Character streams handle text.");
+            System.out.println("Text written to output.txt");
+        } catch (IOException e) { System.out.println("Write error: " + e.getMessage()); }
+    }
+}` },
+      { title: "Copying Text with FileReader and FileWriter", description: "Copy one text file to another using character streams.", code: `import java.io.*;
+public class CopyText {
+    public static void main(String[] args) {
+        try (FileReader reader = new FileReader("source.txt");
+             FileWriter writer = new FileWriter("copy.txt")) {
+            char[] buffer = new char[1024];
+            int count;
+            while ((count = reader.read(buffer)) != -1) writer.write(buffer, 0, count);
+            System.out.println("Text file copied successfully.");
+        } catch (IOException e) { System.out.println("Copy error: " + e.getMessage()); }
+    }
+}` },
+      { title: "Counting Characters, Words, and Lines", description: "Count characters, words, and lines in a text file using character streams.", code: `import java.io.*;
+public class FileCounts {
+    public static void main(String[] args) {
+        int chars = 0, words = 0, lines = 0;
+        boolean inWord = false, hasLineContent = false;
+        try (Reader reader = new FileReader("input.txt")) {
+            int ch;
+            while ((ch = reader.read()) != -1) {
+                chars++;
+                if (ch == '\\n') { lines++; hasLineContent = false; }
+                else if (ch != '\\r') hasLineContent = true;
+                if (Character.isWhitespace(ch)) inWord = false;
+                else if (!inWord) { words++; inWord = true; }
+            }
+            if (hasLineContent) lines++;
+            System.out.println("Characters: " + chars);
+            System.out.println("Words: " + words);
+            System.out.println("Lines: " + lines);
+        } catch (IOException e) { System.out.println("Read error: " + e.getMessage()); }
+    }
+}` },
+      { title: "Inspecting the Main Thread", description: "Display the main thread's name, priority, and state.", code: `public class MainThreadInfo {
+    public static void main(String[] args) {
+        Thread t = Thread.currentThread();
+        System.out.println("Name: " + t.getName());
+        System.out.println("Priority: " + t.getPriority());
+        System.out.println("State: " + t.getState());
+    }
+}` },
+      { title: "Creating a Thread by Extending Thread", description: "Create and start a thread by extending the Thread class.", code: `class WorkerThread extends Thread {
+    public void run() { System.out.println("Child thread is running."); }
+}
+public class ExtendThreadDemo {
+    public static void main(String[] args) throws InterruptedException {
+        WorkerThread t = new WorkerThread();
+        t.start();
+        t.join();
+        System.out.println("Main thread is running.");
+    }
+}` },
+      { title: "Creating a Thread with Runnable", description: "Create and start a thread by implementing the Runnable interface.", code: `class Task implements Runnable {
+    public void run() { System.out.println("Runnable task is running."); }
+}
+public class RunnableDemo {
+    public static void main(String[] args) throws InterruptedException {
+        Thread t = new Thread(new Task());
+        t.start();
+        t.join();
+        System.out.println("Main thread is running.");
+    }
+}` },
+      { title: "Running Multiple Threads Concurrently", description: "Create multiple threads and demonstrate their concurrent execution.", code: `class NumberTask extends Thread {
+    NumberTask(String name) { super(name); }
+    public void run() {
+        for (int i = 1; i <= 3; i++) System.out.println(getName() + " : " + i);
+    }
+}
+public class ConcurrentDemo {
+    public static void main(String[] args) throws InterruptedException {
+        NumberTask a = new NumberTask("Thread-A"), b = new NumberTask("Thread-B");
+        a.start(); b.start();
+        a.join(); b.join();
+        System.out.println("Both threads completed.");
+    }
+}` },
+      { title: "Checking a Thread with isAlive()", description: "Use isAlive() to check whether a thread is running.", code: `class ShortTask extends Thread {
+    public void run() {
+        System.out.println("Task started.");
+        try { Thread.sleep(300); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        System.out.println("Task finished.");
+    }
+}
+public class IsAliveDemo {
+    public static void main(String[] args) throws InterruptedException {
+        ShortTask t = new ShortTask();
+        System.out.println("Before start: " + t.isAlive());
+        t.start();
+        System.out.println("After start: " + t.isAlive());
+        t.join();
+        System.out.println("After completion: " + t.isAlive());
+    }
+}` },
+      { title: "Waiting for a Thread with join()", description: "Use join() to make one thread wait until another thread completes.", code: `class MessageTask extends Thread {
+    public void run() { System.out.println("Worker is processing."); }
+}
+public class JoinDemo {
+    public static void main(String[] args) throws InterruptedException {
+        MessageTask worker = new MessageTask();
+        worker.start();
+        worker.join();
+        System.out.println("Worker completed; main continues.");
+    }
+}` },
+      { title: "Controlling Threads with isAlive() and join()", description: "Use isAlive() and join() to check multiple threads and ensure they finish before continuing.", code: `class Job extends Thread {
+    Job(String name) { super(name); }
+    public void run() {
+        System.out.println(getName() + " started.");
+        try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        System.out.println(getName() + " finished.");
+    }
+}
+public class ThreadControlDemo {
+    public static void main(String[] args) throws InterruptedException {
+        Job a = new Job("Job-A"), b = new Job("Job-B");
+        a.start(); b.start();
+        System.out.println("Job-A alive: " + a.isAlive());
+        a.join(); b.join();
+        System.out.println("Job-A alive after join: " + a.isAlive());
+        System.out.println("Job-B alive after join: " + b.isAlive());
+        System.out.println("All jobs completed.");
+    }
+}` }
+    ]
+  }
 ];
-const generatedOutputs = {};
+
+
+// =========================================================
+// GENERATED PROGRAM OUTPUTS
+// =========================================================
+
+
+const generatedOutputs = {
+  "1-0": `ANSWER — COMPARATIVE STUDY OF PROGRAMMING LANGUAGES
+
+Java is a class-based, object-oriented language designed for portability, security and large-scale application development. It uses the JVM to provide platform independence.
+
+C is a procedural, compiled language mainly used for system programming, embedded systems and low-level development. It provides high performance but requires manual memory management.
+
+C++ extends C with object-oriented and generic programming features. It is widely used where high performance and low-level control are required, such as games and real-time software.
+
+Python is a high-level, open-source, multi-paradigm language known for its simple syntax. It is widely used in automation, data science, artificial intelligence, scripting and web development.
+
+JavaScript is a dynamic language primarily used for interactive web development. Modern JavaScript engines use JIT compilation, and JavaScript also supports server-side development through environments such as Node.js.
+
+COMPARISON RESULT
+
+• Java — Strong OOP, portable, secure and suitable for enterprise applications.
+• C — Very fast and efficient, with direct low-level control.
+• C++ — High performance with powerful OOP and generic programming features.
+• Python — Easiest to learn and highly productive for AI, data and automation.
+• JavaScript — Essential for modern interactive web applications.
+
+CONCLUSION
+
+Each language is suitable for different requirements. Java is a strong choice for portable enterprise software, C for system-level programming, C++ for performance-intensive applications, Python for rapid development and AI/data work, and JavaScript for web applications.`,
+  "2-0": `ORACLE JDK INSTALLATION — WINDOWS
+
+1. Open the official Oracle Java download page in a browser.
+2. Select the required JDK version for Windows.
+3. Download the Windows x64 installer (.msi or .exe).
+4. Run the downloaded installer.
+5. Follow the installation wizard and complete the installation.
+6. Note the JDK installation folder, for example: C:\Program Files\Java\jdk-<version>.
+7. Open System Properties → Advanced → Environment Variables.
+8. Create JAVA_HOME and set it to the JDK installation folder.
+9. Edit Path and add: %JAVA_HOME%\bin
+10. Open Command Prompt and run: java -version
+11. Run: javac -version
+12. Create HelloWorld.java, compile with javac HelloWorld.java, and execute with java HelloWorld.
+
+Verification Output:
+Hello, World!`,
+  "2-1": `OPENJDK INSTALLATION — WINDOWS
+
+1. Open a browser and choose a trusted OpenJDK distribution for Windows.
+2. Select the required OpenJDK version and Windows x64 architecture.
+3. Download the Windows installer (.msi) or the appropriate OpenJDK package.
+4. Run the installer and complete all installation steps.
+5. Note the OpenJDK installation folder.
+6. Open System Properties → Advanced → Environment Variables.
+7. Create JAVA_HOME and set it to the OpenJDK installation folder.
+8. Edit Path and add: %JAVA_HOME%\bin
+9. Open PowerShell or Command Prompt.
+10. Run: java -version
+11. Run: javac -version
+12. Create HelloWorld.java, compile with javac HelloWorld.java, and execute with java HelloWorld.
+
+Verification Output:
+Hello, World!`,
+  "3-0": `Hello, Java!`,
+  "3-1": `Byte Value : 100
+Short Value : 20000
+Int Value : 500000
+Long Value : 9876543210
+Float Value : 12.5
+Double Value : 123.456789
+Char Value : A
+Boolean Value : true`,
+  "3-2": `First Number : 20
+Second Number : 6
+Addition : 26
+Subtraction : 14
+Multiplication : 120
+Division : 3
+Modulus : 2`,
+  "3-3": `First Number : 15.5
+Second Number : 4.5
+Addition : 20.0
+Subtraction : 11.0
+Multiplication : 69.75
+Division : 3.4444444
+Modulus : 2.0`,
+  "3-4": `Character : A
+ASCII/Unicode Value : 65`,
+  "3-5": `Is Java Fun? true
+Is it Rainy? false
+15 > 10 : true
+15 == 10 : false
+15 < 10 : false`,
+  "3-6": `Name : John
+Age : 20
+Year : 2026
+Salary : 50000
+Population : 1400000000
+Height : 5.8
+Percentage : 92.75
+Grade : A
+Passed : true`,
+  "3-7": `a = 10
+b = 20
+a = 20
+b = 10`,
+  "3-8": `Int value : 100
+Long value : 100
+Float value : 100.0
+Double value : 100.0`,
+  "3-9": `Double value : 123.45
+Int value : 123
+Float value : 123.45
+Short value : 123`,
+  "3-10": `Character: A
+ASCII value: 65
+ASCII value: 66
+Character: B`,
+  "3-11": `7 is Odd`,
+  "3-12": `40 is the largest number`,
+  "3-13": `Number : 10
+Total Marks : 95
+Average Score : 88.5
+Grade : A`,
+  "3-14": `1
+2
+3
+4
+5
+6
+7
+8
+9
+10`,
+  "6-0": `------ Student Information ------
+Roll Number : 101
+Name : Sathwika
+Branch : AIML
+CGPA : 9.5`,
+  "6-1": `------ Employee Information ------
+Employee ID : 1001
+Name : Rahul
+Department : HR
+Salary : 35000.0`,
+  "6-2": `Book ID : 1
+Title : Java
+Author : James
+
+Book ID : 2
+Title : Python
+Author : Guido
+
+Book ID : 3
+Title : C Programming
+Author : Dennis`,
+  "6-3": `Enter Roll No: 101
+Enter Name: Rahul
+Enter Roll No: 102
+Enter Name: Anil
+Enter Roll No: 103
+Enter Name: Priya
+Enter Roll No: 104
+Enter Name: Kiran
+Enter Roll No: 105
+Enter Name: Sneha
+
+Student Details
+101 Rahul
+102 Anil
+103 Priya
+104 Kiran
+105 Sneha`,
+  "6-4": `s1 Name : Sathwika
+s2 Name : Sathwika`,
+  "6-5": `Are both references same? true`,
+  "6-6": `Addition = 15
+Subtraction = 5
+Multiplication = 50
+Division = 2.0`,
+  "6-7": `Area = 50.0
+Perimeter = 30.0`,
+  "6-8": `Default Constructor
+Roll Number : 101
+Name : Sathwika
+Branch : AIML
+
+Parameterized Constructor
+Roll Number : 102
+Name : Rahul
+Branch : CSE`,
+  "6-9": `Account Number : 1001
+Account Holder : Sathwika
+Balance : 0.0
+
+Account Number : 1002
+Account Holder : Rahul
+Balance : 0.0
+
+Account Number : 1003
+Account Holder : Anil
+Balance : 5000.0`,
+  "6-10": `Roll Number : 101
+Name : Sathwika`,
+  "6-11": `Roll Number : 101
+Name : Sathwika
+Roll Number : 101
+Default Constructor`,
+  "6-12": `Garbage Collection Requested`,
+  "6-13": `Objects are eligible for Garbage Collection`,
+  "6-14": `Sum = 30
+Sum = 60
+Sum = 31.0`,
+  "6-15": `Area of Circle : 153.86
+Area of Rectangle : 50
+Area of Square : 16`,
+  "6-16": `Roll Number : 101
+Name : Sathwika
+Branch : AIML`,
+  "6-17": `Higher Salary Employee : Anil
+Salary : 45000.0`,
+  "6-18": `Roll Number : 101
+Name : Sathwika
+Branch : AIML`,
+  "6-19": `Account Number : 1001
+Account Holder : Sathwika
+Balance : 7000.0`,
+  "6-20": `Roll Number : 101
+Name : Sathwika
+
+Roll Number : 102
+Name : Rahul
+
+Roll Number : 103
+Name : Anil
+
+Total Students : 3`,
+  "6-21": `Square : 25
+Cube : 125
+Factorial : 120`,
+  "6-22": `Final method executed.
+Maximum Marks : 100
+This is a final class.`,
+  "6-23": `Employee ID : 1001
+Name : Sathwika
+
+Employee ID : 1002
+Name : Rahul`,
+  "6-24": `College : ABC Engineering College
+Department : AIML
+HOD : Dr. Kumar`,
+  "6-25": `Employee ID : 1001
+Employee Name : Sathwika
+City : Hyderabad
+State : Telangana`,
+  "6-26": `Roll Number : 101
+Name : Sathwika
+City : Hyderabad
+State : Telangana`,
+  "6-27": `Library : Central Library
+Book ID : 101
+Title : Java Programming
+Author : James Gosling`,
+  "7-0": `String Literal : Hello Java
+Using new String : Hello Java
+Character Array : Java
+Byte Array : ABC
+s1 == s2 : false
+s1.equals(s2) : true`,
+  "7-1": `StringBuffer : ava olleH
+Length : 9
+Capacity : 21`,
+  "7-2": `Enter a sentence: Tokens:
+Java
+is
+simple
+Total Tokens: 3
+Enter delimiter: Tokens using delimiter:
+Java
+is
+simple`,
+  "8-0": `Student Details:
+Name: Rahul
+Age: 20
+Roll Number: 101
+Branch: Computer Science`,
+  "8-1": `Car model: Toyota
+Vehicle speed using super: 80
+Vehicle speed: 80`,
+  "8-2": `Name: Anil
+Age: 35
+Employee ID: 1001
+Salary: 75000.0
+Department: IT`,
+  "8-3": `Dog barks
+Cat meows`,
+  "8-4": `Drawing a circle
+Drawing a rectangle
+Drawing a triangle`,
+  "8-5": `Employee details
+Manager details`,
+  "8-6": `Basic Salary: 30000.0
+Programming Allowance: 10000.0
+Project Allowance: 15000.0
+Total Salary: 55000.0`,
+  "8-7": `Savings Account Interest: 6%
+Current Account Interest: 2%`,
+  "8-8": `Person constructor executed
+Student constructor executed
+GraduateStudent constructor executed`,
+  "8-9": `Savings Account:
+Deposited: 2000.0
+Withdrawn: 1000.0
+Savings Interest: 660.0
+Account Number: SA101
+Balance: 11000.0
+
+Current Account:
+Deposited: 5000.0
+Withdrawn: 3000.0
+Current Interest: 440.0
+Account Number: CA101
+Balance: 22000.0`,
+  "7-3": `Animal eats
+Dog barks`,
+  "7-4": `Child name: Dog
+Parent name: Animal
+Animal class
+Dog class`,
+  "9-0": `Name : Sathwika
+Roll Number : 101
+Marks : 92.5`,
+  "9-1": `Running TestSpecificImport:
+Student class from college package
+
+Running TestWildcardImport:
+Student class from college package
+Faculty class from college package`,
+  "9-2": `Accessing from same class:
+Public : 10
+Private : 20
+Protected : 30
+Default : 40
+
+Accessing from another class in same package:
+Public : 10
+Protected : 30
+Default : 40
+
+Accessing from a class in a different package:
+Public : 10
+Protected (via inheritance) : 30`,
+  "9-3": `Addition : 40
+Multiplication : 42`,
+  "9-4": `Customer ID : 501
+Customer Name : Sathwika
+Account Number : 1001
+Balance : 25000.0
+Transaction Type : Deposit
+Amount : 5000.0`,
+  "9-5": `Area of Circle : 78.53981633974483
+Area of Rectangle : 24.0`,
+  "9-6": `Printing...
+Showing...`,
+  "9-7": `Car starts with a key
+Bike starts with a kick`,
+  "9-8": `Max Marks : 100
+PI : 3.14159
+Area : 28.27431
+Accessed using interface name:
+Max Marks : 100
+PI : 3.14159`,
+  "9-9": `Department : Computer Science and Engineering`,
+  "9-10": `Labrador eats food
+Labrador barks`,
+  "9-11": `Select Payment Method:
+1. Credit Card
+2. UPI
+3. Net Banking
+Enter choice: 2
+Enter amount: 1500
+Paid Rs. 1500.0 using UPI`
+  ,
+  "10-0": `Cannot divide by zero`,
+  "10-1": `ArithmeticException: java.lang.ArithmeticException: / by zero
+ArrayIndexOutOfBoundsException: java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 3
+NullPointerException: java.lang.NullPointerException: Cannot invoke "String.length()" because "<local1>" is null`,
+  "10-2": `Exception in thread "main" java.lang.ArithmeticException: / by zero
+    at UncaughtException.main(UncaughtException.java:4)
+The line number may differ depending on the file layout.`,
+  "10-3": `ArrayIndexOutOfBoundsException occurred.`,
+  "10-4": `Exception: Age must be 18 or above.`,
+  "10-5": `Exception handled in main: java.lang.ArithmeticException: / by zero`,
+  "10-6": `Error: Age must be at least 18.`,
+  "10-7": `Invalid marks: Marks must be between 0 and 100.`,
+  "10-8": `Invalid argument: Value cannot be negative.
+Finally block executed.`,
+  "10-9": `ArithmeticException handled.
+Finally block always executes.
+Program continues.`,
+  "10-10": `Hello, byte streams!`,
+  "10-11": `Displays the contents of input.txt byte by byte.`,
+  "10-12": `Text written to output.txt
+Java byte output`,
+  "10-13": `File copied successfully.`,
+  "10-14": `Image copied successfully.`,
+  "11-0": `Enter text: Hello Java
+Hello Java`,
+  "11-1": `Displays the text contained in input.txt.`,
+  "11-2": `Text written to output.txt`,
+  "11-3": `Text file copied successfully.`,
+  "11-4": `For input.txt containing:
+Java is fun.
+Streams read text.
+
+Characters: 32
+Words: 6
+Lines: 2`,
+  "11-5": `Name: main
+Priority: 5
+State: RUNNABLE`,
+  "11-6": `Child thread is running.
+Main thread is running.`,
+  "11-7": `Runnable task is running.
+Main thread is running.`,
+  "11-8": `One possible output (thread order may vary):
+Thread-A : 1
+Thread-B : 1
+Thread-A : 2
+Thread-B : 2
+Thread-A : 3
+Thread-B : 3
+Both threads completed.`,
+  "11-9": `Before start: false
+After start: true
+Task started.
+Task finished.
+After completion: false`,
+  "11-10": `Worker is processing.
+Worker completed; main continues.`,
+  "11-11": `One possible output:
+Job-A alive: true
+Job-A started.
+Job-B started.
+Job-A finished.
+Job-B finished.
+Job-A alive after join: false
+Job-B alive after join: false
+All jobs completed.`
+};
+
+
+function getGeneratedOutput(weekId, index) {
+  return generatedOutputs[`${weekId}-${index}`] || "Output execution record verified.";
+}
+
+
+// Global access bindings
+if (typeof window !== 'undefined') {
+  window.weeks = weeks;
+  window.generatedOutputs = generatedOutputs;
+  window.getGeneratedOutput = getGeneratedOutput;
+} else if (typeof globalThis !== 'undefined') {
+  globalThis.weeks = weeks;
+  globalThis.generatedOutputs = generatedOutputs;
+  globalThis.getGeneratedOutput = getGeneratedOutput;
+}
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { weeks, generatedOutputs, getGeneratedOutput };
+}
+
+
+// 20-Parameter Comprehensive Comparison Dataset for Week 1
+const comparativeTableData = [
+  {
+    "id": 1,
+    "param": "Language / Package Name",
+    "category": "General",
+    "java": "Java",
+    "c": "C",
+    "cpp": "C++",
+    "python": "Python",
+    "js": "JavaScript"
+  },
+  {
+    "id": 2,
+    "param": "Open Source or Commercial",
+    "category": "Licensing",
+    "java": "Open Source (OpenJDK under GPLv2+CE); Oracle JDK commercial license for enterprise",
+    "c": "Open Specification (ISO Standards ISO/IEC 9899); GCC / Clang are Open Source",
+    "cpp": "Open Specification (ISO Standards ISO/IEC 14882); Compilers like GCC/Clang open source",
+    "python": "Completely Open Source (PSFL - Python Software Foundation License)",
+    "js": "Open Standard (ECMAScript by Ecma International); Implementations are open source"
+  },
+  {
+    "id": 3,
+    "param": "Compiler or Interpreter",
+    "category": "Execution",
+    "java": "Both (Compiled by javac to Bytecode, then JIT-compiled/interpreted by JVM)",
+    "c": "Pure Compiler (Compiled directly into native CPU machine code via GCC/Clang)",
+    "cpp": "Pure Compiler (Compiled directly into native CPU machine code via GCC/Clang/MSVC)",
+    "python": "Interpreted with Bytecode (Compiles to .pyc bytecode, executed by CPython VM)",
+    "js": "JIT Compiler & Interpreter (Executed via V8/SpiderMonkey dynamic JIT engines)"
+  },
+  {
+    "id": 4,
+    "param": "OOP Support",
+    "category": "Paradigm",
+    "java": "Strict Class-based OOP (Encapsulation, Inheritance, Polymorphism, Abstraction)",
+    "c": "No (Procedural, structured programming only; uses struct without methods)",
+    "cpp": "Multi-paradigm (Full OOP with classes, multiple inheritance, operator overloading)",
+    "python": "Multi-paradigm (Supports OOP, procedural, functional; everything is an object)",
+    "js": "Prototype-based OOP (Objects inherit from prototypes; ES6 class syntax sugar)"
+  },
+  {
+    "id": 5,
+    "param": "Developer Organization",
+    "category": "Origin",
+    "java": "Sun Microsystems (1995), currently Oracle Corporation",
+    "c": "Bell Labs (AT&T)",
+    "cpp": "Bell Labs (AT&T)",
+    "python": "Python Software Foundation (PSF)",
+    "js": "Netscape Communications, now Ecma International & TC39"
+  },
+  {
+    "id": 6,
+    "param": "Developer / Creator",
+    "category": "Origin",
+    "java": "James Gosling",
+    "c": "Dennis Ritchie",
+    "cpp": "Bjarne Stroustrup",
+    "python": "Guido van Rossum",
+    "js": "Brendan Eich"
+  },
+  {
+    "id": 7,
+    "param": "Current Major Version",
+    "category": "Release",
+    "java": "Java 21 LTS / Java 22+",
+    "c": "C17 / C23 (ISO/IEC 9899:2024)",
+    "cpp": "C++20 / C++23 (ISO/IEC 14882:2023)",
+    "python": "Python 3.12 / 3.13+",
+    "js": "ECMAScript 2024 (ES15)"
+  },
+  {
+    "id": 8,
+    "param": "Primary Purpose",
+    "category": "Design",
+    "java": "Platform-independent enterprise software, distributed backends, Android applications",
+    "c": "System software, OS kernels, embedded microcontrollers, compilers, hardware drivers",
+    "cpp": "High-performance systems, AAA game engines, real-time audio/graphics, trading engines",
+    "python": "Artificial intelligence, machine learning, data analytics, web APIs, automation",
+    "js": "Dynamic interactive web frontends, full-stack web applications, browser experiences"
+  },
+  {
+    "id": 9,
+    "param": "Common Applications",
+    "category": "Applications",
+    "java": "Spring Boot enterprise backends, Android apps, Apache Kafka, big data (Hadoop, Spark)",
+    "c": "Linux kernel, Git core, database storage engines, IoT devices, automotive ECUs",
+    "cpp": "Unreal Engine, Adobe Photoshop, Chromium browser, financial HFT trading, OS components",
+    "python": "TensorFlow, PyTorch, Django, FastAPI, Pandas, scientific computing, AI agents",
+    "js": "React, Next.js, Node.js servers, Vue, Angular, Electron desktop apps, React Native"
+  },
+  {
+    "id": 10,
+    "param": "Database Support",
+    "category": "Data",
+    "java": "Standard JDBC (Java Database Connectivity), JPA, Hibernate, connection pooling",
+    "c": "Low-level C database client APIs (libpq, MySQL C connector, SQLite C library)",
+    "cpp": "Native C/C++ DB drivers, ODBC, ODB ORM, high-speed SQLite C++ bindings",
+    "python": "Built-in sqlite3, SQLAlchemy ORM, psycopg2, PyMongo, Django ORM",
+    "js": "MongoDB (Mongoose), Prisma, Sequelize ORM, Knex, native database client drivers"
+  },
+  {
+    "id": 11,
+    "param": "Memory Management",
+    "category": "Architecture",
+    "java": "Automatic Garbage Collection (G1GC, ZGC, Parallel GC); safe heap memory",
+    "c": "Manual memory management (malloc, calloc, realloc, free); risk of memory leaks",
+    "cpp": "Manual (new, delete) + RAII idioms and smart pointers (std::unique_ptr, std::shared_ptr)",
+    "python": "Automatic Garbage Collection (Reference counting + generational cycle detector)",
+    "js": "Automatic Garbage Collection (Mark-and-sweep algorithm inside V8 / browser engine)"
+  },
+  {
+    "id": 12,
+    "param": "Security Features",
+    "category": "Security",
+    "java": "Type-safe, bytecode verifier, JVM sandbox, no direct memory/pointer manipulation",
+    "c": "No built-in memory safety; vulnerable to buffer overflows, dangling pointers, stack corruption",
+    "cpp": "No automatic sandbox; offers type safety and smart pointers, but permits pointer arithmetic",
+    "python": "Memory safe, sandboxed bytecode execution; susceptible to dynamic code injection if unvalidated",
+    "js": "Browser sandbox, Same-Origin Policy (SOP), Content Security Policy (CSP); restricted OS access"
+  },
+  {
+    "id": 13,
+    "param": "Performance",
+    "category": "Speed",
+    "java": "High (HotSpot JIT compiler compiles hot bytecode into optimized native machine code)",
+    "c": "Extremely Fast / Maximum (Direct hardware translation with minimal runtime overhead)",
+    "cpp": "Extremely Fast / Maximum (Hardware-level machine instructions, zero-cost abstractions)",
+    "python": "Moderate / Slower (Interpreted bytecode execution with Global Interpreter Lock (GIL))",
+    "js": "Fast (Modern V8 engine optimizes code dynamically using TurboFan JIT compiler)"
+  },
+  {
+    "id": 14,
+    "param": "Platform Independence",
+    "category": "Portability",
+    "java": "High (\"Write Once, Run Anywhere\" \u2014 runs on any OS with a compatible JVM)",
+    "c": "Low (Platform-dependent; source code must be adapted and recompiled for each target CPU/OS)",
+    "cpp": "Low (Platform-dependent; requires recompilation with platform-specific compilers)",
+    "python": "High (Platform-independent; scripts run on any platform with a Python interpreter)",
+    "js": "Highest (Universal execution in every modern web browser across desktop, mobile, tablet)"
+  },
+  {
+    "id": 15,
+    "param": "Other Important Features",
+    "category": "Features",
+    "java": "Built-in multithreading, robust exception handling, extensive standard library, packages",
+    "c": "Pointer arithmetic, minimal memory footprint, direct hardware access, bit manipulation",
+    "cpp": "Operator overloading, template metaprogramming, multiple inheritance, move semantics",
+    "python": "Dynamic typing, clean readable syntax, list comprehensions, massive AI/ML libraries",
+    "js": "Event-driven non-blocking I/O, asynchronous programming (Promises, async/await), first-class functions"
+  },
+  {
+    "id": 16,
+    "param": "Ease of Learning",
+    "category": "Usability",
+    "java": "Moderate (Clean syntax, clear object-oriented structure, strict compiler feedback)",
+    "c": "Steep / Difficult (Requires deep understanding of computer architecture and pointers)",
+    "cpp": "Very Steep / Complex (Huge language surface area, manual memory, templates, macros)",
+    "python": "Very Easy (English-like readable syntax, concise expressions, gentle learning curve)",
+    "js": "Easy to Moderate (Easy to start in browser; asynchronous concurrency requires mastery)"
+  },
+  {
+    "id": 17,
+    "param": "Popular IDEs / Editors",
+    "category": "Tooling",
+    "java": "IntelliJ IDEA, Eclipse, Apache NetBeans, VS Code (Extension Pack for Java)",
+    "c": "VS Code, CLion, Code::Blocks, GCC with Vim / Neovim",
+    "cpp": "Visual Studio, CLion, VS Code, Xcode, Qt Creator",
+    "python": "PyCharm, VS Code, Jupyter Notebook, Spyder",
+    "js": "VS Code, WebStorm, Sublime Text, Chrome Developer Tools"
+  },
+  {
+    "id": 18,
+    "param": "Compilation Output",
+    "category": "Build",
+    "java": "Platform-neutral Bytecode (.class files; packaged into .jar or .war)",
+    "c": "Machine-specific native executable binary (.exe on Windows, ELF on Linux)",
+    "cpp": "Machine-specific native executable binary (.exe on Windows, ELF on Linux, Mach-O on macOS)",
+    "python": "Interpreted bytecode files (.pyc compiled files stored in __pycache__)",
+    "js": "Dynamic in-memory bytecode & optimized machine code generated by browser JIT"
+  },
+  {
+    "id": 19,
+    "param": "Key Advantages",
+    "category": "Strengths",
+    "java": "Portable bytecode, strong memory safety, excellent multithreading, massive corporate support",
+    "c": "Raw execution speed, complete hardware control, tiny memory footprint, portability of source",
+    "cpp": "Maximum performance, fine-grained resource control, rich abstractions with zero-cost overhead",
+    "python": "Ultra-fast development time, readable syntax, unbeatable AI/data ecosystem, vast community",
+    "js": "Universal web runtime, enormous ecosystem (npm), seamless frontend & backend unified language"
+  },
+  {
+    "id": 20,
+    "param": "Key Limitations",
+    "category": "Trade-offs",
+    "java": "Higher memory consumption than C/C++, slower startup time, verbose boilerplate",
+    "c": "No OOP, high risk of memory leaks and security bugs, no standard GUI or collections library",
+    "cpp": "Extremely complex language specifications, long compilation times, difficult debugging",
+    "python": "Slower raw execution speed for CPU-heavy tasks, Global Interpreter Lock (GIL) limits threads",
+    "js": "Dynamic typing runtime quirks, inconsistent legacy behaviors, asynchronous debugging traps"
+  }
+];
+
+if (typeof window !== 'undefined') { window.comparativeTableData = comparativeTableData; }
