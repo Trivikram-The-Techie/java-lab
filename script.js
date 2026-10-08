@@ -1,7 +1,7 @@
 // ==========================================================================
 // TRIVIKRAM — JAVA PROGRAMMING LABORATORY RECORD
 // Roll No: 25EU02067 | Dept of AI & ML | Batch 2025-2029
-// BLUE AND WHITE THEME — NEO-BRUTALIST DEVELOPER WORKSPACE
+// BLUE AND WHITE THEME — UNIQUE CUSTOM GEOMETRIC ICONS & SHAPES
 // ==========================================================================
 
 const student = {
@@ -19,6 +19,25 @@ let currentWeekId = 1;
 let currentProgramIdx = 0;
 let currentFilter = "";
 
+// ==========================================================================
+// CUSTOM VECTOR SVG ICONS SYSTEM (ZERO EMOJIS, 100% DISTINCT SHAPES)
+// ==========================================================================
+const Icons = {
+  rocket: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3m5.5-3.5L12 6M15 9l3 3m-4.5-7.5C18 3 21 6 21 10.5c0 2-1 3.5-2.5 4.5l-9.5-9.5C10 4 11.5 3 13.5 3z"/></svg>`,
+  user: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>`,
+  search: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>`,
+  copy: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+  download: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`,
+  terminal: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
+  code: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  chevronRight: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>`,
+  chevronLeft: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>`,
+  check: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
+  viva: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  chip: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>`,
+  verified: () => `<svg class="svg-icon stroke" style="width: 14px; height: 14px; stroke: #ffffff;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   renderTopChips();
   setupKeyboardShortcuts();
@@ -29,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // ROUTER & NAVIGATION
 // ==========================================================================
 function navigateTo(page, params = {}) {
-  // Update chip active states
   document.querySelectorAll(".chip").forEach(chip => {
     chip.classList.toggle("active", chip.dataset.page === page);
   });
@@ -54,7 +72,6 @@ function navigateTo(page, params = {}) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// Render the top week navigation chips
 function renderTopChips() {
   const container = document.getElementById("weekChipsContainer");
   if (!container || !window.weeks) return;
@@ -82,7 +99,10 @@ function renderHome() {
   app.innerHTML = `
     <!-- Hero Header -->
     <section class="hero-section">
-      <div class="hero-kicker">✦ Department of AI &bull; Batch 2025&ndash;2029</div>
+      <div class="hero-kicker">
+        ${Icons.verified()}
+        Department of AI &bull; Batch 2025&ndash;2029
+      </div>
       
       <h1 class="hero-big-title">
         JAVA LAB <span class="badge">RECORD</span>
@@ -96,13 +116,16 @@ function renderHome() {
 
       <div class="hero-actions-row">
         <button class="btn-chunky primary" onclick="scrollToCurriculum()">
-          🚀 Explore Weekly Labs &rarr;
+          ${Icons.rocket()}
+          Explore Weekly Labs &rarr;
         </button>
         <button class="btn-chunky" onclick="navigateTo('profile')">
-          👤 View Student Profile
+          ${Icons.user()}
+          View Student Profile
         </button>
         <button class="btn-chunky sky" onclick="openSearchModal()">
-          🔍 Search All Programs (Ctrl+K)
+          ${Icons.search()}
+          Search All Programs (Ctrl+K)
         </button>
       </div>
 
@@ -110,13 +133,13 @@ function renderHome() {
       <div class="me-card">
         <div class="me-avatar-wrap">
           <img class="me-avatar-img" src="assets/profile.png" alt="Trivikram" onerror="handleAvatarFallback(this)">
-          <span class="me-verified-pill">Verified Record</span>
+          <span class="me-verified-pill">${Icons.verified()} Verified Record</span>
         </div>
 
         <div class="me-details">
           <div class="me-heading">
             Trivikram
-            <span style="font-size: 13px; font-weight: 800; background: var(--blue-primary); color: #fff; padding: 2px 8px; border: 2px solid var(--ink);">AI &amp; ML</span>
+            <span style="font-size: 13px; font-weight: 800; background: var(--blue-primary); color: #fff; padding: 3px 10px; border: 2px solid var(--ink); border-radius: 6px 1px 6px 1px;">AI &amp; ML</span>
           </div>
           <div class="me-subheading">B.Tech Undergraduate &bull; Section B &bull; 2025&ndash;2029</div>
 
@@ -153,29 +176,41 @@ function renderHome() {
     <!-- Key Metrics Stats Row -->
     <div class="stats-row">
       <div class="stat-tile">
-        <div class="stat-num">11</div>
+        <div class="stat-icon-wrap">
+          ${Icons.code()}
+        </div>
         <div class="stat-info">
+          <div class="stat-num">11</div>
           <span class="stat-label">Lab Weeks</span>
           <span class="stat-sub">Complete Curriculum</span>
         </div>
       </div>
       <div class="stat-tile">
-        <div class="stat-num">${totalProgs}+</div>
+        <div class="stat-icon-wrap">
+          ${Icons.terminal()}
+        </div>
         <div class="stat-info">
+          <div class="stat-num">${totalProgs}+</div>
           <span class="stat-label">Programs</span>
           <span class="stat-sub">Executable Code</span>
         </div>
       </div>
       <div class="stat-tile">
-        <div class="stat-num">100%</div>
+        <div class="stat-icon-wrap">
+          ${Icons.check()}
+        </div>
         <div class="stat-info">
+          <div class="stat-num">100%</div>
           <span class="stat-label">Compilation</span>
           <span class="stat-sub">Output Verified</span>
         </div>
       </div>
       <div class="stat-tile">
-        <div class="stat-num">21</div>
+        <div class="stat-icon-wrap">
+          ${Icons.chip()}
+        </div>
         <div class="stat-info">
+          <div class="stat-num">21</div>
           <span class="stat-label">Java Standard</span>
           <span class="stat-sub">LTS Platform</span>
         </div>
@@ -201,7 +236,7 @@ function renderHome() {
             </div>
             <div class="tile-footer">
               <span>Inspect Lab Sheet</span>
-              <span>&rarr;</span>
+              <span>${Icons.chevronRight()}</span>
             </div>
           </div>
         `;
@@ -223,19 +258,21 @@ function renderProfile() {
 
   app.innerHTML = `
     <div style="margin-bottom: 20px;">
-      <button class="btn-chunky" onclick="navigateTo('home')">&larr; Back to Home</button>
+      <button class="btn-chunky" onclick="navigateTo('home')">
+        ${Icons.chevronLeft()} Back to Home
+      </button>
     </div>
 
     <div class="me-card">
       <div class="me-avatar-wrap">
         <img class="me-avatar-img" src="assets/profile.png" alt="Trivikram" onerror="handleAvatarFallback(this)">
-        <span class="me-verified-pill">Official Record</span>
+        <span class="me-verified-pill">${Icons.verified()} Official Record</span>
       </div>
 
       <div class="me-details">
         <div class="me-heading">
           Trivikram
-          <span style="font-size: 13px; font-weight: 800; background: var(--blue-primary); color: #fff; padding: 2px 8px; border: 2px solid var(--ink);">Verified Student</span>
+          <span style="font-size: 13px; font-weight: 800; background: var(--blue-primary); color: #fff; padding: 3px 10px; border: 2px solid var(--ink); border-radius: 6px 1px 6px 1px;">Verified Student</span>
         </div>
         <div class="me-subheading">B.Tech in Artificial Intelligence &amp; Machine Learning (Batch 2025&ndash;2029)</div>
 
@@ -310,13 +347,11 @@ function renderWeek(weekId, filterQuery = "") {
   const week = weeks.find(w => w.id === weekId);
   if (!week) return;
 
-  // Week 1: 20-Parameter Comparative Table
   if (weekId === 1) {
     renderWeek1ComparativeTable(week);
     return;
   }
 
-  // Week 4 & 5: Viva Voce Exams
   if (weekId === 4 || weekId === 5) {
     renderVivaView(week);
     return;
@@ -334,7 +369,9 @@ function renderWeek(weekId, filterQuery = "") {
 
   app.innerHTML = `
     <div style="margin-bottom: 16px;">
-      <button class="btn-chunky" onclick="navigateTo('home')">&larr; Back to All Weeks</button>
+      <button class="btn-chunky" onclick="navigateTo('home')">
+        ${Icons.chevronLeft()} Back to All Weeks
+      </button>
     </div>
 
     <div class="week-banner">
@@ -368,7 +405,7 @@ function renderWeek(weekId, filterQuery = "") {
               <div class="row-title">${program.title}</div>
               <div class="row-desc">${program.description}</div>
             </div>
-            <div class="row-arrow">&rarr;</div>
+            <div class="row-arrow">${Icons.chevronRight()}</div>
           </div>
         `;
       }).join("") : `
@@ -396,7 +433,9 @@ function renderWeek1ComparativeTable(week) {
 
   app.innerHTML = `
     <div style="margin-bottom: 16px;">
-      <button class="btn-chunky" onclick="navigateTo('home')">&larr; Back to All Weeks</button>
+      <button class="btn-chunky" onclick="navigateTo('home')">
+        ${Icons.chevronLeft()} Back to All Weeks
+      </button>
     </div>
 
     <div class="week-banner">
@@ -480,7 +519,9 @@ function renderVivaView(week) {
 
   app.innerHTML = `
     <div style="margin-bottom: 16px;">
-      <button class="btn-chunky" onclick="navigateTo('home')">&larr; Back to All Weeks</button>
+      <button class="btn-chunky" onclick="navigateTo('home')">
+        ${Icons.chevronLeft()} Back to All Weeks
+      </button>
     </div>
 
     <div class="week-banner">
@@ -493,7 +534,9 @@ function renderVivaView(week) {
     </div>
 
     <div class="viva-card">
-      <div style="font-size: 44px; margin-bottom: 12px;">🎓</div>
+      <div style="margin-bottom: 14px; color: var(--blue-primary);">
+        <svg class="svg-icon stroke" style="width: 52px; height: 52px;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
       <h3>Viva Voce &amp; Practical Assessment</h3>
       <p>
         No programming task was assigned for this week. 
@@ -507,9 +550,9 @@ function renderVivaView(week) {
   `;
 }
 
-// ==========================================================================
+// ==========================================================
 // PAGE: PROGRAM DETAIL (IDE WORKSPACE VIEW)
-// ==========================================================================
+// ==========================================================
 function renderProgram(weekId, index) {
   const app = document.getElementById("app");
   if (!app) return;
@@ -529,15 +572,15 @@ function renderProgram(weekId, index) {
     <!-- Top Action Bar -->
     <div style="margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
       <button class="btn-chunky" onclick="navigateTo('week-${weekId}')">
-        &larr; Week ${weekId} Programs
+        ${Icons.chevronLeft()} Week ${weekId} Programs
       </button>
 
       <div style="display: flex; gap: 8px;">
         <button class="btn-chunky" ${isFirst ? "disabled" : ""} onclick="navigateTo('program', { weekId: ${weekId}, programIdx: ${index - 1} })">
-          &larr; Prev
+          ${Icons.chevronLeft()} Prev
         </button>
         <button class="btn-chunky" ${isLast ? "disabled" : ""} onclick="navigateTo('program', { weekId: ${weekId}, programIdx: ${index + 1} })">
-          Next &rarr;
+          Next ${Icons.chevronRight()}
         </button>
       </div>
     </div>
@@ -555,23 +598,23 @@ function renderProgram(weekId, index) {
     <!-- Action Bar Buttons -->
     <div class="bar">
       <button class="btn-chunky primary" onclick="copyProgramCode(${weekId}, ${index})">
-        📋 Copy Source Code
+        ${Icons.copy()} Copy Source Code
       </button>
       <button class="btn-chunky" onclick="downloadProgramJava(${weekId}, ${index})">
-        💾 Download .java File
+        ${Icons.download()} Download .java File
       </button>
       <button class="btn-chunky sky" onclick="copyProgramOutput(${weekId}, ${index})">
-        📋 Copy Terminal Output
+        ${Icons.terminal()} Copy Terminal Output
       </button>
     </div>
 
-    <!-- Java Source Code Window -->
+    <!-- Java Source Code Window with Diamond Rhombus Window Dots -->
     <div class="code-frame">
       <div class="code-topbar">
         <div class="code-dots">
-          <span class="code-dot dot-1"></span>
-          <span class="code-dot dot-2"></span>
-          <span class="code-dot dot-3"></span>
+          <span class="code-diamond-stud stud-1"></span>
+          <span class="code-diamond-stud stud-2"></span>
+          <span class="code-diamond-stud stud-3"></span>
         </div>
         <span class="code-filename">${extractClassName(program.code)}.java</span>
         <span style="font-size: 11px; font-weight: 800; color: #94a3b8; text-transform: uppercase;">UTF-8 &bull; Java 21</span>
@@ -582,13 +625,13 @@ function renderProgram(weekId, index) {
       </div>
     </div>
 
-    <!-- Terminal Output Window -->
+    <!-- Terminal Output Window with Diamond Rhombus Window Dots -->
     <div class="term-frame">
       <div class="term-topbar">
         <div class="code-dots">
-          <span class="code-dot dot-1"></span>
-          <span class="code-dot dot-2"></span>
-          <span class="code-dot dot-3"></span>
+          <span class="code-diamond-stud stud-1"></span>
+          <span class="code-diamond-stud stud-2"></span>
+          <span class="code-diamond-stud stud-3"></span>
         </div>
         <span class="term-title">PowerShell &bull; java -version 21.0.2 &bull; Verification Terminal</span>
         <span style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase;">Exit Code: 0</span>
@@ -718,7 +761,7 @@ function renderSearchResults(query) {
         <div style="font-weight: 800; font-size: 14px; color: var(--ink);">${m.prog.title}</div>
         <div style="font-size: 12px; font-weight: 600; color: #475569;">${m.prog.description.slice(0, 95)}...</div>
       </div>
-      <span style="font-size: 11px; font-weight: 900; background: var(--blue-primary); color: #fff; padding: 2px 8px; border: 2px solid var(--ink);">
+      <span style="font-size: 11px; font-weight: 900; background: var(--blue-primary); color: #fff; padding: 2px 8px; border: 2px solid var(--ink); border-radius: 6px 1px 6px 1px;">
         W${String(m.week.id).padStart(2, "0")} &bull; P${String(m.idx + 1).padStart(2, "0")}
       </span>
     </div>
@@ -742,7 +785,7 @@ function setupKeyboardShortcuts() {
   });
 }
 
-// Fallback avatar generator
+// Fallback avatar generator with geometric emblem
 function handleAvatarFallback(img) {
   img.onerror = null;
   const svg = `
@@ -750,14 +793,14 @@ function handleAvatarFallback(img) {
       <defs>
         <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#1d4ed8" />
-          <stop offset="100%" stop-color="#0b1938" />
+          <stop offset="100%" stop-color="#0a1734" />
         </linearGradient>
       </defs>
       <rect width="200" height="240" fill="url(#bg)" />
-      <circle cx="100" cy="95" r="50" fill="#ffffff" stroke="#0b1938" stroke-width="4" />
-      <text x="100" y="112" font-family="'Plus Jakarta Sans', sans-serif" font-size="38" font-weight="900" fill="#1d4ed8" text-anchor="middle">TR</text>
-      <rect x="25" y="170" width="150" height="34" rx="4" fill="#ffffff" stroke="#0b1938" stroke-width="3" />
-      <text x="100" y="193" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" fill="#0b1938" text-anchor="middle">TRIVIKRAM</text>
+      <polygon points="100,45 150,95 100,145 50,95" fill="#ffffff" stroke="#0a1734" stroke-width="4" />
+      <text x="100" y="103" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="900" fill="#1d4ed8" text-anchor="middle">TR</text>
+      <rect x="25" y="172" width="150" height="34" rx="2" fill="#ffffff" stroke="#0a1734" stroke-width="3" />
+      <text x="100" y="195" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" fill="#0a1734" text-anchor="middle">TRIVIKRAM</text>
     </svg>
   `;
   img.src = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
