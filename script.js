@@ -139,7 +139,7 @@ function renderHome() {
         <div class="me-details">
           <div class="me-heading">
             Trivikram
-            <span style="font-size: 13px; font-weight: 800; background: var(--blue-primary); color: #fff; padding: 3px 10px; border: 2px solid var(--ink); border-radius: 6px 1px 6px 1px;">AI &amp; ML</span>
+            <span style="font-size: 12px; font-weight: 700; background: var(--blue-light); color: var(--blue-primary); padding: 4px 12px; border: 1px solid var(--border-blue); border-radius: var(--radius-pill);">AI &amp; ML</span>
           </div>
           <div class="me-subheading">B.Tech Undergraduate &bull; Section B &bull; 2025&ndash;2029</div>
 
@@ -272,7 +272,7 @@ function renderProfile() {
       <div class="me-details">
         <div class="me-heading">
           Trivikram
-          <span style="font-size: 13px; font-weight: 800; background: var(--blue-primary); color: #fff; padding: 3px 10px; border: 2px solid var(--ink); border-radius: 6px 1px 6px 1px;">Verified Student</span>
+          <span style="font-size: 12px; font-weight: 700; background: var(--blue-light); color: var(--blue-primary); padding: 4px 12px; border: 1px solid var(--border-blue); border-radius: var(--radius-pill);">Verified Student</span>
         </div>
         <div class="me-subheading">B.Tech in Artificial Intelligence &amp; Machine Learning (Batch 2025&ndash;2029)</div>
 
@@ -325,14 +325,14 @@ function renderProfile() {
 
     <h2 class="section-headline" style="margin-top: 32px;">Core Lab Competencies</h2>
     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px;">
-      <span class="btn-chunky" style="box-shadow: 3px 3px 0 var(--ink);">Object-Oriented Programming (OOP)</span>
-      <span class="btn-chunky" style="box-shadow: 3px 3px 0 var(--ink);">Dynamic Method Dispatch</span>
-      <span class="btn-chunky" style="box-shadow: 3px 3px 0 var(--ink);">User-Defined Packages &amp; CLASSPATH</span>
-      <span class="btn-chunky" style="box-shadow: 3px 3px 0 var(--ink);">Interface-Based Polymorphism</span>
-      <span class="btn-chunky" style="box-shadow: 3px 3px 0 var(--ink);">Checked &amp; Unchecked Exceptions</span>
-      <span class="btn-chunky" style="box-shadow: 3px 3px 0 var(--ink);">Byte &amp; Character Streams</span>
-      <span class="btn-chunky" style="box-shadow: 3px 3px 0 var(--ink);">Multithreaded Synchronization</span>
-      <span class="btn-chunky" style="box-shadow: 3px 3px 0 var(--ink);">Garbage Collection &amp; Memory Safety</span>
+      <span class="competency-pill">Object-Oriented Programming (OOP)</span>
+      <span class="competency-pill">Dynamic Method Dispatch</span>
+      <span class="competency-pill">User-Defined Packages &amp; CLASSPATH</span>
+      <span class="competency-pill">Interface-Based Polymorphism</span>
+      <span class="competency-pill">Checked &amp; Unchecked Exceptions</span>
+      <span class="competency-pill">Byte &amp; Character Streams</span>
+      <span class="competency-pill">Multithreaded Synchronization</span>
+      <span class="competency-pill">Garbage Collection &amp; Memory Safety</span>
     </div>
   `;
 }
@@ -758,10 +758,10 @@ function renderSearchResults(query) {
   container.innerHTML = matches.slice(0, 25).map(m => `
     <div class="search-item" onclick="selectSearchResult(${m.week.id}, ${m.idx})">
       <div>
-        <div style="font-weight: 800; font-size: 14px; color: var(--ink);">${m.prog.title}</div>
-        <div style="font-size: 12px; font-weight: 600; color: #475569;">${m.prog.description.slice(0, 95)}...</div>
+        <div style="font-weight: 700; font-size: 14px; color: var(--text-main);">${m.prog.title}</div>
+        <div style="font-size: 12px; font-weight: 500; color: var(--text-muted);">${m.prog.description.slice(0, 95)}...</div>
       </div>
-      <span style="font-size: 11px; font-weight: 900; background: var(--blue-primary); color: #fff; padding: 2px 8px; border: 2px solid var(--ink); border-radius: 6px 1px 6px 1px;">
+      <span style="font-size: 11px; font-weight: 700; background: var(--blue-light); color: var(--blue-primary); padding: 3px 10px; border: 1px solid var(--border-blue); border-radius: var(--radius-pill); white-space: nowrap;">
         W${String(m.week.id).padStart(2, "0")} &bull; P${String(m.idx + 1).padStart(2, "0")}
       </span>
     </div>
@@ -793,14 +793,14 @@ function handleAvatarFallback(img) {
       <defs>
         <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#1d4ed8" />
-          <stop offset="100%" stop-color="#0a1734" />
+          <stop offset="100%" stop-color="#0f172a" />
         </linearGradient>
       </defs>
       <rect width="200" height="240" fill="url(#bg)" />
-      <polygon points="100,45 150,95 100,145 50,95" fill="#ffffff" stroke="#0a1734" stroke-width="4" />
-      <text x="100" y="103" font-family="'Space Grotesk', sans-serif" font-size="28" font-weight="700" fill="#1d4ed8" text-anchor="middle">TR</text>
-      <rect x="25" y="172" width="150" height="34" rx="2" fill="#ffffff" stroke="#0a1734" stroke-width="3" />
-      <text x="100" y="195" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" fill="#0a1734" text-anchor="middle">TRIVIKRAM</text>
+      <polygon points="100,45 150,95 100,145 50,95" fill="#ffffff" stroke="#1d4ed8" stroke-width="3" />
+      <text x="100" y="103" font-family="'Inter', -apple-system, sans-serif" font-size="28" font-weight="700" fill="#1d4ed8" text-anchor="middle">TR</text>
+      <rect x="25" y="172" width="150" height="34" rx="8" fill="#ffffff" stroke="#1d4ed8" stroke-width="2" />
+      <text x="100" y="194" font-family="'Inter', -apple-system, sans-serif" font-size="13" font-weight="700" fill="#1d4ed8" text-anchor="middle">TRIVIKRAM</text>
     </svg>
   `;
   img.src = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
