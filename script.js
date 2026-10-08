@@ -798,9 +798,9 @@ function handleAvatarFallback(img) {
       </defs>
       <rect width="200" height="240" fill="url(#bg)" />
       <polygon points="100,45 150,95 100,145 50,95" fill="#ffffff" stroke="#0a1734" stroke-width="4" />
-      <text x="100" y="103" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="900" fill="#1d4ed8" text-anchor="middle">TR</text>
+      <text x="100" y="103" font-family="'Space Grotesk', sans-serif" font-size="28" font-weight="700" fill="#1d4ed8" text-anchor="middle">TR</text>
       <rect x="25" y="172" width="150" height="34" rx="2" fill="#ffffff" stroke="#0a1734" stroke-width="3" />
-      <text x="100" y="195" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" fill="#0a1734" text-anchor="middle">TRIVIKRAM</text>
+      <text x="100" y="195" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" fill="#0a1734" text-anchor="middle">TRIVIKRAM</text>
     </svg>
   `;
   img.src = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
