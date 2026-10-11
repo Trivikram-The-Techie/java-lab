@@ -244,20 +244,36 @@ function renderHome() {
         const pillText = isViva ? "Viva Exam" : `${w.programs.length} Programs`;
         const pdfUrl = `docs/week-${String(w.id).padStart(2, "0")}.pdf`;
 
-        const docActions = isViva ? `
-          <div class="tile-doc-actions">
-            <span class="tile-status-tag">Oral Viva &bull; No Document</span>
-          </div>
-        ` : `
-          <div class="tile-doc-actions" onclick="event.stopPropagation()">
-            <a class="tile-btn-doc open" href="${pdfUrl}" target="_blank" title="Open Week ${w.id} PDF">
-              ${Icons.fileText()} Open PDF
-            </a>
-            <a class="tile-btn-doc download" href="${pdfUrl}" download="Trivikram_Week-${String(w.id).padStart(2, "0")}.pdf" title="Download Week ${w.id} PDF">
-              ${Icons.download()} Download
-            </a>
-          </div>
-        `;
+        let docActions = "";
+        if (isViva) {
+          docActions = `
+            <div class="tile-doc-actions">
+              <span class="tile-status-tag">Oral Viva &bull; No Document</span>
+            </div>
+          `;
+        } else if (w.id === 2) {
+          docActions = `
+            <div class="tile-doc-actions" onclick="event.stopPropagation()">
+              <a class="tile-btn-doc open" href="docs/week-02-oracle.pdf" target="_blank" title="Open Oracle JDK Installation PDF">
+                ${Icons.fileText()} Oracle PDF
+              </a>
+              <a class="tile-btn-doc open" href="docs/week-02-openjdk.pdf" target="_blank" title="Open OpenJDK Installation PDF">
+                ${Icons.fileText()} OpenJDK PDF
+              </a>
+            </div>
+          `;
+        } else {
+          docActions = `
+            <div class="tile-doc-actions" onclick="event.stopPropagation()">
+              <a class="tile-btn-doc open" href="${pdfUrl}" target="_blank" title="Open Week ${w.id} PDF">
+                ${Icons.fileText()} Open PDF
+              </a>
+              <a class="tile-btn-doc download" href="${pdfUrl}" download="Trivikram_Week-${String(w.id).padStart(2, "0")}.pdf" title="Download Week ${w.id} PDF">
+                ${Icons.download()} Download
+              </a>
+            </div>
+          `;
+        }
 
         return `
           <div class="tile" onclick="navigateTo('week-${w.id}')">
@@ -432,32 +448,74 @@ function renderWeek(weekId, filterQuery = "") {
         >
       </div>
 
-      <div class="week-doc-banner">
-        <div class="week-doc-info">
-          <div class="week-doc-icon">${Icons.fileText()}</div>
-          <div>
-            <div class="week-doc-title">Official Lab Document &bull; Week ${String(week.id).padStart(2, "0")}</div>
-            <div class="week-doc-sub">Full verified laboratory record with objectives, procedures, and outputs.</div>
+      ${week.id === 2 ? `
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 14px;">
+          <div class="week-doc-banner" style="margin-top: 0;">
+            <div class="week-doc-info">
+              <div class="week-doc-icon">${Icons.fileText()}</div>
+              <div>
+                <div class="week-doc-title">Oracle JDK Installation &bull; Week 02</div>
+                <div class="week-doc-sub">Oracle JDK 26 installation, Windows PATH / JAVA_HOME configuration, and command prompt verification.</div>
+              </div>
+            </div>
+            <div class="week-doc-btns">
+              <a class="btn-chunky primary" href="docs/week-02-oracle.pdf" target="_blank">
+                ${Icons.externalLink()} Open Oracle PDF
+              </a>
+              <a class="btn-chunky" href="docs/week-02-oracle.pdf" download="Trivikram_Week-02_Oracle_JDK.pdf">
+                ${Icons.download()} Download
+              </a>
+            </div>
+          </div>
+
+          <div class="week-doc-banner" style="margin-top: 0;">
+            <div class="week-doc-info">
+              <div class="week-doc-icon">${Icons.fileText()}</div>
+              <div>
+                <div class="week-doc-title">OpenJDK Installation &bull; Week 02</div>
+                <div class="week-doc-sub">OpenJDK 26 installation, MSI setup, and Ubuntu WSL execution.</div>
+              </div>
+            </div>
+            <div class="week-doc-btns">
+              <a class="btn-chunky primary" href="docs/week-02-openjdk.pdf" target="_blank">
+                ${Icons.externalLink()} Open OpenJDK PDF
+              </a>
+              <a class="btn-chunky" href="docs/week-02-openjdk.pdf" download="Trivikram_Week-02_OpenJDK.pdf">
+                ${Icons.download()} Download
+              </a>
+            </div>
           </div>
         </div>
-        <div class="week-doc-btns">
-          <a class="btn-chunky primary" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" target="_blank">
-            ${Icons.externalLink()} Open Full PDF
-          </a>
-          <a class="btn-chunky" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" download="Trivikram_Week-${String(week.id).padStart(2, '0')}.pdf">
-            ${Icons.download()} Download PDF
-          </a>
-          <button class="btn-chunky sky" onclick="openUploadModal(${week.id})">
-            ${Icons.upload()} Upload File
-          </button>
+      ` : `
+        <div class="week-doc-banner">
+          <div class="week-doc-info">
+            <div class="week-doc-icon">${Icons.fileText()}</div>
+            <div>
+              <div class="week-doc-title">Official Lab Document &bull; Week ${String(week.id).padStart(2, "0")}</div>
+              <div class="week-doc-sub">Full verified laboratory record with objectives, procedures, and outputs.</div>
+            </div>
+          </div>
+          <div class="week-doc-btns">
+            <a class="btn-chunky primary" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" target="_blank">
+              ${Icons.externalLink()} Open Full PDF
+            </a>
+            <a class="btn-chunky" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" download="Trivikram_Week-${String(week.id).padStart(2, '0')}.pdf">
+              ${Icons.download()} Download PDF
+            </a>
+            <button class="btn-chunky sky" onclick="openUploadModal(${week.id})">
+              ${Icons.upload()} Upload File
+            </button>
+          </div>
         </div>
-      </div>
+      `}
     </div>
 
     <div class="program-rows-list">
       ${progs.length > 0 ? progs.map(program => {
         const originalIndex = week.programs.indexOf(program);
         const fileInfo = getProgramFilePath(week.id, originalIndex);
+        const isW2Oracle = week.id === 2 && originalIndex === 0;
+        const isW2OpenJDK = week.id === 2 && originalIndex === 1;
         return `
           <div class="row" onclick="navigateTo('program', { weekId: ${week.id}, programIdx: ${originalIndex} })">
             <b class="prog-tag">P${String(originalIndex + 1).padStart(2, "0")}</b>
@@ -466,6 +524,16 @@ function renderWeek(weekId, filterQuery = "") {
               <div class="row-desc">${program.description}</div>
             </div>
             <div class="row-actions" onclick="event.stopPropagation()">
+              ${isW2Oracle ? `
+                <a class="row-btn-action" href="docs/week-02-oracle.pdf" target="_blank" title="Open Oracle JDK Installation Guide PDF">
+                  ${Icons.fileText()} Oracle PDF
+                </a>
+              ` : ''}
+              ${isW2OpenJDK ? `
+                <a class="row-btn-action" href="docs/week-02-openjdk.pdf" target="_blank" title="Open OpenJDK Installation Guide PDF">
+                  ${Icons.fileText()} OpenJDK PDF
+                </a>
+              ` : ''}
               <a class="row-btn-action" href="${fileInfo.path}" target="_blank" title="Open ${fileInfo.fileName} directly in browser">
                 ${Icons.fileText()} Open File
               </a>
@@ -687,8 +755,21 @@ function renderProgram(weekId, index) {
 
     <!-- Action Bar Buttons -->
     <div class="bar">
-      <a class="btn-chunky primary" href="${fileInfo.path}" target="_blank" title="Open source file directly in browser">
-        ${Icons.fileText()} Open File Directly
+      ${weekId === 2 ? (index === 0 ? `
+        <a class="btn-chunky primary" href="docs/week-02-oracle.pdf" target="_blank" title="Open Oracle JDK Installation PDF">
+          ${Icons.fileText()} View Oracle PDF
+        </a>
+      ` : `
+        <a class="btn-chunky primary" href="docs/week-02-openjdk.pdf" target="_blank" title="Open OpenJDK Installation PDF">
+          ${Icons.fileText()} View OpenJDK PDF
+        </a>
+      `) : (weekId !== 4 && weekId !== 5 ? `
+        <a class="btn-chunky primary" href="docs/week-${String(weekId).padStart(2, '0')}.pdf" target="_blank" title="Open Official Week ${weekId} PDF Document">
+          ${Icons.fileText()} View Week PDF
+        </a>
+      ` : '')}
+      <a class="btn-chunky" href="${fileInfo.path}" target="_blank" title="Open source file directly in browser">
+        ${Icons.externalLink()} Open .java
       </a>
       <button class="btn-chunky" onclick="copyProgramCode(${weekId}, ${index})">
         ${Icons.copy()} Copy Code
@@ -741,8 +822,16 @@ function renderProgram(weekId, index) {
 }
 
 function extractClassName(code) {
-  const match = code.match(/class\s+([A-Za-z0-9_]+)/);
-  return match ? match[1] : "Main";
+  const clean = code.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
+  const pubMatch = clean.match(/public\s+(?:final\s+)?class\s+([A-Za-z0-9_]+)/);
+  if (pubMatch) return pubMatch[1];
+  
+  const classMatches = [...clean.matchAll(/class\s+([A-Za-z0-9_]+)\s*\{([\s\S]*?)\}/g)];
+  for (const m of classMatches) {
+    if (m[2].includes('main')) return m[1];
+  }
+  const firstMatch = clean.match(/class\s+([A-Za-z0-9_]+)/);
+  return firstMatch ? firstMatch[1] : 'Main';
 }
 
 // ==========================================================================

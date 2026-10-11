@@ -1,37 +1,32 @@
-class FinalKeywordDemo {
-
-    final int MAX_MARKS = 100;
-
-    final void display() {
-
-        System.out.println(
-            "Final method executed."
-        );
-
-        System.out.println(
-            "Maximum Marks : " + MAX_MARKS
-        );
+final class SecureSystem {
+    public void displayStatus() {
+        System.out.println("SecureSystem is a final class. It cannot be subclassed.");
     }
+}
 
-    final class FinalClass {
+class Parent {
+    final int MAX_SPEED = 120;
 
-        void show() {
-            System.out.println(
-                "This is a final class."
-            );
-        }
+    public final void showMaxSpeed() {
+        System.out.println("The maximum speed is strictly set to: " + MAX_SPEED + " km/h");
     }
+}
 
+class Child extends Parent {
+    public void childBehavior() {
+        System.out.println("Inside the Child class.");
+    }
+}
+
+public class FinalKeywordDemo {
     public static void main(String[] args) {
+        System.out.println("=== 1. Final Variable and Method Demo ===");
+        Child childObj = new Child();
+        childObj.childBehavior();
+        childObj.showMaxSpeed();
 
-        FinalKeywordDemo obj =
-            new FinalKeywordDemo();
-
-        obj.display();
-
-        FinalKeywordDemo.FinalClass f =
-            obj.new FinalClass();
-
-        f.show();
+        System.out.println("\n=== 2. Final Class Demo ===");
+        SecureSystem system = new SecureSystem();
+        system.displayStatus();
     }
 }

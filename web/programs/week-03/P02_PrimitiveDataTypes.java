@@ -1,22 +1,21 @@
-class PrimitiveDataTypes {
+public class PrimitiveDataTypes {
     public static void main(String[] args) {
+        byte b = 100;
+        short s = 20000;
+        int i = 500000;
+        long l = 9000000000L;
+        float f = 12.5f;
+        double d = 99.999;
+        char c = 'A';
+        boolean a = true;
 
-        byte BV = 100;
-        short SV = 20000;
-        int IV = 500000;
-        long LV = 9876543210L;
-        float FV = 12.5f;
-        double DV = 123.456789;
-        char CV = 'A';
-        boolean BOLV = true;
-
-        System.out.println("Byte Value : " + BV);
-        System.out.println("Short Value : " + SV);
-        System.out.println("Int Value : " + IV);
-        System.out.println("Long Value : " + LV);
-        System.out.println("Float Value : " + FV);
-        System.out.println("Double Value : " + DV);
-        System.out.println("Char Value : " + CV);
-        System.out.println("Boolean Value : " + BOLV);
+        System.out.println("Byte: " + b);
+        System.out.println("Short: " + s);
+        System.out.println("Int: " + i);
+        System.out.println("Long: " + l);
+        System.out.println("Float: " + f);
+        System.out.println("Double: " + d);
+        System.out.println("Char: " + c);
+        System.out.println("Boolean: " + a);
     }
 }
