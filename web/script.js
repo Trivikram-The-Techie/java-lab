@@ -10,7 +10,7 @@ const student = {
   year: "II Year (2nd Year)",
   branch: "Artificial Intelligence & Machine Learning (AI & ML)",
   section: "Section B",
-  subject: "Java Programming (24CS202-P)",
+  subject: "Java Programming (24CS281)",
   college: "Siddhartha Academy of Higher Education (Deemed to be University)",
   batch: "2025 – 2029"
 };
@@ -35,7 +35,9 @@ const Icons = {
   check: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
   viva: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
   chip: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>`,
-  verified: () => `<svg class="svg-icon stroke" style="width: 14px; height: 14px; stroke: #ffffff;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`
+  verified: () => `<svg class="svg-icon stroke" style="width: 14px; height: 14px; stroke: #ffffff;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+  fileText: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+  externalLink: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -161,7 +163,7 @@ function renderHome() {
             </div>
             <div class="me-item">
               <dt>Course &amp; Subject</dt>
-              <dd>Java Programming (24CS202-P)</dd>
+              <dd>Java Programming (24CS281)</dd>
             </div>
             <div class="me-item">
               <dt>University</dt>
@@ -223,6 +225,23 @@ function renderHome() {
       ${weeks.map(w => {
         const isViva = w.id === 4 || w.id === 5;
         const pillText = isViva ? "Viva Exam" : `${w.programs.length} Programs`;
+        const pdfUrl = `docs/week-${String(w.id).padStart(2, "0")}.pdf`;
+
+        const docActions = isViva ? `
+          <div class="tile-doc-actions">
+            <span class="tile-status-tag">Oral Viva &bull; No Document</span>
+          </div>
+        ` : `
+          <div class="tile-doc-actions" onclick="event.stopPropagation()">
+            <a class="tile-btn-doc open" href="${pdfUrl}" target="_blank" title="Open Week ${w.id} PDF">
+              ${Icons.fileText()} Open PDF
+            </a>
+            <a class="tile-btn-doc download" href="${pdfUrl}" download="Trivikram_Week-${String(w.id).padStart(2, "0")}.pdf" title="Download Week ${w.id} PDF">
+              ${Icons.download()} Download
+            </a>
+          </div>
+        `;
+
         return `
           <div class="tile" onclick="navigateTo('week-${w.id}')">
             <div>
@@ -233,8 +252,9 @@ function renderHome() {
               <h3 class="tile-title">${w.title}</h3>
               <p class="tile-desc">${w.subtitle}</p>
             </div>
+            ${docActions}
             <div class="tile-footer">
-              <span>Inspect Lab Sheet</span>
+              <span>Inspect Lab Programs</span>
               <span>${Icons.chevronRight()}</span>
             </div>
           </div>
@@ -297,7 +317,7 @@ function renderProfile() {
           </div>
           <div class="me-item">
             <dt>Course &amp; Subject</dt>
-            <dd>Java Programming (24CS202-P)</dd>
+            <dd>Java Programming (24CS281)</dd>
           </div>
           <div class="me-item">
             <dt>Institution</dt>
@@ -391,6 +411,24 @@ function renderWeek(weekId, filterQuery = "") {
           oninput="handleWeekFilter(event, ${weekId})"
         >
       </div>
+
+      <div class="week-doc-banner">
+        <div class="week-doc-info">
+          <div class="week-doc-icon">${Icons.fileText()}</div>
+          <div>
+            <div class="week-doc-title">Official Lab Document &bull; Week ${String(week.id).padStart(2, "0")}</div>
+            <div class="week-doc-sub">Full verified laboratory record with objectives, procedures, and outputs.</div>
+          </div>
+        </div>
+        <div class="week-doc-btns">
+          <a class="btn-chunky primary" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" target="_blank">
+            ${Icons.externalLink()} Open Full PDF
+          </a>
+          <a class="btn-chunky" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" download="Trivikram_Week-${String(week.id).padStart(2, '0')}.pdf">
+            ${Icons.download()} Download PDF
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="program-rows-list">
@@ -457,6 +495,24 @@ function renderWeek1ComparativeTable(week) {
           placeholder="Filter comparative parameters (e.g. Memory, Speed, Creator, OOP)..." 
           oninput="filterTableRows(this.value)"
         >
+      </div>
+
+      <div class="week-doc-banner">
+        <div class="week-doc-info">
+          <div class="week-doc-icon">${Icons.fileText()}</div>
+          <div>
+            <div class="week-doc-title">Official Lab Document &bull; Week 01</div>
+            <div class="week-doc-sub">Comparative Study of Programming Languages matrix (PDF record).</div>
+          </div>
+        </div>
+        <div class="week-doc-btns">
+          <a class="btn-chunky primary" href="docs/week-01.pdf" target="_blank">
+            ${Icons.externalLink()} Open Full PDF
+          </a>
+          <a class="btn-chunky" href="docs/week-01.pdf" download="Trivikram_Week-01.pdf">
+            ${Icons.download()} Download PDF
+          </a>
+        </div>
       </div>
     </div>
 
