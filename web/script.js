@@ -134,7 +134,10 @@ function renderHome() {
       <!-- Student Profile Card (.me) -->
       <div class="me-card">
         <div class="me-avatar-wrap">
-          <img class="me-avatar-img" src="assets/profile.png?v=10.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
+          <div class="me-avatar-monogram">
+            <span class="monogram-letters">TR</span>
+            <span class="monogram-sub">25EU02067</span>
+          </div>
         </div>
 
         <div class="me-details">
@@ -284,7 +287,10 @@ function renderProfile() {
 
     <div class="me-card">
       <div class="me-avatar-wrap">
-        <img class="me-avatar-img" src="assets/profile.png?v=10.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
+        <div class="me-avatar-monogram">
+          <span class="monogram-letters">TR</span>
+          <span class="monogram-sub">25EU02067</span>
+        </div>
       </div>
 
       <div class="me-details">
