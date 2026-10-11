@@ -1,17 +1,28 @@
-class ShortTask extends Thread {
+class LifeCycleTask implements Runnable {
+    @Override
     public void run() {
-        System.out.println("Task started.");
-        try { Thread.sleep(300); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-        System.out.println("Task finished.");
+        System.out.println("[Worker] Thread has started executing...");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println("[Worker] Thread was interrupted.");
+        }
+        System.out.println("[Worker] Thread is finishing its task.");
     }
 }
+
 public class IsAliveDemo {
-    public static void main(String[] args) throws InterruptedException {
-        ShortTask t = new ShortTask();
-        System.out.println("Before start: " + t.isAlive());
-        t.start();
-        System.out.println("After start: " + t.isAlive());
-        t.join();
-        System.out.println("After completion: " + t.isAlive());
+    public static void main(String[] args) {
+        Thread workerThread = new Thread(new LifeCycleTask(), "WorkerThread");
+        System.out.println("1. Before start()   -> isAlive(): " + workerThread.isAlive());
+        workerThread.start();
+        System.out.println("2. After start()    -> isAlive(): " + workerThread.isAlive());
+        try {
+            System.out.println("Main thread is waiting for WorkerThread to finish...");
+            workerThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("3. After completion -> isAlive(): " + workerThread.isAlive());
     }
 }
