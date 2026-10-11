@@ -37,8 +37,22 @@ const Icons = {
   chip: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>`,
   verified: () => `<svg class="svg-icon stroke" style="width: 14px; height: 14px; stroke: #ffffff;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
   fileText: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
-  externalLink: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`
+  externalLink: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
+  upload: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>`
 };
+
+function getProgramFilePath(weekId, index) {
+  const week = weeks.find(w => w.id === weekId);
+  const prog = week?.programs[index];
+  if (!prog) return { path: "#", fileName: "Program.java" };
+  const clsName = extractClassName(prog.code);
+  const pTag = "P" + String(index + 1).padStart(2, "0");
+  const dirName = "week-" + String(weekId).padStart(2, "0");
+  return {
+    path: `programs/${dirName}/${pTag}_${clsName}.java`,
+    fileName: `${pTag}_${clsName}.java`
+  };
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   renderTopChips();
@@ -433,6 +447,9 @@ function renderWeek(weekId, filterQuery = "") {
           <a class="btn-chunky" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" download="Trivikram_Week-${String(week.id).padStart(2, '0')}.pdf">
             ${Icons.download()} Download PDF
           </a>
+          <button class="btn-chunky sky" onclick="openUploadModal(${week.id})">
+            ${Icons.upload()} Upload File
+          </button>
         </div>
       </div>
     </div>
@@ -440,12 +457,21 @@ function renderWeek(weekId, filterQuery = "") {
     <div class="program-rows-list">
       ${progs.length > 0 ? progs.map(program => {
         const originalIndex = week.programs.indexOf(program);
+        const fileInfo = getProgramFilePath(week.id, originalIndex);
         return `
           <div class="row" onclick="navigateTo('program', { weekId: ${week.id}, programIdx: ${originalIndex} })">
             <b class="prog-tag">P${String(originalIndex + 1).padStart(2, "0")}</b>
             <div class="row-content">
               <div class="row-title">${program.title}</div>
               <div class="row-desc">${program.description}</div>
+            </div>
+            <div class="row-actions" onclick="event.stopPropagation()">
+              <a class="row-btn-action" href="${fileInfo.path}" target="_blank" title="Open ${fileInfo.fileName} directly in browser">
+                ${Icons.fileText()} Open File
+              </a>
+              <a class="row-btn-action download" href="${fileInfo.path}" download="${fileInfo.fileName}" title="Download ${fileInfo.fileName}">
+                ${Icons.download()} Download
+              </a>
             </div>
             <div class="row-arrow">${Icons.chevronRight()}</div>
           </div>
@@ -518,6 +544,9 @@ function renderWeek1ComparativeTable(week) {
           <a class="btn-chunky" href="docs/week-01.pdf" download="Trivikram_Week-01.pdf">
             ${Icons.download()} Download PDF
           </a>
+          <button class="btn-chunky sky" onclick="openUploadModal(1)">
+            ${Icons.upload()} Upload File
+          </button>
         </div>
       </div>
     </div>
@@ -625,6 +654,7 @@ function renderProgram(weekId, index) {
   const lines = program.code.split("\n");
   const lineNumbers = lines.map((_, i) => i + 1).join("\n");
 
+  const fileInfo = getProgramFilePath(weekId, index);
   const isFirst = index === 0;
   const isLast = index === week.programs.length - 1;
 
@@ -657,14 +687,20 @@ function renderProgram(weekId, index) {
 
     <!-- Action Bar Buttons -->
     <div class="bar">
-      <button class="btn-chunky primary" onclick="copyProgramCode(${weekId}, ${index})">
-        ${Icons.copy()} Copy Source Code
+      <a class="btn-chunky primary" href="${fileInfo.path}" target="_blank" title="Open source file directly in browser">
+        ${Icons.fileText()} Open File Directly
+      </a>
+      <button class="btn-chunky" onclick="copyProgramCode(${weekId}, ${index})">
+        ${Icons.copy()} Copy Code
       </button>
-      <button class="btn-chunky" onclick="downloadProgramJava(${weekId}, ${index})">
-        ${Icons.download()} Download .java File
-      </button>
+      <a class="btn-chunky" href="${fileInfo.path}" download="${fileInfo.fileName}">
+        ${Icons.download()} Download .java
+      </a>
       <button class="btn-chunky sky" onclick="copyProgramOutput(${weekId}, ${index})">
-        ${Icons.terminal()} Copy Terminal Output
+        ${Icons.terminal()} Copy Output
+      </button>
+      <button class="btn-chunky" onclick="openUploadModal(${weekId})">
+        ${Icons.upload()} Upload / Replace
       </button>
     </div>
 
@@ -841,8 +877,112 @@ function setupKeyboardShortcuts() {
     }
     if (e.key === "Escape") {
       closeSearchModal();
+      closeUploadModal();
     }
   });
+}
+
+// ==========================================================================
+// DIRECT CLIENT-SIDE FILE UPLOADER
+// ==========================================================================
+let currentUploadFile = null;
+
+function openUploadModal(defaultWeekId = null) {
+  const modal = document.getElementById("uploadModal");
+  if (!modal) return;
+  const select = document.getElementById("uploadWeekSelect");
+  if (select && defaultWeekId && [1, 2, 3, 6, 7, 8, 9, 10, 11].includes(Number(defaultWeekId))) {
+    select.value = String(defaultWeekId);
+  }
+  resetUploadModal();
+  modal.classList.add("open");
+}
+
+function closeUploadModal() {
+  const modal = document.getElementById("uploadModal");
+  if (modal) modal.classList.remove("open");
+}
+
+function handleUploadBackdrop(e) {
+  if (e.target.id === "uploadModal") {
+    closeUploadModal();
+  }
+}
+
+function resetUploadModal() {
+  currentUploadFile = null;
+  const box = document.getElementById("uploadPreviewBox");
+  if (box) box.style.display = "none";
+  const input = document.getElementById("modalFileInput");
+  if (input) input.value = "";
+}
+
+function handleModalFileSelected(e) {
+  const file = e.target.files?.[0];
+  if (file) processSelectedFile(file);
+}
+
+function handleDropFile(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove("dragover");
+  const file = e.dataTransfer?.files?.[0];
+  if (file) processSelectedFile(file);
+}
+
+function processSelectedFile(file) {
+  currentUploadFile = file;
+  const box = document.getElementById("uploadPreviewBox");
+  const nameEl = document.getElementById("previewFileName");
+  const sizeEl = document.getElementById("previewFileSize");
+  const iconEl = document.getElementById("previewFileIcon");
+
+  if (!box || !nameEl || !sizeEl) return;
+
+  nameEl.innerText = file.name;
+  const kb = (file.size / 1024).toFixed(1);
+  sizeEl.innerText = `${kb} KB • ${file.name.split(".").pop().toUpperCase()}`;
+
+  if (file.name.endsWith(".docx") || file.name.endsWith(".doc")) {
+    iconEl.innerText = "📝";
+  } else if (file.name.endsWith(".pdf")) {
+    iconEl.innerText = "📕";
+  } else if (file.name.endsWith(".java")) {
+    iconEl.innerText = "☕";
+  } else {
+    iconEl.innerText = "📄";
+  }
+
+  box.style.display = "flex";
+}
+
+function applyUploadedFile() {
+  if (!currentUploadFile) {
+    showToast("⚠️ Please select a file first");
+    return;
+  }
+
+  const weekId = parseInt(document.getElementById("uploadWeekSelect")?.value || "1", 10);
+  const file = currentUploadFile;
+
+  if (file.name.endsWith(".java") || file.name.endsWith(".txt")) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target.result;
+      const week = weeks.find(w => w.id === weekId);
+      if (week && week.programs.length > 0) {
+        week.programs[0].code = content;
+      }
+      closeUploadModal();
+      showToast(`✓ Loaded ${file.name} into Week ${weekId}!`);
+      navigateTo("week-" + weekId);
+    };
+    reader.readAsText(file);
+  } else {
+    const fileUrl = URL.createObjectURL(file);
+    closeUploadModal();
+    showToast(`✓ Document ${file.name} attached to Week ${weekId}!`);
+    window.open(fileUrl, "_blank");
+  }
 }
 
 // Fallback avatar generator with geometric emblem

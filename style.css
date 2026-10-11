@@ -936,6 +936,50 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 4px;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.row-btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-alt);
+  color: var(--blue-primary);
+  border: 1px solid var(--border-blue);
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.row-btn-action:hover {
+  background: var(--blue-primary);
+  color: #ffffff;
+  border-color: var(--blue-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.25);
+}
+
+.row-btn-action.download {
+  color: var(--text-muted);
+  border-color: #cbd5e1;
+}
+
+.row-btn-action.download:hover {
+  background: var(--blue-light);
+  color: var(--blue-primary);
+  border-color: var(--blue-vibrant);
 }
 
 /* Viva Voce Card */
@@ -1285,4 +1329,99 @@ table.comp-tbl tr:hover td {
     flex-direction: column;
     align-items: flex-start;
   }
+  .row-actions {
+    width: 100%;
+    margin-top: 8px;
+  }
+  .row-btn-action {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+/* Upload Modal */
+.upload-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.upload-overlay.open {
+  display: flex;
+}
+
+.upload-card {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.upload-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.upload-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.upload-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.upload-drop-zone {
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius-lg);
+  padding: 32px 20px;
+  text-align: center;
+  background: var(--bg-page);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.upload-drop-zone:hover, .upload-drop-zone.dragover {
+  border-color: var(--blue-primary);
+  background: var(--blue-light);
+}
+
+.upload-preview-box {
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
 }
