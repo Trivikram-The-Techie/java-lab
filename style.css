@@ -384,25 +384,6 @@ main {
   box-shadow: 0 8px 24px rgba(29, 78, 216, 0.16);
 }
 
-.me-verified-pill {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
-  color: #ffffff;
-  border-radius: var(--radius-pill);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 14px;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
 .me-details {
   flex: 1;
   display: flex;

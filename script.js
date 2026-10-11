@@ -132,8 +132,7 @@ function renderHome() {
       <!-- Student Profile Card (.me) -->
       <div class="me-card">
         <div class="me-avatar-wrap">
-          <img class="me-avatar-img" src="assets/profile.png?v=8.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
-          <span class="me-verified-pill">${Icons.verified()} Verified Record</span>
+          <img class="me-avatar-img" src="assets/profile.png?v=9.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
         </div>
 
         <div class="me-details">
@@ -265,14 +264,13 @@ function renderProfile() {
 
     <div class="me-card">
       <div class="me-avatar-wrap">
-        <img class="me-avatar-img" src="assets/profile.png?v=8.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
-        <span class="me-verified-pill">${Icons.verified()} Official Record</span>
+        <img class="me-avatar-img" src="assets/profile.png?v=9.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
       </div>
 
       <div class="me-details">
         <div class="me-heading">
           Trivikram
-          <span style="font-size: 12px; font-weight: 700; background: var(--blue-light); color: var(--blue-primary); padding: 4px 12px; border: 1px solid var(--border-blue); border-radius: var(--radius-pill);">Verified Student</span>
+          <span style="font-size: 12px; font-weight: 700; background: var(--blue-light); color: var(--blue-primary); padding: 4px 12px; border: 1px solid var(--border-blue); border-radius: var(--radius-pill);">AI &amp; ML</span>
         </div>
         <div class="me-subheading">B.Tech in Artificial Intelligence &amp; Machine Learning (Batch 2025&ndash;2029)</div>
 
