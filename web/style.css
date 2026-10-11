@@ -384,6 +384,10 @@ main {
   box-shadow: 0 8px 24px rgba(29, 78, 216, 0.16);
 }
 
+.me-verified-pill {
+  display: none !important;
+}
+
 .me-details {
   flex: 1;
   display: flex;

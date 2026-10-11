@@ -10,7 +10,7 @@ const student = {
   year: "II Year (2nd Year)",
   branch: "Artificial Intelligence & Machine Learning (AI & ML)",
   section: "Section B",
-  subject: "Java Programming (23AI5351)",
+  subject: "Java Programming (24CS202-P)",
   college: "Siddhartha Academy of Higher Education (Deemed to be University)",
   batch: "2025 – 2029"
 };
@@ -132,7 +132,7 @@ function renderHome() {
       <!-- Student Profile Card (.me) -->
       <div class="me-card">
         <div class="me-avatar-wrap">
-          <img class="me-avatar-img" src="assets/profile.png?v=9.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
+          <img class="me-avatar-img" src="assets/profile.png?v=10.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
         </div>
 
         <div class="me-details">
@@ -161,7 +161,7 @@ function renderHome() {
             </div>
             <div class="me-item">
               <dt>Course &amp; Subject</dt>
-              <dd>Java Programming (23AI5351)</dd>
+              <dd>Java Programming (24CS202-P)</dd>
             </div>
             <div class="me-item">
               <dt>University</dt>
@@ -264,7 +264,7 @@ function renderProfile() {
 
     <div class="me-card">
       <div class="me-avatar-wrap">
-        <img class="me-avatar-img" src="assets/profile.png?v=9.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
+        <img class="me-avatar-img" src="assets/profile.png?v=10.0" alt="Trivikram" onerror="handleAvatarFallback(this)">
       </div>
 
       <div class="me-details">
@@ -297,7 +297,7 @@ function renderProfile() {
           </div>
           <div class="me-item">
             <dt>Course &amp; Subject</dt>
-            <dd>Java Programming (23AI5351)</dd>
+            <dd>Java Programming (24CS202-P)</dd>
           </div>
           <div class="me-item">
             <dt>Institution</dt>
