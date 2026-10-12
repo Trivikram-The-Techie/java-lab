@@ -1,58 +1,62 @@
 /* ==========================================================================
    TRIVIKRAM — JAVA PROGRAMMING LABORATORY RECORD (24CS281)
-   THEME: FUTURISTIC CLOUD IDE & JAVA DEVELOPER CONSOLE (DARK OBSIDIAN)
+   THEME: NEO-GLASS TECH CONSOLE // INTERACTIVE DEVELOPER LAB STUDIO
    Student: Trivikram | Roll No: 25EU02067 | Dept of AI & ML | Section B
-   Institution: Siddhartha Academy of Higher Education | Guide: Ramesh Sir
+   Institution: Siddhartha Academy of Higher Education | Faculty: Ramesh Sir
    ========================================================================== */
 
 :root {
-  /* Dark Obsidian Theme Palette */
-  --bg-base: #06090e;
-  --bg-obsidian: #0b0f17;
-  --bg-surface: #101726;
-  --bg-surface-elevated: #151e32;
-  --bg-surface-hover: #1c2842;
-  --bg-panel: rgba(16, 23, 38, 0.78);
-  --bg-glass: rgba(19, 27, 46, 0.65);
-  --bg-glass-elevated: rgba(26, 36, 60, 0.75);
+  /* Deep Rich Obsidian Background Palette */
+  --bg-base: #0a0d14;
+  --bg-obsidian: #0e131f;
+  --bg-surface: #121929;
+  --bg-surface-elevated: #172238;
+  --bg-surface-hover: #1e2c47;
+  --bg-panel: rgba(14, 20, 34, 0.82);
+  --bg-glass: rgba(18, 25, 41, 0.72);
+  --bg-glass-elevated: rgba(23, 34, 56, 0.82);
 
-  /* Glowing Accent Colors */
-  --accent-orange: #f89820;          /* Electric Java Flame */
-  --accent-orange-glow: rgba(248, 152, 32, 0.35);
-  --accent-orange-subtle: rgba(248, 152, 32, 0.12);
+  /* High-Contrast Accents */
+  /* Primary: Java Warm Amber & Gold */
+  --accent-amber: #f59e0b;          /* Java Warm Amber */
+  --accent-gold: #fbbf24;           /* Radiant Gold */
+  --accent-amber-glow: rgba(245, 158, 11, 0.4);
+  --accent-amber-subtle: rgba(245, 158, 11, 0.14);
 
-  --accent-cyan: #00e5ff;            /* Cyber Neon Cyan */
-  --accent-cyan-glow: rgba(0, 229, 255, 0.35);
-  --accent-cyan-subtle: rgba(0, 229, 255, 0.12);
+  /* Secondary: Cyan Glow */
+  --accent-cyan: #00e5ff;           /* Cyber Neon Cyan */
+  --accent-cyan-bright: #38bdf8;    /* Pure Sky */
+  --accent-cyan-glow: rgba(0, 229, 255, 0.4);
+  --accent-cyan-subtle: rgba(0, 229, 255, 0.14);
 
-  --accent-emerald: #10b981;         /* Verified Emerald */
-  --accent-emerald-glow: rgba(16, 185, 129, 0.35);
-  --accent-emerald-subtle: rgba(16, 185, 129, 0.12);
+  /* Status Accents */
+  --accent-emerald: #10b981;        /* Verified Emerald */
+  --accent-emerald-glow: rgba(16, 185, 129, 0.4);
+  --accent-emerald-subtle: rgba(16, 185, 129, 0.14);
 
-  --accent-purple: #a855f7;          /* Royal Violet */
-  --accent-purple-glow: rgba(168, 85, 247, 0.35);
+  --accent-purple: #a855f7;         /* Royal Violet */
 
-  /* Active Dynamic Accent (Default: Electric Java Orange) */
-  --accent-primary: var(--accent-orange);
-  --accent-glow: var(--accent-orange-glow);
-  --accent-subtle: var(--accent-orange-subtle);
+  /* Active Dynamic Accent Tokens (Default: Java Warm Amber / Gold) */
+  --accent-primary: var(--accent-amber);
+  --accent-glow: var(--accent-amber-glow);
+  --accent-subtle: var(--accent-amber-subtle);
 
-  /* Text Colors */
-  --text-main: #f1f5f9;              /* Slate 100 - Crisp White-Silver */
-  --text-muted: #cbd5e1;             /* Slate 300 - Readable Secondary */
-  --text-subtle: #94a3b8;            /* Slate 400 - Metadata & Captions */
-  --text-dim: #64748b;               /* Slate 500 - Borders/Muted labels */
-
-  /* Borders & Hairline Glows */
+  /* Slate Borders & Hairlines */
   --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(248, 152, 32, 0.3);
-  --border-cyan-glow: rgba(0, 229, 255, 0.3);
+  --border-glow: rgba(245, 158, 11, 0.35);
+  --border-cyan-glow: rgba(0, 229, 255, 0.35);
   --border-elevated: rgba(255, 255, 255, 0.14);
 
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.75);
+  /* Text Colors */
+  --text-main: #f8fafc;             /* Slate 50 - High-Contrast Pure White-Silver */
+  --text-muted: #cbd5e1;            /* Slate 300 - Crisp Secondary */
+  --text-subtle: #94a3b8;           /* Slate 400 - Captions & Metadata */
+  --text-dim: #64748b;              /* Slate 500 - Borders/Labels */
+
+  /* Depth Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.65);
+  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.8);
   --shadow-glow: 0 0 24px var(--accent-glow);
 
   /* Radii */
@@ -63,33 +67,40 @@
   --radius-xl: 20px;
   --radius-pill: 9999px;
 
-  /* Fonts */
+  /* Typography */
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
 
-  /* IDE Dimensions */
+  /* Studio Dimensions */
   --topbar-height: 58px;
   --statusbar-height: 28px;
   --sidebar-width: 310px;
   --inspector-width: 320px;
 }
 
-/* Accent Mode Variants */
+/* Accent Themes */
+body.accent-amber {
+  --accent-primary: var(--accent-amber);
+  --accent-glow: var(--accent-amber-glow);
+  --accent-subtle: var(--accent-amber-subtle);
+  --border-glow: rgba(245, 158, 11, 0.35);
+}
+
 body.accent-cyan {
   --accent-primary: var(--accent-cyan);
   --accent-glow: var(--accent-cyan-glow);
   --accent-subtle: var(--accent-cyan-subtle);
-  --border-glow: var(--border-cyan-glow);
+  --border-glow: rgba(0, 229, 255, 0.35);
 }
 
 body.accent-emerald {
   --accent-primary: var(--accent-emerald);
   --accent-glow: var(--accent-emerald-glow);
   --accent-subtle: var(--accent-emerald-subtle);
-  --border-glow: rgba(16, 185, 129, 0.3);
+  --border-glow: rgba(16, 185, 129, 0.35);
 }
 
-/* Reset & Box Sizing */
+/* Reset & Base Elements */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -107,12 +118,12 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Background Atmosphere Grid */
+/* Neo-Glass Tech Atmosphere Canvas */
 body {
   background-image:
-    radial-gradient(ellipse at 15% 0%, rgba(248, 152, 32, 0.08) 0%, transparent 45%),
-    radial-gradient(ellipse at 85% 15%, rgba(0, 229, 255, 0.07) 0%, transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 0%, rgba(245, 158, 11, 0.09) 0%, transparent 48%),
+    radial-gradient(ellipse at 85% 15%, rgba(0, 229, 255, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(251, 191, 36, 0.04) 0%, transparent 50%),
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
@@ -139,7 +150,7 @@ a {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(11, 15, 23, 0.6);
+  background: rgba(10, 13, 20, 0.6);
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.16);
@@ -149,7 +160,7 @@ a {
   background: var(--accent-primary);
 }
 
-/* Vector SVG Icon Helper */
+/* Vector SVG Icon */
 .svg-icon {
   width: 16px;
   height: 16px;
@@ -166,7 +177,7 @@ a {
 }
 
 /* ==========================================================================
-   APP SHELL LAYOUT: TOP BAR + SPLIT PANE IDE + STATUS BAR
+   APP SHELL: TOP BAR + SPLIT-PANE STUDIO + STATUS BAR
    ========================================================================== */
 .ide-shell {
   display: flex;
@@ -177,13 +188,13 @@ a {
 }
 
 /* ==========================================================================
-   1. TOP BAR (FUTURISTIC CLOUD DEVELOPER CONSOLE)
+   1. TOP BAR (NEO-GLASS TECH CONSOLE)
    ========================================================================== */
 .top-bar {
   height: var(--topbar-height);
-  background: rgba(11, 15, 23, 0.92);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(10, 13, 20, 0.92);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
@@ -209,13 +220,13 @@ a {
   font-weight: 700;
   font-size: 13.5px;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, rgba(248, 152, 32, 0.16), rgba(0, 229, 255, 0.1));
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(0, 229, 255, 0.1));
   border: 1px solid var(--border-glow);
   padding: 6px 14px;
   border-radius: var(--radius-sm);
   color: var(--text-main);
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: all 0.2s ease;
 }
 
@@ -229,7 +240,7 @@ a {
   height: 22px;
   border-radius: 4px;
   background: var(--accent-primary);
-  color: #0b0f17;
+  color: #0a0d14;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -287,7 +298,7 @@ a {
   100% { transform: scale(0.9); opacity: 0.7; }
 }
 
-/* Top Bar Center: Live Search Field */
+/* Center: Live Search Field */
 .top-bar-center {
   flex: 1;
   max-width: 540px;
@@ -299,18 +310,18 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(16, 23, 38, 0.85);
+  background: rgba(18, 25, 41, 0.85);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 7px 14px;
   transition: all 0.25s ease;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .ide-search-box:focus-within {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 16px var(--accent-glow), inset 0 1px 2px rgba(0, 0, 0, 0.2);
-  background: rgba(22, 32, 53, 0.95);
+  box-shadow: 0 0 16px var(--accent-glow), inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: rgba(23, 34, 56, 0.95);
 }
 
 .ide-search-box svg {
@@ -347,7 +358,7 @@ a {
   letter-spacing: 0.05em;
 }
 
-/* Top Bar Right: Student Details Badge & Quick Controls */
+/* Right: Student Details & Controls */
 .top-bar-right {
   display: flex;
   align-items: center;
@@ -374,7 +385,7 @@ a {
   border-color: var(--accent-primary);
   color: var(--text-main);
   background: var(--bg-surface-elevated);
-  box-shadow: 0 0 12px var(--accent-glow);
+  box-shadow: 0 0 14px var(--accent-glow);
 }
 
 .student-badge-name {
@@ -395,7 +406,7 @@ a {
 }
 
 .student-badge-guide {
-  color: var(--accent-orange);
+  color: var(--accent-amber);
   font-weight: 600;
 }
 
@@ -404,7 +415,7 @@ a {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(16, 23, 38, 0.8);
+  background: rgba(18, 25, 41, 0.8);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pill);
   padding: 3px 6px;
@@ -428,7 +439,7 @@ a {
   box-shadow: 0 0 8px currentColor;
 }
 
-.accent-btn.orange { background: #f89820; color: #f89820; }
+.accent-btn.amber { background: #f59e0b; color: #f59e0b; }
 .accent-btn.cyan { background: #00e5ff; color: #00e5ff; }
 .accent-btn.emerald { background: #10b981; color: #10b981; }
 
@@ -436,7 +447,7 @@ a {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(248, 152, 32, 0.12);
+  background: var(--accent-subtle);
   border: 1px solid var(--border-glow);
   color: var(--accent-primary);
   padding: 6px 12px;
@@ -449,7 +460,7 @@ a {
 
 .top-action-btn:hover {
   background: var(--accent-primary);
-  color: #0b0f17;
+  color: #0a0d14;
   box-shadow: 0 0 16px var(--accent-glow);
 }
 
@@ -461,6 +472,8 @@ a {
   flex: 1;
   overflow: hidden;
   position: relative;
+  min-height: 0;
+  min-width: 0;
 }
 
 /* ==========================================================================
@@ -468,8 +481,8 @@ a {
    ========================================================================== */
 .sidebar-panel {
   width: var(--sidebar-width);
-  background: rgba(11, 15, 23, 0.88);
-  backdrop-filter: blur(16px);
+  background: rgba(10, 13, 20, 0.88);
+  backdrop-filter: blur(14px);
   border-right: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
@@ -477,6 +490,7 @@ a {
   overflow: hidden;
   user-select: none;
   z-index: 20;
+  min-height: 0;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s ease;
 }
 
@@ -486,7 +500,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(16, 23, 38, 0.5);
+  background: rgba(18, 25, 41, 0.5);
 }
 
 .sidebar-title-wrap {
@@ -519,7 +533,7 @@ a {
   border-bottom: 1px solid var(--border-subtle);
   overflow-x: auto;
   white-space: nowrap;
-  background: rgba(11, 15, 23, 0.95);
+  background: rgba(10, 13, 20, 0.95);
 }
 
 .sidebar-filter-row::-webkit-scrollbar {
@@ -558,6 +572,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-height: 0;
 }
 
 /* Week Tree Node Card */
@@ -575,13 +590,13 @@ a {
 }
 
 .week-node.active {
-  background: linear-gradient(90deg, rgba(248, 152, 32, 0.12) 0%, rgba(16, 23, 38, 0.7) 100%);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.14) 0%, rgba(18, 25, 41, 0.7) 100%);
   border-color: var(--accent-primary);
-  box-shadow: 0 0 16px var(--accent-glow), inset 0 0 10px rgba(248, 152, 32, 0.05);
+  box-shadow: 0 0 16px var(--accent-glow), inset 0 0 10px rgba(245, 158, 11, 0.06);
 }
 
 body.accent-cyan .week-node.active {
-  background: linear-gradient(90deg, rgba(0, 229, 255, 0.12) 0%, rgba(16, 23, 38, 0.7) 100%);
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.14) 0%, rgba(18, 25, 41, 0.7) 100%);
 }
 
 .week-node-header {
@@ -619,7 +634,7 @@ body.accent-cyan .week-node.active {
 
 .week-node.active .week-badge-pill {
   background: var(--accent-primary);
-  color: #0b0f17;
+  color: #0a0d14;
   font-weight: 800;
   box-shadow: 0 0 10px var(--accent-glow);
   border-color: var(--accent-primary);
@@ -728,18 +743,21 @@ body.accent-cyan .week-node.active {
   background: var(--bg-obsidian);
   overflow: hidden;
   position: relative;
+  min-height: 0;
+  min-width: 0;
 }
 
 /* Workspace Breadcrumb & Action Header */
 .workspace-header {
   padding: 10px 18px;
-  background: rgba(16, 23, 38, 0.7);
+  background: rgba(18, 25, 41, 0.75);
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .workspace-breadcrumb {
@@ -803,7 +821,7 @@ body.accent-cyan .week-node.active {
 
 .ide-action-btn.primary {
   background: var(--accent-primary);
-  color: #0b0f17;
+  color: #0a0d14;
   border-color: var(--accent-primary);
   box-shadow: 0 0 12px var(--accent-glow);
   font-weight: 700;
@@ -819,7 +837,7 @@ body.accent-cyan .week-node.active {
   display: flex;
   align-items: center;
   gap: 2px;
-  background: rgba(11, 15, 23, 0.95);
+  background: rgba(10, 13, 20, 0.95);
   border-bottom: 1px solid var(--border-subtle);
   padding: 0 12px;
   overflow-x: auto;
@@ -849,11 +867,7 @@ body.accent-cyan .week-node.active {
 .workspace-tab.active {
   color: #ffffff;
   border-bottom-color: var(--accent-primary);
-  background: rgba(248, 152, 32, 0.06);
-}
-
-body.accent-cyan .workspace-tab.active {
-  background: rgba(0, 229, 255, 0.06);
+  background: var(--accent-subtle);
 }
 
 .tab-badge {
@@ -867,7 +881,7 @@ body.accent-cyan .workspace-tab.active {
 
 .workspace-tab.active .tab-badge {
   background: var(--accent-primary);
-  color: #0b0f17;
+  color: #0a0d14;
   font-weight: 700;
 }
 
@@ -878,6 +892,8 @@ body.accent-cyan .workspace-tab.active {
   position: relative;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  min-width: 0;
 }
 
 /* ==========================================================================
@@ -890,6 +906,7 @@ body.accent-cyan .workspace-tab.active {
   width: 100%;
   overflow-y: auto;
   flex-direction: column;
+  min-height: 0;
 }
 
 .tab-pane.active {
@@ -904,18 +921,20 @@ body.accent-cyan .workspace-tab.active {
   width: 100%;
   background: #06090e;
   position: relative;
+  min-height: 0;
 }
 
-/* Multi-PDF Switcher Bar (e.g. for Week 2 Oracle & OpenJDK) */
+/* Multi-PDF Switcher Bar */
 .pdf-multi-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px;
-  background: rgba(16, 23, 38, 0.9);
+  background: rgba(18, 25, 41, 0.9);
   border-bottom: 1px solid var(--border-subtle);
   gap: 12px;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .pdf-multi-tabs {
@@ -950,13 +969,14 @@ body.accent-cyan .workspace-tab.active {
   box-shadow: 0 0 10px var(--accent-glow);
 }
 
-/* Embedded PDF Frame */
+/* Embedded PDF Frame Wrapper */
 .pdf-embed-wrapper {
   flex: 1;
   width: 100%;
   height: 100%;
   position: relative;
-  background: #1e293b;
+  background: #111827;
+  min-height: 0;
 }
 
 .pdf-embed-frame {
@@ -970,7 +990,7 @@ body.accent-cyan .workspace-tab.active {
 /* PDF Fallback & Direct Action Bar */
 .pdf-fallback-bar {
   padding: 10px 18px;
-  background: rgba(11, 15, 23, 0.95);
+  background: rgba(10, 13, 20, 0.95);
   border-top: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
@@ -978,6 +998,7 @@ body.accent-cyan .workspace-tab.active {
   gap: 12px;
   font-size: 12px;
   color: var(--text-subtle);
+  flex-shrink: 0;
 }
 
 .pdf-fallback-info {
@@ -1004,7 +1025,7 @@ body.accent-cyan .workspace-tab.active {
 }
 
 .overview-aim-card {
-  background: linear-gradient(135deg, rgba(16, 23, 38, 0.9) 0%, rgba(22, 32, 53, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(18, 25, 41, 0.9) 0%, rgba(23, 34, 56, 0.6) 100%);
   border: 1px solid var(--border-glow);
   border-left: 4px solid var(--accent-primary);
   border-radius: var(--radius-md);
@@ -1086,7 +1107,7 @@ body.accent-cyan .workspace-tab.active {
 }
 
 .syllabus-table th {
-  background: rgba(11, 15, 23, 0.9);
+  background: rgba(10, 13, 20, 0.9);
   padding: 12px 16px;
   font-family: var(--font-mono);
   font-size: 11.5px;
@@ -1118,15 +1139,15 @@ body.accent-cyan .workspace-tab.active {
   display: inline-block;
 }
 
-/* Viva Voce Assessment Special Card */
+/* Viva Voce Assessment Card */
 .viva-assessment-box {
-  background: linear-gradient(135deg, rgba(16, 23, 38, 0.95), rgba(22, 32, 53, 0.8));
+  background: linear-gradient(135deg, rgba(18, 25, 41, 0.95), rgba(23, 34, 56, 0.8));
   border: 2px dashed rgba(0, 229, 255, 0.4);
   border-radius: var(--radius-lg);
   padding: 32px 24px;
   text-align: center;
   margin: 20px 0;
-  box-shadow: 0 0 24px rgba(0, 229, 255, 0.1);
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.12);
 }
 
 .viva-beacon-large {
@@ -1176,7 +1197,7 @@ body.accent-cyan .workspace-tab.active {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(16, 23, 38, 0.85);
+  background: rgba(18, 25, 41, 0.85);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   padding: 8px 12px;
@@ -1203,7 +1224,7 @@ body.accent-cyan .workspace-tab.active {
 
 .prog-chip.active {
   background: var(--accent-primary);
-  color: #0b0f17;
+  color: #0a0d14;
   font-weight: 700;
   box-shadow: 0 0 10px var(--accent-glow);
 }
@@ -1271,7 +1292,7 @@ body.accent-cyan .workspace-tab.active {
 
 .code-copy-btn:hover {
   background: var(--accent-primary);
-  color: #0b0f17;
+  color: #0a0d14;
   box-shadow: 0 0 10px var(--accent-glow);
 }
 
@@ -1343,12 +1364,12 @@ pre.code-canvas {
 }
 
 /* ==========================================================================
-   RIGHT INSPECTOR / METADATA PANEL
+   RIGHT INSPECTOR / METADATA PANEL (NEO-GLASS TECH CONSOLE)
    ========================================================================== */
 .inspector-panel {
   width: var(--inspector-width);
-  background: rgba(11, 15, 23, 0.88);
-  backdrop-filter: blur(16px);
+  background: rgba(10, 13, 20, 0.88);
+  backdrop-filter: blur(14px);
   border-left: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
@@ -1372,40 +1393,46 @@ pre.code-canvas {
   justify-content: space-between;
 }
 
-/* Bento Metrics Card */
+/* Bento Metrics Card (PIXEL-MATCHED TO USER SCREENSHOT) */
 .inspector-bento-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 16px;
+  background: transparent;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  box-shadow: var(--shadow-sm);
+  gap: 10px;
 }
 
 .bento-metric-tile {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-sm);
-  padding: 10px;
+  background: rgba(14, 20, 34, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.bento-metric-tile:hover {
+  background: rgba(20, 28, 48, 0.85);
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .bento-num {
-  font-size: 22px;
+  font-family: var(--font-main);
+  font-size: 20px;
   font-weight: 800;
-  color: #ffffff;
   letter-spacing: -0.03em;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .bento-label {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-subtle);
-  margin-top: 3px;
+  margin-top: 4px;
   font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 /* Active File Metadata Card */
@@ -1417,6 +1444,7 @@ pre.code-canvas {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  box-shadow: var(--shadow-sm);
 }
 
 .meta-row {
@@ -1441,7 +1469,7 @@ pre.code-canvas {
 
 /* Student Profile Inspector Card */
 .student-profile-card {
-  background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(22, 32, 53, 0.5) 100%);
+  background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(23, 34, 56, 0.5) 100%);
   border: 1px solid var(--border-subtle);
   border-top: 3px solid var(--accent-primary);
   border-radius: var(--radius-md);
@@ -1449,6 +1477,7 @@ pre.code-canvas {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow: var(--shadow-sm);
 }
 
 .profile-avatar-row {
@@ -1461,13 +1490,13 @@ pre.code-canvas {
   width: 48px;
   height: 48px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--accent-orange), var(--accent-cyan));
+  background: linear-gradient(135deg, var(--accent-amber), var(--accent-cyan));
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
   font-size: 18px;
-  color: #0b0f17;
+  color: #0a0d14;
   box-shadow: 0 0 16px var(--accent-glow);
   flex-shrink: 0;
 }
@@ -1557,7 +1586,7 @@ pre.code-canvas {
 .ide-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 7, 12, 0.75);
+  background: rgba(4, 7, 12, 0.8);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   z-index: 300;
@@ -1574,7 +1603,7 @@ pre.code-canvas {
 .ide-modal-box {
   width: 100%;
   max-width: 580px;
-  background: #0f172a;
+  background: #0e1424;
   border: 1px solid var(--border-glow);
   border-radius: var(--radius-xl);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 30px var(--accent-glow);
@@ -1630,7 +1659,7 @@ pre.code-canvas {
   position: fixed;
   bottom: 38px;
   right: 24px;
-  background: linear-gradient(135deg, rgba(16, 23, 38, 0.95), rgba(22, 32, 53, 0.95));
+  background: linear-gradient(135deg, rgba(18, 25, 41, 0.95), rgba(23, 34, 56, 0.95));
   border: 1px solid var(--accent-primary);
   color: #ffffff;
   padding: 10px 18px;
@@ -1650,9 +1679,7 @@ pre.code-canvas {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ==========================================================================
-   RESPONSIVE LAYOUT FOR MOBILE & TABLETS
-   ========================================================================== */
+/* Responsive */
 @media (max-width: 1080px) {
   .inspector-panel {
     display: none;

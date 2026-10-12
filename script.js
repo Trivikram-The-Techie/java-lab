@@ -91,19 +91,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==========================================================================
-// ACCENT THEME TOGGLE (ORANGE, CYAN, EMERALD)
+// ACCENT THEME TOGGLE (AMBER / GOLD, CYAN, EMERALD)
 // ==========================================================================
 function initAccentTheme() {
-  const savedAccent = localStorage.getItem("ide_accent") || "orange";
+  const savedAccent = localStorage.getItem("ide_accent") || "amber";
   setAccent(savedAccent, false);
 }
 
 function setAccent(accentName, save = true) {
-  document.body.classList.remove("accent-cyan", "accent-emerald");
+  document.body.classList.remove("accent-amber", "accent-cyan", "accent-emerald", "accent-orange");
   if (accentName === "cyan") {
     document.body.classList.add("accent-cyan");
   } else if (accentName === "emerald") {
     document.body.classList.add("accent-emerald");
+  } else {
+    document.body.classList.add("accent-amber");
   }
   
   document.querySelectorAll(".accent-btn").forEach(btn => {
@@ -646,19 +648,19 @@ function updateInspector() {
     </div>
     <div class="inspector-bento-card">
       <div class="bento-metric-tile">
-        <span class="bento-num">${totalWeeks}</span>
-        <span class="bento-label">Total Lab Weeks</span>
+        <span class="bento-num" style="color: var(--accent-amber);">${totalWeeks} Weeks</span>
+        <span class="bento-label">Curriculum Modules</span>
       </div>
       <div class="bento-metric-tile">
-        <span class="bento-num">${totalProgs}+</span>
+        <span class="bento-num" style="color: var(--accent-gold);">${totalProgs}+</span>
         <span class="bento-label">Programs Verified</span>
       </div>
       <div class="bento-metric-tile">
-        <span class="bento-num" style="color: var(--accent-cyan); font-size: 18px;">JDK 21</span>
+        <span class="bento-num" style="color: var(--accent-cyan);">JDK 21</span>
         <span class="bento-label">LTS Toolchain</span>
       </div>
       <div class="bento-metric-tile">
-        <span class="bento-num" style="color: var(--accent-emerald); font-size: 18px;">100%</span>
+        <span class="bento-num" style="color: var(--accent-emerald);">100%</span>
         <span class="bento-label">Faculty Signed</span>
       </div>
     </div>
