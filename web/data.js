@@ -676,6 +676,25 @@ const weeks = [
         "output": null
       }
     ]
+  },
+  {
+    "id": 12,
+    "title": "Week 12",
+    "subtitle": "Java Collections Framework, Generics & Comprehensive Lab Record Submission",
+    "programs": [
+      {
+        "title": "ArrayList Demo — Dynamic Resizable Arrays",
+        "description": "Demonstrate creation, addition, sorting, iteration, and element manipulation using the Java ArrayList collections class.",
+        "code": "import java.util.ArrayList;\nimport java.util.Collections;\n\npublic class P01_ArrayListDemo {\n    public static void main(String[] args) {\n        System.out.println(\"=== Java Collections: ArrayList Demo ===\");\n        ArrayList<String> students = new ArrayList<>();\n        students.add(\"Trivikram\");\n        students.add(\"Aravind\");\n        students.add(\"Bhavya\");\n        students.add(\"Deepak\");\n\n        System.out.println(\"Original Student List: \" + students);\n        Collections.sort(students);\n        System.out.println(\"Sorted Student List:   \" + students);\n        System.out.println(\"Total Count: \" + students.size());\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "HashMap Demo — Key-Value Pair Mapping",
+        "description": "Implement a key-value associative mapping using java.util.HashMap to store and query student academic records by Roll Number.",
+        "code": "import java.util.HashMap;\nimport java.util.Map;\n\npublic class P02_HashMapDemo {\n    public static void main(String[] args) {\n        System.out.println(\"=== Java Collections: HashMap Demo ===\");\n        Map<String, String> studentRecords = new HashMap<>();\n        studentRecords.put(\"25EU02067\", \"Trivikram - AI & ML\");\n        studentRecords.put(\"25EU02068\", \"Aditya - CSE\");\n        studentRecords.put(\"25EU02069\", \"Charan - AI & DS\");\n\n        for (Map.Entry<String, String> entry : studentRecords.entrySet()) {\n            System.out.println(\"Roll No: \" + entry.getKey() + \" -> \" + entry.getValue());\n        }\n    }\n}",
+        "output": null
+      }
+    ]
   }
 ];
 
@@ -779,7 +798,9 @@ const generatedOutputs = {
   "11-8": "Main thread started spawning workers...\n\nMain thread finished spawning. Workers are now running concurrently.\n\nThread-Alpha is executing step 1\nThread-Beta is executing step 1\nThread-Gamma is executing step 1\nThread-Alpha is executing step 2\nThread-Beta is executing step 2\nThread-Gamma is executing step 2\nThread-Gamma is executing step 3\nThread-Alpha is executing step 3\nThread-Beta is executing step 3\nThread-Alpha is executing step 4\nThread-Gamma is executing step 4\n==> Thread-Gamma has FINISHED.\nThread-Beta is executing step 4\n==> Thread-Alpha has FINISHED.\n==> Thread-Beta has FINISHED.",
   "11-9": "1. Before start()   -> isAlive(): false\n2. After start()    -> isAlive(): true\nMain thread is waiting for WorkerThread to finish...\n[Worker] Thread has started executing...\n[Worker] Thread is finishing its task.\n3. After completion -> isAlive(): false",
   "11-10": "[Main] Initializing system...\n[Main] Starting the download thread.\n[Main] Calling join(). Main thread will now wait...\n[Downloader] Starting file download...\n[Downloader] File download complete.\n[Main] Download confirmed. Resuming main thread operations.",
-  "11-11": "[Main] Starting Thread-1.\n[Main] Is Thread-1 alive? true\n[Main] Waiting for Thread-1 to finish before starting others...\n[Thread-1] is executing.\n[Thread-1] has completed.\n[Main] Is Thread-1 alive now? false\n\n[Main] Thread-1 finished. Now starting Thread-2 and Thread-3 concurrently.\n[Main] Waiting for Thread-2 and Thread-3 to finish...\n[Thread-2] is executing.\n[Thread-3] is executing.\n[Thread-3] has completed.\n[Thread-2] has completed.\n\n[Main] All worker threads are dead. Main thread safely exiting."
+  "11-11": "[Main] Starting Thread-1.\n[Main] Is Thread-1 alive? true\n[Main] Waiting for Thread-1 to finish before starting others...\n[Thread-1] is executing.\n[Thread-1] has completed.\n[Main] Is Thread-1 alive now? false\n\n[Main] Thread-1 finished. Now starting Thread-2 and Thread-3 concurrently.\n[Main] Waiting for Thread-2 and Thread-3 to finish...\n[Thread-2] is executing.\n[Thread-3] is executing.\n[Thread-3] has completed.\n[Thread-2] has completed.\n\n[Main] All worker threads are dead. Main thread safely exiting.",
+  "12-0": "=== Java Collections: ArrayList Demo ===\nOriginal Student List: [Trivikram, Aravind, Bhavya, Deepak]\nSorted Student List:   [Aravind, Bhavya, Deepak, Trivikram]\nTotal Count: 4",
+  "12-1": "=== Java Collections: HashMap Demo ===\nRoll No: 25EU02067 -> Trivikram - AI & ML\nRoll No: 25EU02068 -> Aditya - CSE\nRoll No: 25EU02069 -> Charan - AI & DS"
 };
 
 function getGeneratedOutput(weekId, index) {

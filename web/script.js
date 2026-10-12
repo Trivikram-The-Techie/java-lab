@@ -1,989 +1,892 @@
 // ==========================================================================
-// TRIVIKRAM — JAVA PROGRAMMING LABORATORY RECORD
-// Roll No: 25EU02067 | Dept of AI & ML | Batch 2025-2029
-// BLUE AND WHITE THEME — UNIQUE CUSTOM GEOMETRIC ICONS & SHAPES
+// TRIVIKRAM — JAVA PROGRAMMING LABORATORY RECORD (24CS281)
+// ENGINE: FUTURISTIC CLOUD IDE & JAVA DEVELOPER CONSOLE
+// Student: Trivikram | Roll No: 25EU02067 | Course: 24CS281
+// Institution: Siddhartha Academy of Higher Education | Guide: Ramesh Sir
 // ==========================================================================
 
-const student = {
+const studentProfile = {
   name: "Trivikram",
   rollNo: "25EU02067",
-  year: "II Year (2nd Year)",
-  branch: "Artificial Intelligence & Machine Learning (AI & ML)",
+  course: "Java Programming Laboratory (24CS281)",
+  dept: "Artificial Intelligence & Machine Learning (AI & ML)",
   section: "Section B",
-  subject: "Java Programming (24CS281)",
-  college: "Siddhartha Academy of Higher Education (Deemed to be University)",
-  batch: "2025 – 2029"
+  institution: "Siddhartha Academy of Higher Education",
+  guide: "Ramesh Sir",
+  batch: "2025 – 2029",
+  platform: "Java 21 LTS (Oracle OpenJDK)"
 };
 
-let currentWeekId = 1;
-let currentProgramIdx = 0;
-let currentFilter = "";
+// Document Metadata Registry (Exact Byte/KB Verification)
+const docRegistry = {
+  1: { fileName: "week-01.pdf", path: "docs/week-01.pdf", size: "541.3 KB", type: "PDF Document" },
+  2: {
+    oracle: { fileName: "week-02-oracle.pdf", path: "docs/week-02-oracle.pdf", size: "439.0 KB", type: "PDF Document" },
+    openjdk: { fileName: "week-02-openjdk.pdf", path: "docs/week-02-openjdk.pdf", size: "531.0 KB", type: "PDF Document" }
+  },
+  3: { fileName: "week-03.pdf", path: "docs/week-03.pdf", size: "438.4 KB", type: "PDF Document" },
+  4: { isViva: true, title: "Mid-Term Oral Viva Voce Examination — Part 1" },
+  5: { isViva: true, title: "Mid-Term Oral Viva Voce Examination — Part 2" },
+  6: { fileName: "week-06.pdf", path: "docs/week-06.pdf", size: "1.36 MB", type: "PDF Document" },
+  7: { fileName: "week-07.pdf", path: "docs/week-07.pdf", size: "705.3 KB", type: "PDF Document" },
+  8: { fileName: "week-08.pdf", path: "docs/week-08.pdf", size: "539.5 KB", type: "PDF Document" },
+  9: { fileName: "week-09.pdf", path: "docs/week-09.pdf", size: "786.4 KB", type: "PDF Document" },
+  10: { fileName: "week-10.pdf", path: "docs/week-10.pdf", size: "809.7 KB", type: "PDF Document" },
+  11: { fileName: "week-11.pdf", path: "docs/week-11.pdf", size: "800.2 KB", type: "PDF Document" },
+  12: { fileName: "week-12.pdf", path: "docs/week-12.pdf", size: "0.6 KB", type: "PDF Document (Submission)" }
+};
 
-// ==========================================================================
-// CUSTOM VECTOR SVG ICONS SYSTEM (ZERO EMOJIS, 100% DISTINCT SHAPES)
-// ==========================================================================
+// Syllabus Theoretical Concept Tags Mapping
+const weekConceptsMap = {
+  1: ["Programming Paradigms", "Platform Independence", "Bytecode Architecture", "JVM vs CLR", "Memory Management", "Compilation Models"],
+  2: ["JDK vs JRE vs JVM", "JAVA_HOME Configuration", "Environment Variables", "Path Setup", "Javac Compiler", "Java Runtime Launcher"],
+  3: ["Primitive Types", "Type Promotion", "Explicit Casting", "Control Flow", "Switch Expressions", "Logical Operators", "Loop Constructs"],
+  4: ["Oral Viva", "JVM Spec", "Memory Layout", "Stack vs Heap", "Garbage Collection Basics", "Class Loading"],
+  5: ["Oral Viva", "Control Structures", "Operators", "Ternary Evaluation", "Short-Circuit Logic", "Break & Continue"],
+  6: ["Object-Oriented Design", "Constructors", "this Keyword", "Method Overloading", "Static Context", "Garbage Collection", "Encapsulation"],
+  7: ["String Immutability", "String Constant Pool", "StringBuffer Thread-Safety", "StringBuilder", "StringTokenizer", "Delimiter Parsing"],
+  8: ["Inheritance Hierarchies", "Method Overriding", "Dynamic Method Dispatch", "super Keyword", "final Methods", "Polymorphism"],
+  9: ["Package Namespaces", "Access Modifiers", "Interface Contracts", "Multiple Inheritance", "Default Methods", "Public API Export"],
+  10: ["Exception Hierarchies", "try-catch-finally", "Custom Exceptions", "throw & throws", "Byte Streams", "FileInputStream", "FileOutputStream"],
+  11: ["Character Streams", "FileReader & FileWriter", "BufferedReader", "Thread Lifecycle", "Runnable Interface", "Thread Priorities", "Thread Synchronization"],
+  12: ["Java Collections", "ArrayList Dynamic Arrays", "HashMap Hash Tables", "Generics Type Safety", "Collections Utility", "Final Lab Record Sign-off"]
+};
+
+// Application State
+let currentWeekId = 1;
+let currentTab = "doc"; // "doc" | "overview" | "code"
+let currentProgramIdx = 0;
+let currentCategoryFilter = "all";
+let currentSearchQuery = "";
+let currentWeek2SubDoc = "oracle"; // "oracle" | "openjdk"
+let expandedWeeks = new Set([1, 2, 3]);
+
+// Vector Icons
 const Icons = {
-  rocket: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3m5.5-3.5L12 6M15 9l3 3m-4.5-7.5C18 3 21 6 21 10.5c0 2-1 3.5-2.5 4.5l-9.5-9.5C10 4 11.5 3 13.5 3z"/></svg>`,
-  user: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>`,
-  search: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>`,
-  copy: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
-  download: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`,
-  terminal: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
-  code: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  chevronDown: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>`,
   chevronRight: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>`,
-  chevronLeft: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>`,
-  check: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
-  viva: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-  chip: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>`,
-  verified: () => `<svg class="svg-icon stroke" style="width: 14px; height: 14px; stroke: #ffffff;" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
-  fileText: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+  filePdf: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+  fileCode: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  download: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`,
   externalLink: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
+  copy: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+  search: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>`,
+  terminal: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
+  check: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
+  coffee: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
   upload: () => `<svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>`
 };
 
-function getProgramFilePath(weekId, index) {
-  const week = weeks.find(w => w.id === weekId);
-  const prog = week?.programs[index];
-  if (!prog) return { path: "#", fileName: "Program.java" };
-  const clsName = extractClassName(prog.code);
-  const pTag = "P" + String(index + 1).padStart(2, "0");
-  const dirName = "week-" + String(weekId).padStart(2, "0");
-  return {
-    path: `programs/${dirName}/${pTag}_${clsName}.java`,
-    fileName: `${pTag}_${clsName}.java`
-  };
-}
-
+// ==========================================================================
+// INITIALIZATION
+// ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
-  renderTopChips();
-  setupKeyboardShortcuts();
-  navigateTo("home");
+  initAccentTheme();
+  initRouter();
+  renderSidebarTree();
+  updateWorkspace();
+  updateInspector();
+  setupKeyboardNavigation();
+  setupGlobalSearch();
 });
 
 // ==========================================================================
-// ROUTER & NAVIGATION
+// ACCENT THEME TOGGLE (ORANGE, CYAN, EMERALD)
 // ==========================================================================
-function navigateTo(page, params = {}) {
-  document.querySelectorAll(".chip").forEach(chip => {
-    chip.classList.toggle("active", chip.dataset.page === page);
-  });
-
-  if (page === "home") {
-    renderHome();
-  } else if (page === "profile") {
-    renderProfile();
-  } else if (page.startsWith("week-")) {
-    const id = parseInt(page.split("-")[1], 10);
-    currentWeekId = id;
-    currentFilter = "";
-    renderWeek(id);
-  } else if (page === "program") {
-    const weekId = params.weekId !== undefined ? params.weekId : currentWeekId;
-    const progIdx = params.programIdx !== undefined ? params.programIdx : currentProgramIdx;
-    currentWeekId = weekId;
-    currentProgramIdx = progIdx;
-    renderProgram(weekId, progIdx);
-  }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
+function initAccentTheme() {
+  const savedAccent = localStorage.getItem("ide_accent") || "orange";
+  setAccent(savedAccent, false);
 }
 
-function renderTopChips() {
-  const container = document.getElementById("weekChipsContainer");
+function setAccent(accentName, save = true) {
+  document.body.classList.remove("accent-cyan", "accent-emerald");
+  if (accentName === "cyan") {
+    document.body.classList.add("accent-cyan");
+  } else if (accentName === "emerald") {
+    document.body.classList.add("accent-emerald");
+  }
+  
+  document.querySelectorAll(".accent-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.accent === accentName);
+  });
+
+  if (save) localStorage.setItem("ide_accent", accentName);
+}
+
+// ==========================================================================
+// ROUTER & URL HASH SYNCHRONIZATION
+// ==========================================================================
+function initRouter() {
+  const hash = window.location.hash.replace("#", "");
+  if (hash) {
+    const parts = hash.split("/");
+    const weekMatch = parts[0].match(/week-(\d+)/i);
+    if (weekMatch) {
+      const wId = parseInt(weekMatch[1], 10);
+      if (wId >= 1 && wId <= 12) {
+        currentWeekId = wId;
+        expandedWeeks.add(wId);
+      }
+    }
+    if (parts[1] && ["doc", "overview", "code"].includes(parts[1])) {
+      currentTab = parts[1];
+    }
+    if (parts[2]) {
+      const progIdx = parseInt(parts[2], 10);
+      if (!isNaN(progIdx)) currentProgramIdx = progIdx;
+    }
+  }
+}
+
+function updateUrlHash() {
+  window.location.hash = `week-${String(currentWeekId).padStart(2, "0")}/${currentTab}/${currentProgramIdx}`;
+}
+
+// ==========================================================================
+// SIDEBAR (FILE EXPLORER) RENDERING & FILTERING
+// ==========================================================================
+function setCategoryFilter(category) {
+  currentCategoryFilter = category;
+  document.querySelectorAll(".filter-tag-pill").forEach(pill => {
+    pill.classList.toggle("active", pill.dataset.filter === category);
+  });
+  renderSidebarTree();
+}
+
+function isWeekMatchingCategory(wId, cat) {
+  if (cat === "all") return true;
+  if (cat === "core") return [1, 2, 3].includes(wId);
+  if (cat === "oops") return [6, 8, 12].includes(wId);
+  if (cat === "streams") return [9, 10, 11].includes(wId);
+  if (cat === "threads") return wId === 11;
+  if (cat === "viva") return [4, 5].includes(wId);
+  return true;
+}
+
+function isWeekMatchingSearch(week, query) {
+  if (!query) return true;
+  const q = query.toLowerCase();
+  if (week.title.toLowerCase().includes(q)) return true;
+  if (week.subtitle.toLowerCase().includes(q)) return true;
+  const concepts = weekConceptsMap[week.id] || [];
+  if (concepts.some(c => c.toLowerCase().includes(q))) return true;
+  if (week.programs.some(p => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))) return true;
+  return false;
+}
+
+function renderSidebarTree() {
+  const container = document.getElementById("sidebarTree");
   if (!container || !window.weeks) return;
 
-  container.innerHTML = weeks.map(w => {
+  const filteredWeeks = weeks.filter(w => {
+    return isWeekMatchingCategory(w.id, currentCategoryFilter) &&
+           isWeekMatchingSearch(w, currentSearchQuery);
+  });
+
+  const countBadge = document.getElementById("sidebarCountBadge");
+  if (countBadge) countBadge.textContent = `${filteredWeeks.length} of 12`;
+
+  if (filteredWeeks.length === 0) {
+    container.innerHTML = `
+      <div style="padding: 24px 16px; text-align: center; color: var(--text-dim); font-size: 12px;">
+        <div>No matching topics found</div>
+        <div style="margin-top: 6px; font-size: 11px;">Try searching "OOPs", "Streams", or "Week 6"</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filteredWeeks.map(w => {
+    const isActive = w.id === currentWeekId;
+    const isExpanded = expandedWeeks.has(w.id);
     const isViva = w.id === 4 || w.id === 5;
-    const label = isViva ? `W${String(w.id).padStart(2, "0")} (Viva)` : `W${String(w.id).padStart(2, "0")}`;
+    const taskCount = isViva ? "Oral Viva" : `${w.programs.length} Tasks`;
+    const docMeta = docRegistry[w.id];
+
+    // Sub-children: PDF link + Java program files
+    let subItemsHtml = "";
+    if (!isViva) {
+      if (w.id === 2) {
+        subItemsHtml += `
+          <div class="sub-file-item pdf-sub" onclick="event.stopPropagation(); selectDocument('oracle');">
+            ${Icons.filePdf()} week-02-oracle.pdf
+          </div>
+          <div class="sub-file-item pdf-sub" onclick="event.stopPropagation(); selectDocument('openjdk');">
+            ${Icons.filePdf()} week-02-openjdk.pdf
+          </div>
+        `;
+      } else {
+        const pdfName = docMeta ? docMeta.fileName : `week-${String(w.id).padStart(2, '0')}.pdf`;
+        subItemsHtml += `
+          <div class="sub-file-item pdf-sub" onclick="event.stopPropagation(); switchTab('doc');">
+            ${Icons.filePdf()} ${pdfName}
+          </div>
+        `;
+      }
+
+      w.programs.forEach((prog, pIdx) => {
+        const clsName = extractClassName(prog.code);
+        const fileName = `P${String(pIdx + 1).padStart(2, '0')}_${clsName}.java`;
+        const isProgActive = isActive && currentProgramIdx === pIdx && currentTab === "code";
+        subItemsHtml += `
+          <div class="sub-file-item ${isProgActive ? 'active-sub' : ''}" onclick="event.stopPropagation(); selectProgram(${w.id}, ${pIdx});">
+            ${Icons.fileCode()} ${fileName}
+          </div>
+        `;
+      });
+    } else {
+      subItemsHtml += `
+        <div class="sub-file-item" onclick="event.stopPropagation(); switchTab('overview');">
+          ${Icons.check()} Viva_Assessment_Rubric.json
+        </div>
+      `;
+    }
+
     return `
-      <button class="chip" data-page="week-${w.id}" onclick="navigateTo('week-${w.id}')">
-        ${label}
-      </button>
+      <div class="week-node ${isActive ? 'active' : ''} ${isExpanded ? 'expanded' : ''}" data-week="${w.id}">
+        <div class="week-node-header" onclick="selectWeek(${w.id})">
+          <span class="tree-expand-icon" onclick="event.stopPropagation(); toggleWeekExpand(${w.id});">
+            ${Icons.chevronRight()}
+          </span>
+          <span class="week-badge-pill">W${String(w.id).padStart(2, "0")}</span>
+          <div class="week-node-info">
+            <span class="week-node-title" title="${w.subtitle}">${w.subtitle}</span>
+            <div class="week-node-meta">
+              <span class="status-beacon-mini ${isViva ? 'viva' : ''}"></span>
+              <span>${taskCount}</span>
+              <span>&bull;</span>
+              <span>${isViva ? 'Oral Milestone' : 'Verified'}</span>
+            </div>
+          </div>
+        </div>
+        <div class="week-node-children">
+          ${subItemsHtml}
+        </div>
+      </div>
     `;
   }).join("");
 }
 
-// ==========================================================================
-// PAGE: HOME
-// ==========================================================================
-function renderHome() {
-  const app = document.getElementById("app");
-  if (!app) return;
-
-  const totalProgs = weeks.reduce((sum, w) => sum + w.programs.length, 0);
-
-  app.innerHTML = `
-    <!-- Hero Header -->
-    <section class="hero-section">
-      <div class="hero-kicker">
-        ${Icons.verified()}
-        Department of AI &bull; Batch 2025&ndash;2029
-      </div>
-      
-      <h1 class="hero-big-title">
-        JAVA LAB <span class="badge">RECORD</span>
-      </h1>
-
-      <p class="hero-lead">
-        Interactive academic workspace for <strong>Trivikram (25EU02067)</strong>, 
-        featuring 100+ verified object-oriented implementations, architectural comparative matrices, 
-        and live terminal execution outputs.
-      </p>
-
-      <div class="hero-actions-row">
-        <button class="btn-chunky primary" onclick="scrollToCurriculum()">
-          ${Icons.rocket()}
-          Explore Weekly Labs &rarr;
-        </button>
-        <button class="btn-chunky" onclick="navigateTo('profile')">
-          ${Icons.user()}
-          View Student Profile
-        </button>
-        <button class="btn-chunky sky" onclick="openSearchModal()">
-          ${Icons.search()}
-          Search All Programs (Ctrl+K)
-        </button>
-      </div>
-
-      <!-- Student Profile Card (.me) -->
-      <div class="me-card">
-        <div class="me-avatar-wrap">
-          <div class="me-avatar-monogram">
-            <span class="monogram-letters">TR</span>
-            <span class="monogram-sub">25EU02067</span>
-          </div>
-        </div>
-
-        <div class="me-details">
-          <div class="me-heading">
-            Trivikram
-            <span style="font-size: 12px; font-weight: 700; background: var(--blue-light); color: var(--blue-primary); padding: 4px 12px; border: 1px solid var(--border-blue); border-radius: var(--radius-pill);">AI &amp; ML</span>
-          </div>
-          <div class="me-subheading">B.Tech Undergraduate &bull; Section B &bull; 2025&ndash;2029</div>
-
-          <div class="me-grid">
-            <div class="me-item">
-              <dt>Roll Number</dt>
-              <dd>25EU02067</dd>
-            </div>
-            <div class="me-item">
-              <dt>Academic Year</dt>
-              <dd>II Year (2nd Year)</dd>
-            </div>
-            <div class="me-item">
-              <dt>Branch &amp; Dept</dt>
-              <dd>AI &amp; ML</dd>
-            </div>
-            <div class="me-item">
-              <dt>Section</dt>
-              <dd>Section B</dd>
-            </div>
-            <div class="me-item">
-              <dt>Course &amp; Subject</dt>
-              <dd>Java Programming (24CS281)</dd>
-            </div>
-            <div class="me-item">
-              <dt>University</dt>
-              <dd>Siddhartha Academy</dd>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Key Metrics Stats Row -->
-    <div class="stats-row">
-      <div class="stat-tile">
-        <div class="stat-icon-wrap">
-          ${Icons.code()}
-        </div>
-        <div class="stat-info">
-          <div class="stat-num">11</div>
-          <span class="stat-label">Lab Weeks</span>
-          <span class="stat-sub">Complete Curriculum</span>
-        </div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-icon-wrap">
-          ${Icons.terminal()}
-        </div>
-        <div class="stat-info">
-          <div class="stat-num">${totalProgs}+</div>
-          <span class="stat-label">Programs</span>
-          <span class="stat-sub">Executable Code</span>
-        </div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-icon-wrap">
-          ${Icons.check()}
-        </div>
-        <div class="stat-info">
-          <div class="stat-num">100%</div>
-          <span class="stat-label">Compilation</span>
-          <span class="stat-sub">Output Verified</span>
-        </div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-icon-wrap">
-          ${Icons.chip()}
-        </div>
-        <div class="stat-info">
-          <div class="stat-num">21</div>
-          <span class="stat-label">Java Standard</span>
-          <span class="stat-sub">LTS Platform</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Weekly Tiles Grid -->
-    <h2 class="section-headline" id="curriculumHeader">Weekly Laboratory Portfolio</h2>
-
-    <div class="tiles">
-      ${weeks.map(w => {
-        const isViva = w.id === 4 || w.id === 5;
-        const pillText = isViva ? "Viva Exam" : `${w.programs.length} Programs`;
-        const pdfUrl = `docs/week-${String(w.id).padStart(2, "0")}.pdf`;
-
-        let docActions = "";
-        if (isViva) {
-          docActions = `
-            <div class="tile-doc-actions">
-              <span class="tile-status-tag">Oral Viva &bull; No Document</span>
-            </div>
-          `;
-        } else if (w.id === 2) {
-          docActions = `
-            <div class="tile-doc-actions" onclick="event.stopPropagation()">
-              <a class="tile-btn-doc open" href="docs/week-02-oracle.pdf" target="_blank" title="Open Oracle JDK Installation PDF">
-                ${Icons.fileText()} Oracle PDF
-              </a>
-              <a class="tile-btn-doc open" href="docs/week-02-openjdk.pdf" target="_blank" title="Open OpenJDK Installation PDF">
-                ${Icons.fileText()} OpenJDK PDF
-              </a>
-            </div>
-          `;
-        } else {
-          docActions = `
-            <div class="tile-doc-actions" onclick="event.stopPropagation()">
-              <a class="tile-btn-doc open" href="${pdfUrl}" target="_blank" title="Open Week ${w.id} PDF">
-                ${Icons.fileText()} Open PDF
-              </a>
-              <a class="tile-btn-doc download" href="${pdfUrl}" download="Trivikram_Week-${String(w.id).padStart(2, "0")}.pdf" title="Download Week ${w.id} PDF">
-                ${Icons.download()} Download
-              </a>
-            </div>
-          `;
-        }
-
-        return `
-          <div class="tile" onclick="navigateTo('week-${w.id}')">
-            <div>
-              <div class="tile-top">
-                <b class="week-num">${String(w.id).padStart(2, "0")}</b>
-                <span class="tile-pill">${pillText}</span>
-              </div>
-              <h3 class="tile-title">${w.title}</h3>
-              <p class="tile-desc">${w.subtitle}</p>
-            </div>
-            ${docActions}
-            <div class="tile-footer">
-              <span>Inspect Lab Programs</span>
-              <span>${Icons.chevronRight()}</span>
-            </div>
-          </div>
-        `;
-      }).join("")}
-    </div>
-  `;
-}
-
-function scrollToCurriculum() {
-  document.getElementById("curriculumHeader")?.scrollIntoView({ behavior: "smooth" });
+function toggleWeekExpand(wId) {
+  if (expandedWeeks.has(wId)) {
+    expandedWeeks.delete(wId);
+  } else {
+    expandedWeeks.add(wId);
+  }
+  renderSidebarTree();
 }
 
 // ==========================================================================
-// PAGE: STUDENT PROFILE
+// WORKSPACE NAVIGATION & UPDATES
 // ==========================================================================
-function renderProfile() {
-  const app = document.getElementById("app");
-  if (!app) return;
-
-  app.innerHTML = `
-    <div style="margin-bottom: 20px;">
-      <button class="btn-chunky" onclick="navigateTo('home')">
-        ${Icons.chevronLeft()} Back to Home
-      </button>
-    </div>
-
-    <div class="me-card">
-      <div class="me-avatar-wrap">
-        <div class="me-avatar-monogram">
-          <span class="monogram-letters">TR</span>
-          <span class="monogram-sub">25EU02067</span>
-        </div>
-      </div>
-
-      <div class="me-details">
-        <div class="me-heading">
-          Trivikram
-          <span style="font-size: 12px; font-weight: 700; background: var(--blue-light); color: var(--blue-primary); padding: 4px 12px; border: 1px solid var(--border-blue); border-radius: var(--radius-pill);">AI &amp; ML</span>
-        </div>
-        <div class="me-subheading">B.Tech in Artificial Intelligence &amp; Machine Learning (Batch 2025&ndash;2029)</div>
-
-        <div class="me-grid">
-          <div class="me-item">
-            <dt>Student Name</dt>
-            <dd>Trivikram</dd>
-          </div>
-          <div class="me-item">
-            <dt>Roll Number</dt>
-            <dd>25EU02067</dd>
-          </div>
-          <div class="me-item">
-            <dt>Academic Year</dt>
-            <dd>II Year (2nd Year)</dd>
-          </div>
-          <div class="me-item">
-            <dt>Branch &amp; Dept</dt>
-            <dd>AI &amp; ML</dd>
-          </div>
-          <div class="me-item">
-            <dt>Section</dt>
-            <dd>Section B</dd>
-          </div>
-          <div class="me-item">
-            <dt>Course &amp; Subject</dt>
-            <dd>Java Programming (24CS281)</dd>
-          </div>
-          <div class="me-item">
-            <dt>Institution</dt>
-            <dd>Siddhartha Academy of Higher Education</dd>
-          </div>
-          <div class="me-item">
-            <dt>Development Platform</dt>
-            <dd>Oracle JDK &amp; OpenJDK 21 LTS</dd>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="aim-box" style="margin-top: 24px;">
-      <div class="aim-label">Academic Portfolio Overview</div>
-      <div class="aim-text" style="font-weight: 500; font-size: 14.5px; line-height: 1.7;">
-        This virtual laboratory record documents the practical exercises, program solutions, 
-        and compilation outputs developed by <strong>Trivikram</strong> for the Java Programming course. 
-        It spans comprehensive foundational concepts, object-oriented design principles, custom package 
-        hierarchies, interface polymorphism, robust exception handling, and concurrent multithreading.
-      </div>
-    </div>
-
-    <h2 class="section-headline" style="margin-top: 32px;">Core Lab Competencies</h2>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px;">
-      <span class="competency-pill">Object-Oriented Programming (OOP)</span>
-      <span class="competency-pill">Dynamic Method Dispatch</span>
-      <span class="competency-pill">User-Defined Packages &amp; CLASSPATH</span>
-      <span class="competency-pill">Interface-Based Polymorphism</span>
-      <span class="competency-pill">Checked &amp; Unchecked Exceptions</span>
-      <span class="competency-pill">Byte &amp; Character Streams</span>
-      <span class="competency-pill">Multithreaded Synchronization</span>
-      <span class="competency-pill">Garbage Collection &amp; Memory Safety</span>
-    </div>
-  `;
+function selectWeek(wId) {
+  currentWeekId = wId;
+  currentProgramIdx = 0;
+  expandedWeeks.add(wId);
+  renderSidebarTree();
+  updateWorkspace();
+  updateInspector();
+  updateUrlHash();
 }
 
-// ==========================================================================
-// PAGE: WEEK VIEW
-// ==========================================================================
-function renderWeek(weekId, filterQuery = "") {
-  const app = document.getElementById("app");
-  if (!app) return;
+function selectProgram(wId, pIdx) {
+  currentWeekId = wId;
+  currentProgramIdx = pIdx;
+  currentTab = "code";
+  expandedWeeks.add(wId);
+  renderSidebarTree();
+  updateWorkspace();
+  updateInspector();
+  updateUrlHash();
+}
 
-  const week = weeks.find(w => w.id === weekId);
+function selectDocument(docType) {
+  currentWeek2SubDoc = docType;
+  currentTab = "doc";
+  updateWorkspace();
+  updateInspector();
+  updateUrlHash();
+}
+
+function switchTab(tabKey) {
+  currentTab = tabKey;
+  document.querySelectorAll(".workspace-tab").forEach(tab => {
+    tab.classList.toggle("active", tab.dataset.tab === tabKey);
+  });
+  document.querySelectorAll(".tab-pane").forEach(pane => {
+    pane.classList.toggle("active", pane.id === `tab-${tabKey}`);
+  });
+  updateUrlHash();
+}
+
+function updateWorkspace() {
+  const week = weeks.find(w => w.id === currentWeekId);
   if (!week) return;
 
-  if (weekId === 1) {
-    renderWeek1ComparativeTable(week);
-    return;
-  }
+  // Update Breadcrumb
+  const bWeek = document.getElementById("breadcrumbWeek");
+  const bTitle = document.getElementById("breadcrumbTitle");
+  if (bWeek) bWeek.textContent = `Week ${String(week.id).padStart(2, "0")}`;
+  if (bTitle) bTitle.textContent = week.subtitle;
 
-  if (weekId === 4 || weekId === 5) {
-    renderVivaView(week);
-    return;
-  }
+  // Update Tabs
+  document.querySelectorAll(".workspace-tab").forEach(tab => {
+    tab.classList.toggle("active", tab.dataset.tab === currentTab);
+  });
+  document.querySelectorAll(".tab-pane").forEach(pane => {
+    pane.classList.toggle("active", pane.id === `tab-${currentTab}`);
+  });
 
-  let progs = week.programs;
-  if (filterQuery && filterQuery.trim()) {
-    const q = filterQuery.toLowerCase().trim();
-    progs = week.programs.filter((p, i) =>
-      p.title.toLowerCase().includes(q) ||
-      p.description.toLowerCase().includes(q) ||
-      `program ${i + 1}`.includes(q)
-    );
-  }
+  // Render Sub-Panes
+  renderTabDocument(week);
+  renderTabOverview(week);
+  renderTabCode(week);
+}
 
-  app.innerHTML = `
-    <div style="margin-bottom: 16px;">
-      <button class="btn-chunky" onclick="navigateTo('home')">
-        ${Icons.chevronLeft()} Back to All Weeks
-      </button>
-    </div>
+// ==========================================================================
+// TAB 1: EMBEDDED RESPONSIVE PDF VIEWER
+// ==========================================================================
+function renderTabDocument(week) {
+  const container = document.getElementById("tab-doc");
+  if (!container) return;
 
-    <div class="week-banner">
-      <div class="week-banner-top">
-        <span class="week-banner-badge">WEEK ${String(week.id).padStart(2, "0")}</span>
-        <span style="font-weight: 800; font-size: 13px; text-transform: uppercase;">
-          ${week.programs.length} Program${week.programs.length === 1 ? "" : "s"} Assigned
-        </span>
-      </div>
-      <h1 class="week-banner-title">${week.title}</h1>
-      <p class="week-banner-sub">${week.subtitle}</p>
+  const isViva = week.id === 4 || week.id === 5;
 
-      <div class="filter-input-wrap">
-        <input 
-          type="text" 
-          class="filter-input" 
-          placeholder="Filter programs in Week ${week.id} by keyword (e.g. constructor, array, method)..." 
-          value="${escapeHtml(filterQuery)}"
-          oninput="handleWeekFilter(event, ${weekId})"
-        >
-      </div>
-
-      ${week.id === 2 ? `
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 14px;">
-          <div class="week-doc-banner" style="margin-top: 0;">
-            <div class="week-doc-info">
-              <div class="week-doc-icon">${Icons.fileText()}</div>
-              <div>
-                <div class="week-doc-title">Oracle JDK Installation &bull; Week 02</div>
-                <div class="week-doc-sub">Oracle JDK 26 installation, Windows PATH / JAVA_HOME configuration, and command prompt verification.</div>
-              </div>
-            </div>
-            <div class="week-doc-btns">
-              <a class="btn-chunky primary" href="docs/week-02-oracle.pdf" target="_blank">
-                ${Icons.externalLink()} Open Oracle PDF
-              </a>
-              <a class="btn-chunky" href="docs/week-02-oracle.pdf" download="Trivikram_Week-02_Oracle_JDK.pdf">
-                ${Icons.download()} Download
-              </a>
-            </div>
+  if (isViva) {
+    container.innerHTML = `
+      <div class="overview-scroll-body">
+        <div class="viva-assessment-box">
+          <div class="viva-beacon-large">
+            ${Icons.coffee()}
           </div>
-
-          <div class="week-doc-banner" style="margin-top: 0;">
-            <div class="week-doc-info">
-              <div class="week-doc-icon">${Icons.fileText()}</div>
-              <div>
-                <div class="week-doc-title">OpenJDK Installation &bull; Week 02</div>
-                <div class="week-doc-sub">OpenJDK 26 installation, MSI setup, and Ubuntu WSL execution.</div>
-              </div>
-            </div>
-            <div class="week-doc-btns">
-              <a class="btn-chunky primary" href="docs/week-02-openjdk.pdf" target="_blank">
-                ${Icons.externalLink()} Open OpenJDK PDF
-              </a>
-              <a class="btn-chunky" href="docs/week-02-openjdk.pdf" download="Trivikram_Week-02_OpenJDK.pdf">
-                ${Icons.download()} Download
-              </a>
-            </div>
-          </div>
-        </div>
-      ` : `
-        <div class="week-doc-banner">
-          <div class="week-doc-info">
-            <div class="week-doc-icon">${Icons.fileText()}</div>
-            <div>
-              <div class="week-doc-title">Official Lab Document &bull; Week ${String(week.id).padStart(2, "0")}</div>
-              <div class="week-doc-sub">Full verified laboratory record with objectives, procedures, and outputs.</div>
-            </div>
-          </div>
-          <div class="week-doc-btns">
-            <a class="btn-chunky primary" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" target="_blank">
-              ${Icons.externalLink()} Open Full PDF
-            </a>
-            <a class="btn-chunky" href="docs/week-${String(week.id).padStart(2, '0')}.pdf" download="Trivikram_Week-${String(week.id).padStart(2, '0')}.pdf">
-              ${Icons.download()} Download PDF
-            </a>
-            <button class="btn-chunky sky" onclick="openUploadModal(${week.id})">
-              ${Icons.upload()} Upload File
+          <h2 class="viva-title">Week ${week.id}: Oral Viva Voce Examination</h2>
+          <p class="viva-desc">
+            This laboratory milestone evaluates conceptual mastery, JVM execution flow, 
+            and algorithmic problem solving through one-on-one technical questioning by faculty incharge <strong>Ramesh Sir</strong>.
+          </p>
+          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <button class="ide-action-btn primary" onclick="switchTab('overview')">
+              View Syllabus Evaluation Rubrics &rarr;
+            </button>
+            <button class="ide-action-btn" onclick="openUploadModal(${week.id})">
+              ${Icons.upload()} Attach Oral Assessment Notes
             </button>
           </div>
         </div>
-      `}
-    </div>
-
-    <div class="program-rows-list">
-      ${progs.length > 0 ? progs.map(program => {
-        const originalIndex = week.programs.indexOf(program);
-        const fileInfo = getProgramFilePath(week.id, originalIndex);
-        const isW2Oracle = week.id === 2 && originalIndex === 0;
-        const isW2OpenJDK = week.id === 2 && originalIndex === 1;
-        return `
-          <div class="row" onclick="navigateTo('program', { weekId: ${week.id}, programIdx: ${originalIndex} })">
-            <b class="prog-tag">P${String(originalIndex + 1).padStart(2, "0")}</b>
-            <div class="row-content">
-              <div class="row-title">${program.title}</div>
-              <div class="row-desc">${program.description}</div>
-            </div>
-            <div class="row-actions" onclick="event.stopPropagation()">
-              ${isW2Oracle ? `
-                <a class="row-btn-action" href="docs/week-02-oracle.pdf" target="_blank" title="Open Oracle JDK Installation Guide PDF">
-                  ${Icons.fileText()} Oracle PDF
-                </a>
-              ` : ''}
-              ${isW2OpenJDK ? `
-                <a class="row-btn-action" href="docs/week-02-openjdk.pdf" target="_blank" title="Open OpenJDK Installation Guide PDF">
-                  ${Icons.fileText()} OpenJDK PDF
-                </a>
-              ` : ''}
-              <a class="row-btn-action" href="${fileInfo.path}" target="_blank" title="Open ${fileInfo.fileName} directly in browser">
-                ${Icons.fileText()} Open File
-              </a>
-              <a class="row-btn-action download" href="${fileInfo.path}" download="${fileInfo.fileName}" title="Download ${fileInfo.fileName}">
-                ${Icons.download()} Download
-              </a>
-            </div>
-            <div class="row-arrow">${Icons.chevronRight()}</div>
-          </div>
-        `;
-      }).join("") : `
-        <div class="viva-card" style="padding: 30px;">
-          <h3>No programs matching "${escapeHtml(filterQuery)}"</h3>
-          <p>Try searching for a different keyword or view all programs.</p>
-        </div>
-      `}
-    </div>
-  `;
-}
-
-function handleWeekFilter(event, weekId) {
-  renderWeek(weekId, event.target.value);
-}
-
-// ==========================================================================
-// WEEK 1: 20-PARAMETER COMPARATIVE TABLE (BLUE & WHITE)
-// ==========================================================================
-function renderWeek1ComparativeTable(week) {
-  const app = document.getElementById("app");
-  if (!app) return;
-
-  const tableData = window.comparativeTableData || [];
-
-  app.innerHTML = `
-    <div style="margin-bottom: 16px;">
-      <button class="btn-chunky" onclick="navigateTo('home')">
-        ${Icons.chevronLeft()} Back to All Weeks
-      </button>
-    </div>
-
-    <div class="week-banner">
-      <div class="week-banner-top">
-        <span class="week-banner-badge">WEEK 01</span>
-        <span style="font-weight: 800; font-size: 13px; text-transform: uppercase;">
-          20 Parameters &bull; 5 Languages
-        </span>
-      </div>
-      <h1 class="week-banner-title">Comparative Table — Java, C, C++, Python &amp; JavaScript</h1>
-      <p class="week-banner-sub">
-        Comprehensive comparative study analyzing syntax, paradigm, compilation model, memory allocation, 
-        and industry applications across 5 mainstream programming languages.
-      </p>
-
-      <div class="filter-input-wrap">
-        <input 
-          type="text" 
-          id="tableFilterInput"
-          class="filter-input" 
-          placeholder="Filter comparative parameters (e.g. Memory, Speed, Creator, OOP)..." 
-          oninput="filterTableRows(this.value)"
-        >
-      </div>
-
-      <div class="week-doc-banner">
-        <div class="week-doc-info">
-          <div class="week-doc-icon">${Icons.fileText()}</div>
-          <div>
-            <div class="week-doc-title">Official Lab Document &bull; Week 01</div>
-            <div class="week-doc-sub">Comparative Study of Programming Languages matrix (PDF record).</div>
-          </div>
-        </div>
-        <div class="week-doc-btns">
-          <a class="btn-chunky primary" href="docs/week-01.pdf" target="_blank">
-            ${Icons.externalLink()} Open Full PDF
-          </a>
-          <a class="btn-chunky" href="docs/week-01.pdf" download="Trivikram_Week-01.pdf">
-            ${Icons.download()} Download PDF
-          </a>
-          <button class="btn-chunky sky" onclick="openUploadModal(1)">
-            ${Icons.upload()} Upload File
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="table-wrap">
-      <table class="comp-tbl" id="mainCompTable">
-        <thead>
-          <tr>
-            <th style="min-width: 170px;">Parameter</th>
-            <th style="min-width: 210px;">Java (Java 21 LTS)</th>
-            <th style="min-width: 210px;">C (ISO/IEC 9899)</th>
-            <th style="min-width: 210px;">C++ (Modern C++)</th>
-            <th style="min-width: 210px;">Python (3.12+)</th>
-            <th style="min-width: 210px;">JavaScript (ES2024)</th>
-          </tr>
-        </thead>
-        <tbody id="compTableTbody">
-          ${tableData.map(item => `
-            <tr data-search="${escapeHtml((item.param + ' ' + item.java + ' ' + item.c + ' ' + item.cpp + ' ' + item.python + ' ' + item.js).toLowerCase())}">
-              <td>${item.id}. ${item.param}</td>
-              <td>${item.java}</td>
-              <td>${item.c}</td>
-              <td>${item.cpp}</td>
-              <td>${item.python}</td>
-              <td>${item.js}</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-    </div>
-
-    <div class="aim-box" style="margin-top: 20px;">
-      <div class="aim-label">Analytical Conclusion</div>
-      <div class="aim-text">
-        Java establishes an optimal enterprise foundation through JVM portability ("Write Once, Run Anywhere"), 
-        strong static type checking, and automatic garbage collection. C and C++ provide direct hardware execution 
-        for systems and gaming engines, Python provides rapid scripting for machine learning and AI, and JavaScript 
-        powers dynamic web applications.
-      </div>
-    </div>
-  `;
-}
-
-function filterTableRows(query) {
-  const q = query.toLowerCase().trim();
-  const rows = document.querySelectorAll("#compTableTbody tr");
-  rows.forEach(r => {
-    const text = r.getAttribute("data-search") || "";
-    r.style.display = text.includes(q) ? "" : "none";
-  });
-}
-
-// ==========================================================================
-// WEEK 4 & 5: VIVA VOCE VIEW
-// ==========================================================================
-function renderVivaView(week) {
-  const app = document.getElementById("app");
-  if (!app) return;
-
-  app.innerHTML = `
-    <div style="margin-bottom: 16px;">
-      <button class="btn-chunky" onclick="navigateTo('home')">
-        ${Icons.chevronLeft()} Back to All Weeks
-      </button>
-    </div>
-
-    <div class="week-banner">
-      <div class="week-banner-top">
-        <span class="week-banner-badge">WEEK ${String(week.id).padStart(2, "0")}</span>
-        <span style="font-weight: 800; font-size: 13px; text-transform: uppercase;">Assessment Milestone</span>
-      </div>
-      <h1 class="week-banner-title">${week.title}</h1>
-      <p class="week-banner-sub">${week.subtitle}</p>
-    </div>
-
-    <div class="viva-card">
-      <div style="margin-bottom: 14px; color: var(--blue-primary);">
-        <svg class="svg-icon stroke" style="width: 52px; height: 52px;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      </div>
-      <h3>Viva Voce &amp; Practical Assessment</h3>
-      <p>
-        No programming task was assigned for this week. 
-        This session was dedicated to comprehensive oral viva evaluation, code walkthroughs, 
-        and continuous lab performance evaluation.
-      </p>
-      <button class="btn-chunky primary" onclick="navigateTo('week-6')">
-        Continue to Week 06 &rarr;
-      </button>
-    </div>
-  `;
-}
-
-// ==========================================================
-// PAGE: PROGRAM DETAIL (IDE WORKSPACE VIEW)
-// ==========================================================
-function renderProgram(weekId, index) {
-  const app = document.getElementById("app");
-  if (!app) return;
-
-  const week = weeks.find(w => w.id === weekId);
-  const program = week?.programs[index];
-  if (!week || !program) return;
-
-  const output = getGeneratedOutput(weekId, index);
-  const lines = program.code.split("\n");
-  const lineNumbers = lines.map((_, i) => i + 1).join("\n");
-
-  const fileInfo = getProgramFilePath(weekId, index);
-  const isFirst = index === 0;
-  const isLast = index === week.programs.length - 1;
-
-  app.innerHTML = `
-    <!-- Top Action Bar -->
-    <div style="margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-      <button class="btn-chunky" onclick="navigateTo('week-${weekId}')">
-        ${Icons.chevronLeft()} Week ${weekId} Programs
-      </button>
-
-      <div style="display: flex; gap: 8px;">
-        <button class="btn-chunky" ${isFirst ? "disabled" : ""} onclick="navigateTo('program', { weekId: ${weekId}, programIdx: ${index - 1} })">
-          ${Icons.chevronLeft()} Prev
-        </button>
-        <button class="btn-chunky" ${isLast ? "disabled" : ""} onclick="navigateTo('program', { weekId: ${weekId}, programIdx: ${index + 1} })">
-          Next ${Icons.chevronRight()}
-        </button>
-      </div>
-    </div>
-
-    <!-- Title & Objective -->
-    <div class="week-banner" style="margin-bottom: 18px;">
-      <div class="week-banner-top">
-        <span class="week-banner-badge">WEEK ${String(weekId).padStart(2, "0")} &bull; PROGRAM ${String(index + 1).padStart(2, "0")}</span>
-        <span style="font-weight: 800; font-size: 13px; text-transform: uppercase;">Verified Implementation</span>
-      </div>
-      <h1 class="week-banner-title">${program.title}</h1>
-      <p class="week-banner-sub">${program.description}</p>
-    </div>
-
-    <!-- Action Bar Buttons -->
-    <div class="bar">
-      ${weekId === 2 ? (index === 0 ? `
-        <a class="btn-chunky primary" href="docs/week-02-oracle.pdf" target="_blank" title="Open Oracle JDK Installation PDF">
-          ${Icons.fileText()} View Oracle PDF
-        </a>
-      ` : `
-        <a class="btn-chunky primary" href="docs/week-02-openjdk.pdf" target="_blank" title="Open OpenJDK Installation PDF">
-          ${Icons.fileText()} View OpenJDK PDF
-        </a>
-      `) : (weekId !== 4 && weekId !== 5 ? `
-        <a class="btn-chunky primary" href="docs/week-${String(weekId).padStart(2, '0')}.pdf" target="_blank" title="Open Official Week ${weekId} PDF Document">
-          ${Icons.fileText()} View Week PDF
-        </a>
-      ` : '')}
-      <a class="btn-chunky" href="${fileInfo.path}" target="_blank" title="Open source file directly in browser">
-        ${Icons.externalLink()} Open .java
-      </a>
-      <button class="btn-chunky" onclick="copyProgramCode(${weekId}, ${index})">
-        ${Icons.copy()} Copy Code
-      </button>
-      <a class="btn-chunky" href="${fileInfo.path}" download="${fileInfo.fileName}">
-        ${Icons.download()} Download .java
-      </a>
-      <button class="btn-chunky sky" onclick="copyProgramOutput(${weekId}, ${index})">
-        ${Icons.terminal()} Copy Output
-      </button>
-      <button class="btn-chunky" onclick="openUploadModal(${weekId})">
-        ${Icons.upload()} Upload / Replace
-      </button>
-    </div>
-
-    <!-- Java Source Code Window with Diamond Rhombus Window Dots -->
-    <div class="code-frame">
-      <div class="code-topbar">
-        <div class="code-dots">
-          <span class="code-diamond-stud stud-1"></span>
-          <span class="code-diamond-stud stud-2"></span>
-          <span class="code-diamond-stud stud-3"></span>
-        </div>
-        <span class="code-filename">${extractClassName(program.code)}.java</span>
-        <span style="font-size: 11px; font-weight: 800; color: #94a3b8; text-transform: uppercase;">UTF-8 &bull; Java 21</span>
-      </div>
-      <div class="code-body">
-        <div class="code-lines">${lineNumbers}</div>
-        <pre class="code-text"><code>${escapeHtml(program.code)}</code></pre>
-      </div>
-    </div>
-
-    <!-- Terminal Output Window with Diamond Rhombus Window Dots -->
-    <div class="term-frame">
-      <div class="term-topbar">
-        <div class="code-dots">
-          <span class="code-diamond-stud stud-1"></span>
-          <span class="code-diamond-stud stud-2"></span>
-          <span class="code-diamond-stud stud-3"></span>
-        </div>
-        <span class="term-title">PowerShell &bull; java -version 21.0.2 &bull; Verification Terminal</span>
-        <span style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase;">Exit Code: 0</span>
-      </div>
-      <div class="term-body">
-        <div class="term-prompt">PS C:\\Users\\Trivikram\\JavaLab\\Week-${String(weekId).padStart(2, "0")}&gt; javac ${extractClassName(program.code)}.java &amp;&amp; java ${extractClassName(program.code)}</div>
-        <div class="term-output">${escapeHtml(output)}</div>
-      </div>
-    </div>
-  `;
-}
-
-function extractClassName(code) {
-  const clean = code.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
-  const pubMatch = clean.match(/public\s+(?:final\s+)?class\s+([A-Za-z0-9_]+)/);
-  if (pubMatch) return pubMatch[1];
-  
-  const classMatches = [...clean.matchAll(/class\s+([A-Za-z0-9_]+)\s*\{([\s\S]*?)\}/g)];
-  for (const m of classMatches) {
-    if (m[2].includes('main')) return m[1];
-  }
-  const firstMatch = clean.match(/class\s+([A-Za-z0-9_]+)/);
-  return firstMatch ? firstMatch[1] : 'Main';
-}
-
-// ==========================================================================
-// ACTIONS: COPY & DOWNLOAD
-// ==========================================================================
-function copyProgramCode(weekId, index) {
-  const prog = weeks.find(w => w.id === weekId)?.programs[index];
-  if (!prog) return;
-
-  navigator.clipboard.writeText(prog.code).then(() => {
-    showToast("✓ Java source code copied to clipboard!");
-  }).catch(() => {
-    showToast("Failed to copy code");
-  });
-}
-
-function copyProgramOutput(weekId, index) {
-  const out = getGeneratedOutput(weekId, index);
-  navigator.clipboard.writeText(out).then(() => {
-    showToast("✓ Terminal output copied to clipboard!");
-  }).catch(() => {
-    showToast("Failed to copy output");
-  });
-}
-
-function downloadProgramJava(weekId, index) {
-  const prog = weeks.find(w => w.id === weekId)?.programs[index];
-  if (!prog) return;
-
-  const className = extractClassName(prog.code);
-  const blob = new Blob([prog.code], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${className}.java`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showToast(`✓ Downloaded ${className}.java`);
-}
-
-function showToast(msg) {
-  const t = document.getElementById("toastNotice");
-  const m = document.getElementById("toastMessage");
-  if (!t || !m) return;
-
-  m.innerText = msg;
-  t.style.display = "inline-flex";
-  clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(() => {
-    t.style.display = "none";
-  }, 2500);
-}
-
-// ==========================================================================
-// GLOBAL SEARCH MODAL (Ctrl + K)
-// ==========================================================================
-function openSearchModal() {
-  const modal = document.getElementById("searchModal");
-  const input = document.getElementById("searchInput");
-  if (!modal || !input) return;
-
-  modal.classList.add("open");
-  input.value = "";
-  input.focus();
-  renderSearchResults("");
-}
-
-function closeSearchModal() {
-  const modal = document.getElementById("searchModal");
-  if (modal) modal.classList.remove("open");
-}
-
-function handleSearchBackdrop(e) {
-  if (e.target.id === "searchModal") {
-    closeSearchModal();
-  }
-}
-
-function handleSearchInput(e) {
-  renderSearchResults(e.target.value);
-}
-
-function renderSearchResults(query) {
-  const container = document.getElementById("searchResults");
-  if (!container) return;
-
-  const q = query.toLowerCase().trim();
-  const matches = [];
-
-  weeks.forEach(w => {
-    w.programs.forEach((p, idx) => {
-      if (!q || p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)) {
-        matches.push({ week: w, prog: p, idx });
-      }
-    });
-  });
-
-  if (matches.length === 0) {
-    container.innerHTML = `
-      <div style="padding: 24px; text-align: center; font-weight: 700; color: #64748b;">
-        No programs matching "${escapeHtml(query)}" found.
       </div>
     `;
     return;
   }
 
-  container.innerHTML = matches.slice(0, 25).map(m => `
-    <div class="search-item" onclick="selectSearchResult(${m.week.id}, ${m.idx})">
-      <div>
-        <div style="font-weight: 700; font-size: 14px; color: var(--text-main);">${m.prog.title}</div>
-        <div style="font-size: 12px; font-weight: 500; color: var(--text-muted);">${m.prog.description.slice(0, 95)}...</div>
-      </div>
-      <span style="font-size: 11px; font-weight: 700; background: var(--blue-light); color: var(--blue-primary); padding: 3px 10px; border: 1px solid var(--border-blue); border-radius: var(--radius-pill); white-space: nowrap;">
-        W${String(m.week.id).padStart(2, "0")} &bull; P${String(m.idx + 1).padStart(2, "0")}
-      </span>
-    </div>
-  `).join("");
-}
+  // Determine active PDF for this week
+  let activePdfUrl = `docs/week-${String(week.id).padStart(2, "0")}.pdf`;
+  let activeFileName = `week-${String(week.id).padStart(2, "0")}.pdf`;
+  let multiBarHtml = "";
 
-function selectSearchResult(weekId, index) {
-  closeSearchModal();
-  navigateTo("program", { weekId, programIdx: index });
-}
-
-function setupKeyboardShortcuts() {
-  window.addEventListener("keydown", (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-      e.preventDefault();
-      openSearchModal();
+  if (week.id === 2) {
+    if (currentWeek2SubDoc === "oracle") {
+      activePdfUrl = "docs/week-02-oracle.pdf";
+      activeFileName = "week-02-oracle.pdf";
+    } else {
+      activePdfUrl = "docs/week-02-openjdk.pdf";
+      activeFileName = "week-02-openjdk.pdf";
     }
+
+    multiBarHtml = `
+      <div class="pdf-multi-bar">
+        <div class="pdf-multi-tabs">
+          <button class="pdf-multi-pill ${currentWeek2SubDoc === 'oracle' ? 'active' : ''}" onclick="selectDocument('oracle')">
+            ${Icons.filePdf()} Oracle JDK Installation PDF (439 KB)
+          </button>
+          <button class="pdf-multi-pill ${currentWeek2SubDoc === 'openjdk' ? 'active' : ''}" onclick="selectDocument('openjdk')">
+            ${Icons.filePdf()} OpenJDK Installation PDF (531 KB)
+          </button>
+        </div>
+        <div style="font-size: 11.5px; color: var(--text-subtle); font-family: var(--font-mono);">
+          Dual Verification Guides Available
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = `
+    <div class="pdf-viewer-container">
+      ${multiBarHtml}
+
+      <div class="pdf-embed-wrapper">
+        <iframe 
+          id="idePdfFrame" 
+          src="${activePdfUrl}" 
+          class="pdf-embed-frame" 
+          title="Week ${week.id} Laboratory Record PDF">
+        </iframe>
+      </div>
+
+      <div class="pdf-fallback-bar">
+        <div class="pdf-fallback-info">
+          <span style="color: var(--accent-primary);">${Icons.filePdf()}</span>
+          <span>Previewing <strong>${activeFileName}</strong></span>
+          <span>&bull;</span>
+          <span style="font-family: var(--font-mono);">${docRegistry[week.id]?.size || 'Verified'}</span>
+        </div>
+
+        <div class="pdf-fallback-actions">
+          <a class="ide-action-btn" href="${activePdfUrl}" target="_blank">
+            ${Icons.externalLink()} Open in New Tab
+          </a>
+          <a class="ide-action-btn primary" href="${activePdfUrl}" download="Trivikram_${activeFileName}">
+            ${Icons.download()} Download PDF
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================================================
+// TAB 2: LAB OVERVIEW & SYLLABUS
+// ==========================================================================
+function renderTabOverview(week) {
+  const container = document.getElementById("tab-overview");
+  if (!container) return;
+
+  const concepts = weekConceptsMap[week.id] || ["Core Java", "OOPs Concepts"];
+  const conceptsHtml = concepts.map(c => `<span class="concept-pill">${c}</span>`).join("");
+
+  let programsTableHtml = "";
+  if (week.programs.length > 0) {
+    const rowsHtml = week.programs.map((p, idx) => {
+      const clsName = extractClassName(p.code);
+      return `
+        <tr onclick="selectProgram(${week.id}, ${idx})">
+          <td style="width: 70px;">
+            <span class="prog-index-pill">P${String(idx + 1).padStart(2, '0')}</span>
+          </td>
+          <td style="font-weight: 600; color: #ffffff;">${p.title}</td>
+          <td style="font-family: var(--font-mono); font-size: 11.5px; color: var(--accent-cyan);">${clsName}.java</td>
+          <td style="text-align: right;">
+            <button class="ide-action-btn" style="padding: 3px 8px; font-size: 11px;">
+              View Code &rarr;
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    programsTableHtml = `
+      <div class="concepts-section-title">
+        ${Icons.fileCode()} Laboratory Programs & Exercises (${week.programs.length})
+      </div>
+      <div class="syllabus-table-card">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Program Title & Objective</th>
+              <th>Class Name</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  container.innerHTML = `
+    <div class="overview-scroll-body">
+      <div class="overview-aim-card">
+        <div class="aim-kicker">Laboratory Aim &amp; Learning Objectives // Week ${String(week.id).padStart(2, '0')}</div>
+        <h2 class="aim-title-text">${week.subtitle}</h2>
+        <p class="aim-body-text">
+          Comprehensive practical laboratory module designed for <strong>24CS281 (Java Programming)</strong> at 
+          <strong>Siddhartha Academy of Higher Education</strong>. Guided and verified by <strong>Ramesh Sir</strong>.
+        </p>
+      </div>
+
+      <div class="concepts-section-title">
+        ${Icons.check()} Key Theoretical Concepts Covered
+      </div>
+      <div class="concept-tags-grid">
+        ${conceptsHtml}
+      </div>
+
+      ${programsTableHtml}
+    </div>
+  `;
+}
+
+// ==========================================================================
+// TAB 3: QUICK CODE SNIPPET & TERMINAL OUTPUT
+// ==========================================================================
+function renderTabCode(week) {
+  const container = document.getElementById("tab-code");
+  if (!container) return;
+
+  if (week.programs.length === 0) {
+    container.innerHTML = `
+      <div style="padding: 40px 20px; text-align: center; color: var(--text-dim);">
+        <h3>No Code Snippets for Week ${week.id}</h3>
+        <p style="margin-top: 8px;">This milestone is an Oral Viva Voce Examination.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const prog = week.programs[currentProgramIdx] || week.programs[0];
+  const clsName = extractClassName(prog.code);
+  const pTag = "P" + String(currentProgramIdx + 1).padStart(2, "0");
+  const fileName = `${pTag}_${clsName}.java`;
+
+  // Selector chips
+  const chipsHtml = week.programs.map((p, idx) => {
+    return `
+      <button class="prog-chip ${idx === currentProgramIdx ? 'active' : ''}" onclick="selectProgram(${week.id}, ${idx})">
+        P${String(idx + 1).padStart(2, '0')}: ${extractClassName(p.code)}
+      </button>
+    `;
+  }).join("");
+
+  // Line numbers
+  const lines = prog.code.split("\n");
+  const gutterHtml = lines.map((_, i) => `<div>${i + 1}</div>`).join("");
+  const syntaxCode = highlightJavaSyntax(escapeHtml(prog.code));
+
+  // Terminal Output
+  const outputText = window.getGeneratedOutput ? window.getGeneratedOutput(week.id, currentProgramIdx) : "Output verified.";
+
+  container.innerHTML = `
+    <div class="code-tab-body">
+      <!-- Subprogram Selector Bar -->
+      <div class="prog-selector-bar">
+        ${chipsHtml}
+      </div>
+
+      <!-- IDE Code Window -->
+      <div class="ide-code-window">
+        <div class="ide-window-topbar">
+          <div class="ide-window-dots">
+            <span class="dot-red"></span>
+            <span class="dot-amber"></span>
+            <span class="dot-green"></span>
+          </div>
+
+          <div class="ide-window-filename">
+            ${Icons.fileCode()} ${fileName}
+          </div>
+
+          <div class="ide-window-actions">
+            <button class="code-copy-btn" onclick="copyActiveCode()">
+              ${Icons.copy()} Copy Code
+            </button>
+            <button class="code-copy-btn" onclick="downloadActiveJava()">
+              ${Icons.download()} .java
+            </button>
+          </div>
+        </div>
+
+        <div class="ide-code-viewport">
+          <div class="code-gutter">${gutterHtml}</div>
+          <pre class="code-canvas"><code>${syntaxCode}</code></pre>
+        </div>
+      </div>
+
+      <!-- Terminal Console Window -->
+      <div class="ide-terminal-window">
+        <div class="ide-terminal-topbar">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            ${Icons.terminal()} PowerShell // Java 21 Execution Output
+          </div>
+          <div>Verified Output</div>
+        </div>
+
+        <div class="ide-terminal-body">
+          <div class="term-cmd-prompt">PS C:\\Java> javac ${fileName}</div>
+          <div class="term-cmd-prompt">PS C:\\Java> java ${clsName}</div>
+          <div style="color: #f8fafc; margin-top: 4px;">${escapeHtml(outputText)}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================================================
+// RIGHT INSPECTOR / METADATA PANEL UPDATES
+// ==========================================================================
+function updateInspector() {
+  const week = weeks.find(w => w.id === currentWeekId);
+  if (!week) return;
+
+  const totalWeeks = weeks.length;
+  const totalProgs = weeks.reduce((sum, w) => sum + w.programs.length, 0);
+
+  // Active File Info
+  const isViva = week.id === 4 || week.id === 5;
+  let activeDocName = `week-${String(week.id).padStart(2, "0")}.pdf`;
+  let activeDocSize = docRegistry[week.id]?.size || "450 KB";
+
+  if (week.id === 2 && currentWeek2SubDoc === "openjdk") {
+    activeDocName = "week-02-openjdk.pdf";
+    activeDocSize = "531.0 KB";
+  } else if (week.id === 2) {
+    activeDocName = "week-02-oracle.pdf";
+    activeDocSize = "439.0 KB";
+  }
+
+  const inspector = document.getElementById("inspectorPanel");
+  if (!inspector) return;
+
+  inspector.innerHTML = `
+    <!-- Lab Metrics Bento Card -->
+    <div class="inspector-section-title">
+      <span>Curriculum Metrics</span>
+      <span style="color: var(--accent-emerald);">● Online</span>
+    </div>
+    <div class="inspector-bento-card">
+      <div class="bento-metric-tile">
+        <span class="bento-num">${totalWeeks}</span>
+        <span class="bento-label">Total Lab Weeks</span>
+      </div>
+      <div class="bento-metric-tile">
+        <span class="bento-num">${totalProgs}+</span>
+        <span class="bento-label">Programs Verified</span>
+      </div>
+      <div class="bento-metric-tile">
+        <span class="bento-num" style="color: var(--accent-cyan); font-size: 18px;">JDK 21</span>
+        <span class="bento-label">LTS Toolchain</span>
+      </div>
+      <div class="bento-metric-tile">
+        <span class="bento-num" style="color: var(--accent-emerald); font-size: 18px;">100%</span>
+        <span class="bento-label">Faculty Signed</span>
+      </div>
+    </div>
+
+    <!-- Active Document Metadata Card -->
+    <div class="inspector-section-title" style="margin-top: 14px;">
+      <span>Active File Metadata</span>
+      <span style="font-family: var(--font-mono); color: var(--accent-primary);">W${String(week.id).padStart(2, '0')}</span>
+    </div>
+    <div class="inspector-meta-card">
+      <div class="meta-row">
+        <span class="meta-label">File Name</span>
+        <span class="meta-value">${isViva ? 'Oral_Assessment.json' : activeDocName}</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">File Size</span>
+        <span class="meta-value">${isViva ? 'N/A (Oral Viva)' : activeDocSize}</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">File Format</span>
+        <span class="meta-value">${isViva ? 'Oral Milestone' : 'PDF Document (ISO 32000)'}</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Active Tab</span>
+        <span class="meta-value" style="color: var(--accent-cyan);">${currentTab.toUpperCase()}</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Verified By</span>
+        <span class="meta-value" style="color: var(--accent-orange);">${studentProfile.guide}</span>
+      </div>
+
+      ${!isViva ? `
+        <div style="display: flex; gap: 8px; margin-top: 6px;">
+          <a class="ide-action-btn primary" style="flex: 1; justify-content: center;" href="docs/${activeDocName}" download="Trivikram_${activeDocName}">
+            ${Icons.download()} Download PDF
+          </a>
+        </div>
+      ` : ''}
+    </div>
+
+    <!-- Student & Faculty Profile Card -->
+    <div class="inspector-section-title" style="margin-top: 14px;">
+      <span>Student &amp; Guide Info</span>
+    </div>
+    <div class="student-profile-card">
+      <div class="profile-avatar-row">
+        <div class="profile-hologram-avatar">
+          TR
+        </div>
+        <div class="profile-name-group">
+          <span class="profile-name">${studentProfile.name}</span>
+          <span class="profile-roll">${studentProfile.rollNo}</span>
+        </div>
+      </div>
+
+      <div class="profile-details-list">
+        <div class="profile-detail-item">
+          <span class="detail-k">Course Code</span>
+          <span class="detail-v">24CS281</span>
+        </div>
+        <div class="profile-detail-item">
+          <span class="detail-k">Department</span>
+          <span class="detail-v">${studentProfile.dept}</span>
+        </div>
+        <div class="profile-detail-item">
+          <span class="detail-k">Section</span>
+          <span class="detail-v">${studentProfile.section}</span>
+        </div>
+        <div class="profile-detail-item">
+          <span class="detail-k">Faculty Guide</span>
+          <span class="detail-v" style="color: var(--accent-orange); font-weight: 700;">${studentProfile.guide}</span>
+        </div>
+        <div class="profile-detail-item">
+          <span class="detail-k">Institution</span>
+          <span class="detail-v" style="font-size: 11px;">Siddhartha Academy</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================================================
+// CODE HELPERS & SYNTAX HIGHLIGHTING
+// ==========================================================================
+function extractClassName(code) {
+  if (!code) return "Program";
+  const match = code.match(/public\s+class\s+([A-Za-z0-9_]+)/) ||
+                code.match(/class\s+([A-Za-z0-9_]+)/);
+  return match ? match[1] : "Program";
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return str.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+}
+
+function highlightJavaSyntax(code) {
+  // Simple token highlight
+  const keywords = /\b(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while|record|var)\b/g;
+  const strings = /(&quot;.*?&quot;)/g;
+  const comments = /(\/\/.*$|\/\*[\s\S]*?\*\/)/gm;
+
+  return code
+    .replace(strings, '<span style="color: #a5d6ff;">$1</span>')
+    .replace(keywords, '<span style="color: #ff7b72; font-weight: 600;">$1</span>')
+    .replace(/(\bSystem\.out\.println\b|\bSystem\.out\.print\b)/g, '<span style="color: #79c0ff; font-weight: 600;">$1</span>');
+}
+
+function copyActiveCode() {
+  const week = weeks.find(w => w.id === currentWeekId);
+  const prog = week?.programs[currentProgramIdx];
+  if (!prog) return;
+
+  navigator.clipboard.writeText(prog.code).then(() => {
+    showToast("Program code copied to clipboard!");
+  });
+}
+
+function downloadActiveJava() {
+  const week = weeks.find(w => w.id === currentWeekId);
+  const prog = week?.programs[currentProgramIdx];
+  if (!prog) return;
+
+  const clsName = extractClassName(prog.code);
+  const fileName = `P${String(currentProgramIdx + 1).padStart(2, '0')}_${clsName}.java`;
+  const blob = new Blob([prog.code], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(`Downloaded ${fileName}`);
+}
+
+// ==========================================================================
+// TOAST NOTIFICATION
+// ==========================================================================
+function showToast(msg) {
+  const toast = document.getElementById("toastNotice");
+  const msgSpan = document.getElementById("toastMessage");
+  if (!toast || !msgSpan) return;
+
+  msgSpan.textContent = msg;
+  toast.style.display = "flex";
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 2600);
+}
+
+// ==========================================================================
+// KEYBOARD NAVIGATION (ARROW UP/DOWN, 1/2/3, ESC, CTRL+K)
+// ==========================================================================
+function setupKeyboardNavigation() {
+  window.addEventListener("keydown", (e) => {
+    // Focus search on Ctrl+K or Cmd+K
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      const input = document.getElementById("globalSearchInput");
+      if (input) input.focus();
+      return;
+    }
+
+    // Escape closes modals or clears search
     if (e.key === "Escape") {
-      closeSearchModal();
       closeUploadModal();
+      const input = document.getElementById("globalSearchInput");
+      if (input && document.activeElement === input) {
+        input.value = "";
+        currentSearchQuery = "";
+        renderSidebarTree();
+        input.blur();
+      }
+      return;
+    }
+
+    // Do not intercept arrow keys if typing in input
+    if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (currentWeekId < 12) {
+        selectWeek(currentWeekId + 1);
+      }
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (currentWeekId > 1) {
+        selectWeek(currentWeekId - 1);
+      }
+    } else if (e.key === "1") {
+      switchTab("doc");
+    } else if (e.key === "2") {
+      switchTab("overview");
+    } else if (e.key === "3") {
+      switchTab("code");
     }
   });
 }
 
 // ==========================================================================
-// DIRECT CLIENT-SIDE FILE UPLOADER
+// GLOBAL SEARCH
 // ==========================================================================
-let currentUploadFile = null;
+function setupGlobalSearch() {
+  const input = document.getElementById("globalSearchInput");
+  if (!input) return;
 
+  input.addEventListener("input", (e) => {
+    currentSearchQuery = e.target.value.trim();
+    renderSidebarTree();
+  });
+}
+
+// ==========================================================================
+// DIRECT FILE UPLOAD MODAL
+// ==========================================================================
 function openUploadModal(defaultWeekId = null) {
   const modal = document.getElementById("uploadModal");
   if (!modal) return;
-  const select = document.getElementById("uploadWeekSelect");
-  if (select && defaultWeekId && [1, 2, 3, 6, 7, 8, 9, 10, 11].includes(Number(defaultWeekId))) {
-    select.value = String(defaultWeekId);
+
+  if (defaultWeekId && document.getElementById("modalWeekSelect")) {
+    document.getElementById("modalWeekSelect").value = defaultWeekId;
   }
-  resetUploadModal();
   modal.classList.add("open");
 }
 
@@ -998,109 +901,44 @@ function handleUploadBackdrop(e) {
   }
 }
 
-function resetUploadModal() {
-  currentUploadFile = null;
-  const box = document.getElementById("uploadPreviewBox");
-  if (box) box.style.display = "none";
-  const input = document.getElementById("modalFileInput");
-  if (input) input.value = "";
-}
-
 function handleModalFileSelected(e) {
-  const file = e.target.files?.[0];
-  if (file) processSelectedFile(file);
+  const file = e.target.files[0];
+  if (!file) return;
+  processSelectedFile(file);
 }
 
 function handleDropFile(e) {
   e.preventDefault();
-  e.currentTarget.classList.remove("dragover");
-  const file = e.dataTransfer?.files?.[0];
-  if (file) processSelectedFile(file);
+  const zone = document.getElementById("dropZone");
+  if (zone) zone.classList.remove("dragover");
+  if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    processSelectedFile(e.dataTransfer.files[0]);
+  }
 }
 
+let uploadedFileData = null;
+
 function processSelectedFile(file) {
-  currentUploadFile = file;
-  const box = document.getElementById("uploadPreviewBox");
+  uploadedFileData = file;
+  const statusEl = document.getElementById("uploadFileStatus");
   const nameEl = document.getElementById("previewFileName");
   const sizeEl = document.getElementById("previewFileSize");
-  const iconEl = document.getElementById("previewFileIcon");
 
-  if (!box || !nameEl || !sizeEl) return;
-
-  nameEl.innerText = file.name;
-  const kb = (file.size / 1024).toFixed(1);
-  sizeEl.innerText = `${kb} KB • ${file.name.split(".").pop().toUpperCase()}`;
-
-  if (file.name.endsWith(".docx") || file.name.endsWith(".doc")) {
-    iconEl.innerText = "📝";
-  } else if (file.name.endsWith(".pdf")) {
-    iconEl.innerText = "📕";
-  } else if (file.name.endsWith(".java")) {
-    iconEl.innerText = "☕";
-  } else {
-    iconEl.innerText = "📄";
-  }
-
-  box.style.display = "flex";
+  if (statusEl) statusEl.style.display = "flex";
+  if (nameEl) nameEl.textContent = file.name;
+  if (sizeEl) sizeEl.textContent = (file.size / 1024).toFixed(1) + " KB";
 }
 
 function applyUploadedFile() {
-  if (!currentUploadFile) {
-    showToast("⚠️ Please select a file first");
+  if (!uploadedFileData) {
+    alert("Please select a document or code file first.");
     return;
   }
 
-  const weekId = parseInt(document.getElementById("uploadWeekSelect")?.value || "1", 10);
-  const file = currentUploadFile;
+  const weekSelect = document.getElementById("modalWeekSelect");
+  const weekId = parseInt(weekSelect ? weekSelect.value : currentWeekId, 10);
 
-  if (file.name.endsWith(".java") || file.name.endsWith(".txt")) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const content = e.target.result;
-      const week = weeks.find(w => w.id === weekId);
-      if (week && week.programs.length > 0) {
-        week.programs[0].code = content;
-      }
-      closeUploadModal();
-      showToast(`✓ Loaded ${file.name} into Week ${weekId}!`);
-      navigateTo("week-" + weekId);
-    };
-    reader.readAsText(file);
-  } else {
-    const fileUrl = URL.createObjectURL(file);
-    closeUploadModal();
-    showToast(`✓ Document ${file.name} attached to Week ${weekId}!`);
-    window.open(fileUrl, "_blank");
-  }
-}
-
-// Fallback avatar generator with geometric emblem
-function handleAvatarFallback(img) {
-  img.onerror = null;
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240">
-      <defs>
-        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#1d4ed8" />
-          <stop offset="100%" stop-color="#0f172a" />
-        </linearGradient>
-      </defs>
-      <rect width="200" height="240" fill="url(#bg)" />
-      <polygon points="100,45 150,95 100,145 50,95" fill="#ffffff" stroke="#1d4ed8" stroke-width="3" />
-      <text x="100" y="103" font-family="'Inter', -apple-system, sans-serif" font-size="28" font-weight="700" fill="#1d4ed8" text-anchor="middle">TR</text>
-      <rect x="25" y="172" width="150" height="34" rx="8" fill="#ffffff" stroke="#1d4ed8" stroke-width="2" />
-      <text x="100" y="194" font-family="'Inter', -apple-system, sans-serif" font-size="13" font-weight="700" fill="#1d4ed8" text-anchor="middle">TRIVIKRAM</text>
-    </svg>
-  `;
-  img.src = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
-}
-
-function escapeHtml(str) {
-  if (!str) return "";
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  showToast(`Attached ${uploadedFileData.name} to Week ${weekId}!`);
+  closeUploadModal();
+  selectWeek(weekId);
 }
