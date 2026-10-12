@@ -6,286 +6,145 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Trivikram // Interactive Developer Lab Studio (24CS281)</title>
+  <title>Trivikram // Java Programming Laboratory Record (25EU02067)</title>
 
-  <!-- Google Developer Fonts: Inter & JetBrains Mono -->
+  <!-- Modern Developer Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=18.0">
+  <link rel="stylesheet" href="style.css?v=20.0">
 </head>
-<body class="accent-amber">
+<body>
 
-  <div class="ide-shell">
-
-    <!-- ======================================================================
-         1. TOP BAR (NEO-GLASS TECH CONSOLE)
-         ====================================================================== -->
-    <header class="top-bar">
-      <div class="top-bar-left">
-        <div class="brand-emblem" onclick="selectWeek(1)">
-          <div class="brand-icon-wrap">⚡</div>
-          <div class="brand-badge-text">
-            <span class="brand-title">JAVA LAB STUDIO</span>
-            <span class="brand-subtitle">NEO-GLASS CONSOLE</span>
-          </div>
-        </div>
-
-        <div class="system-beacon">
-          <span class="pulse-dot"></span>
-          <span>ONLINE // JDK 21 LTS</span>
-        </div>
+  <!-- Sticky Top Navigation Bar -->
+  <nav class="top-nav" id="topNav">
+    <div class="top-brand" onclick="navigateTo('home')">
+      <div class="brand-emblem-shape">
+        <span>T</span>
       </div>
-
-      <!-- Center: Live Search Field -->
-      <div class="top-bar-center">
-        <div class="ide-search-box">
-          <svg class="svg-icon stroke" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-          <input 
-            type="text" 
-            id="globalSearchInput" 
-            class="ide-search-input" 
-            placeholder="Search topics, e.g., Multithreading, Polymorphism, Week 5..." 
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <kbd class="ide-search-kbd">Ctrl+K</kbd>
-        </div>
-      </div>
-
-      <!-- Right: Student Details Badge & Quick Controls -->
-      <div class="top-bar-right">
-        <div class="student-badge-pill" onclick="switchTab('overview')">
-          <span class="student-badge-name">Trivikram</span>
-          <span class="badge-divider">|</span>
-          <span class="student-badge-course">24CS281</span>
-          <span class="badge-divider">|</span>
-          <span>Siddhartha Academy</span>
-          <span class="badge-divider">|</span>
-          <span class="student-badge-guide">Ramesh Sir</span>
-        </div>
-
-        <!-- Glowing Accent Switcher -->
-        <div class="accent-toggle-group">
-          <button class="accent-btn amber active" data-accent="amber" title="Java Warm Amber Glow" onclick="setAccent('amber')"></button>
-          <button class="accent-btn cyan" data-accent="cyan" title="Cyber Neon Cyan Glow" onclick="setAccent('cyan')"></button>
-          <button class="accent-btn emerald" data-accent="emerald" title="Matrix Emerald Glow" onclick="setAccent('emerald')"></button>
-        </div>
-
-        <!-- Direct Upload Button -->
-        <button class="top-action-btn" onclick="openUploadModal()">
-          <svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-          <span>Upload File</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- ======================================================================
-         2. MAIN WORKSPACE (SPLIT-PANE 3-COLUMN LAYOUT)
-         ====================================================================== -->
-    <div class="ide-workspace">
-
-      <!-- LEFT SIDEBAR: FILE EXPLORER & CURRICULUM TREE -->
-      <aside class="sidebar-panel" id="sidebarPanel">
-        <div class="sidebar-header">
-          <div class="sidebar-title-wrap">
-            <svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2z"/></svg>
-            <span>STUDIO EXPLORER // CURRICULUM</span>
-          </div>
-          <span class="sidebar-count-badge" id="sidebarCountBadge">12 of 12</span>
-        </div>
-
-        <!-- Category Filter Tags -->
-        <div class="sidebar-filter-row">
-          <button class="filter-tag-pill active" data-filter="all" onclick="setCategoryFilter('all')">All</button>
-          <button class="filter-tag-pill" data-filter="core" onclick="setCategoryFilter('core')">Core Basics</button>
-          <button class="filter-tag-pill" data-filter="oops" onclick="setCategoryFilter('oops')">OOPs</button>
-          <button class="filter-tag-pill" data-filter="streams" onclick="setCategoryFilter('streams')">Exceptions &amp; Streams</button>
-          <button class="filter-tag-pill" data-filter="threads" onclick="setCategoryFilter('threads')">Multithreading</button>
-          <button class="filter-tag-pill" data-filter="viva" onclick="setCategoryFilter('viva')">Viva Voce</button>
-        </div>
-
-        <!-- Collapsible Tree Structure (Week 01 to Week 12) -->
-        <div class="sidebar-tree-container" id="sidebarTree">
-          <!-- Dynamically populated via script.js -->
-        </div>
-      </aside>
-
-      <!-- CENTRAL WORKSPACE: SPLIT-PANE TABBED VIEWER -->
-      <main class="workspace-center">
-        <!-- Breadcrumb & Document Action Bar -->
-        <div class="workspace-header">
-          <div class="workspace-breadcrumb">
-            <span class="breadcrumb-root">Java-Lab-Record</span>
-            <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-week" id="breadcrumbWeek">Week 01</span>
-            <span class="breadcrumb-sep">/</span>
-            <span class="breadcrumb-title" id="breadcrumbTitle">Comparative Study of Programming Languages</span>
-          </div>
-
-          <div class="workspace-actions">
-            <button class="ide-action-btn" onclick="switchTab('doc')">
-              <svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Document View
-            </button>
-            <button class="ide-action-btn" onclick="switchTab('code')">
-              <svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              Code Window
-            </button>
-          </div>
-        </div>
-
-        <!-- Cloud IDE Tabs Navigation Bar -->
-        <div class="workspace-tabs-bar">
-          <div class="workspace-tab active" data-tab="doc" onclick="switchTab('doc')">
-            <svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            <span>Tab 1: Document Studio</span>
-            <span class="tab-badge">PDF Embed</span>
-          </div>
-
-          <div class="workspace-tab" data-tab="overview" onclick="switchTab('overview')">
-            <svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            <span>Tab 2: Lab Overview &amp; Syllabus</span>
-            <span class="tab-badge">Aim &amp; Tasks</span>
-          </div>
-
-          <div class="workspace-tab" data-tab="code" onclick="switchTab('code')">
-            <svg class="svg-icon stroke" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            <span>Tab 3: Interactive Code &amp; Terminal Studio</span>
-            <span class="tab-badge">Execution Output</span>
-          </div>
-        </div>
-
-        <!-- Tab Content Viewport -->
-        <div class="workspace-content-viewport">
-          <div class="tab-pane active" id="tab-doc"></div>
-          <div class="tab-pane" id="tab-overview"></div>
-          <div class="tab-pane" id="tab-code"></div>
-        </div>
-      </main>
-
-      <!-- RIGHT INSPECTOR / METADATA PANEL -->
-      <aside class="inspector-panel" id="inspectorPanel">
-        <!-- Dynamically rendered via script.js -->
-      </aside>
-
+      TRIVIKRAM <span class="highlight">// JAVA</span>
     </div>
 
-    <!-- ======================================================================
-         3. BOTTOM STATUS BAR (CLOUD IDE STATUS & KEYBOARD SHORTCUTS)
-         ====================================================================== -->
-    <footer class="ide-status-bar">
-      <div class="status-bar-left">
-        <div class="status-item highlight">
-          <span>⚡ Java 21 LTS (Oracle OpenJDK)</span>
-        </div>
-        <div class="status-item">
-          <span>UTF-8</span>
-        </div>
-        <div class="status-item">
-          <span>Spaces: 4</span>
-        </div>
-        <div class="status-item">
-          <span>Siddhartha Academy of Higher Education</span>
-        </div>
-        <div class="status-item" style="color: var(--accent-orange);">
-          <span>Faculty: Ramesh Sir</span>
-        </div>
-      </div>
+    <button class="chip active" data-page="home" onclick="navigateTo('home')">
+      <!-- Custom Isometric Blueprint Home SVG -->
+      <svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
+      Home
+    </button>
+    <button class="chip" data-page="profile" onclick="navigateTo('profile')">
+      <!-- Custom Hexagon User Shield SVG -->
+      <svg class="svg-icon stroke" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+      Profile
+    </button>
 
-      <div class="status-bar-right">
-        <div class="status-item">
-          <span style="color: var(--accent-emerald);">● Ready</span>
-        </div>
-        <div class="status-item">
-          <span>[↑/↓] Switch Week</span>
-        </div>
-        <div class="status-item">
-          <span>[1-3] Switch Tab</span>
-        </div>
-        <div class="status-item">
-          <span>[Ctrl+K] Search</span>
-        </div>
-      </div>
-    </footer>
+    <!-- Dynamic Week Chips rendered via script.js -->
+    <div id="weekChipsContainer" style="display: inline-flex; gap: 8px;"></div>
 
+    <button class="chip" onclick="openUploadModal()">
+      <svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+      Upload File
+    </button>
+
+    <button class="chip chip-search" onclick="openSearchModal()">
+      <!-- Custom Cyber Viewfinder Search SVG -->
+      <svg class="svg-icon stroke" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+      Search (Ctrl+K)
+    </button>
+  </nav>
+
+  <!-- Main View Container -->
+  <main id="app"></main>
+
+  <!-- Global Search Command Palette Modal -->
+  <div class="search-overlay" id="searchModal" onclick="handleSearchBackdrop(event)">
+    <div class="search-modal" onclick="event.stopPropagation()">
+      <div class="search-header">
+        <svg class="svg-icon stroke" style="width: 22px; height: 22px; stroke: var(--blue-primary);" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-input-field" 
+          placeholder="Search 100+ Java programs, concepts, syntax (e.g. tokenizer, inheritance)..." 
+          oninput="handleSearchInput(event)"
+        >
+        <kbd style="font-size: 11px; font-family: var(--font-mono); font-weight: 600; background: var(--bg-surface-alt); color: var(--text-muted); padding: 3px 8px; border: 1px solid var(--border-light); border-radius: var(--radius-xs);">ESC</kbd>
+      </div>
+      <div class="search-results-list" id="searchResults"></div>
+      <div style="padding: 12px 20px; background: var(--bg-surface-alt); border-top: 1px solid var(--border-light); font-size: 12px; color: var(--text-muted); font-weight: 500; display: flex; justify-content: space-between;">
+        <span>Press ESC to exit &bull; Click any program to inspect</span>
+        <span>11 Weeks &bull; 100+ Verified Programs</span>
+      </div>
+    </div>
   </div>
 
-  <!-- ======================================================================
-       DIRECT FILE UPLOAD MODAL (DRAG & DROP INTEGRATION)
-       ====================================================================== -->
-  <div class="ide-overlay" id="uploadModal" onclick="handleUploadBackdrop(event)">
-    <div class="ide-modal-box" onclick="event.stopPropagation()">
-      <div class="ide-modal-header">
-        <div class="ide-modal-title">
-          <svg class="svg-icon stroke" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-          Direct File &amp; Document Integration
+  <!-- Interactive Document / Program File Upload Modal -->
+  <div class="upload-overlay" id="uploadModal" onclick="handleUploadBackdrop(event)">
+    <div class="upload-card" onclick="event.stopPropagation()">
+      <div class="upload-card-header">
+        <div class="upload-card-title">
+          <svg class="svg-icon stroke" style="stroke: var(--blue-primary); width: 20px; height: 20px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          Direct Website File Uploader
         </div>
-        <button class="ide-modal-close" onclick="closeUploadModal()">&times;</button>
+        <button onclick="closeUploadModal()" style="font-size: 18px; font-weight: 700; color: var(--text-muted); cursor: pointer; padding: 4px 8px; border-radius: 6px;">✕</button>
       </div>
-
-      <div class="ide-modal-body">
-        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-          Attach documents (.pdf, .docx, .doc) or Java program files (.java) directly into any lab week in your record repository.
-        </p>
-
-        <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;">
-          <span>Target Week:</span>
-          <select id="modalWeekSelect" style="flex: 1; padding: 7px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: #ffffff; font-family: inherit; font-size: 13px;">
-            <option value="1">Week 01 — Comparative Study of Programming Languages</option>
-            <option value="2">Week 02 — Installation of Java and Hello World</option>
-            <option value="3">Week 03 — Basic Java Concepts, Data Types &amp; Control Flow</option>
-            <option value="4">Week 04 — Oral Viva Voce Examination Part 1</option>
-            <option value="5">Week 05 — Oral Viva Voce Examination Part 2</option>
-            <option value="6">Week 06 — Unit 2 — Object Oriented Programming</option>
-            <option value="7">Week 07 — String Handling</option>
-            <option value="8">Week 08 — Inheritance &amp; Polymorphism</option>
-            <option value="9">Week 9 — Packages and Interfaces</option>
-            <option value="10">Week 10 — Exception Handling and Byte Streams</option>
-            <option value="11">Week 11 — Character Streams and Multithreading</option>
-            <option value="12">Week 12 — Java Collections Framework &amp; Submission</option>
+      <div class="upload-card-body">
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-main);">Target Week / Category:</label>
+          <select id="uploadWeekSelect" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; background: var(--bg-surface-alt); outline: none;">
+            <option value="1">Week 01 — Comparative Table</option>
+            <option value="2">Week 02 — Oracle &amp; OpenJDK Setup</option>
+            <option value="3">Week 03 — Basic Java Operations (15 Programs)</option>
+            <option value="6">Week 06 — Object-Oriented Programming (28 Programs)</option>
+            <option value="7">Week 07 — String Handling (5 Programs)</option>
+            <option value="8">Week 08 — Inheritance &amp; Polymorphism (10 Programs)</option>
+            <option value="9">Week 09 — Packages &amp; Interfaces (12 Programs)</option>
+            <option value="10">Week 10 — Exception Handling (15 Programs)</option>
+            <option value="11">Week 11 — Character Streams &amp; Threads (12 Programs)</option>
           </select>
         </div>
 
-        <div 
-          id="dropZone" 
-          style="border: 2px dashed rgba(248, 152, 32, 0.4); border-radius: var(--radius-md); padding: 30px 20px; text-align: center; background: rgba(0, 0, 0, 0.2); cursor: pointer; transition: all 0.2s ease;"
-          onclick="document.getElementById('modalFileInput').click()"
-          ondragover="event.preventDefault(); this.style.borderColor='var(--accent-primary)';"
-          ondragleave="this.style.borderColor='rgba(248, 152, 32, 0.4)';"
-          ondrop="handleDropFile(event)"
-        >
-          <input type="file" id="modalFileInput" style="display: none;" onchange="handleModalFileSelected(event)">
-          <div style="font-size: 28px; margin-bottom: 8px;">📁</div>
-          <div style="font-size: 14px; font-weight: 700; color: #ffffff;">Drag &amp; drop document or code file here</div>
-          <div style="font-size: 12px; color: var(--text-subtle); margin-top: 4px;">Supports PDF, Word (.docx), and Java source files (.java)</div>
-        </div>
+        <input type="file" id="modalFileInput" style="display: none;" onchange="handleModalFileSelected(event)" accept=".docx,.doc,.pdf,.java,.txt">
 
-        <div id="uploadFileStatus" style="display: none; align-items: center; justify-content: space-between; background: var(--bg-surface); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="color: var(--accent-emerald);">●</span>
-            <span id="previewFileName" style="font-weight: 700; font-size: 13px; color: #ffffff;">document.pdf</span>
-            <span id="previewFileSize" style="font-size: 11.5px; color: var(--text-dim);">0 KB</span>
+        <div class="upload-drop-zone" onclick="document.getElementById('modalFileInput').click()" ondragover="event.preventDefault(); this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleDropFile(event)">
+          <div style="color: var(--blue-primary); margin-bottom: 10px;">
+            <svg class="svg-icon stroke" style="width: 44px; height: 44px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
           </div>
-          <span style="font-size: 11px; font-weight: 700; color: var(--accent-emerald); background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: var(--radius-pill);">Ready</span>
+          <div style="font-weight: 700; font-size: 15px; color: var(--text-main);">Click to Browse or Drag &amp; Drop File</div>
+          <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Supports Word (.docx), PDF (.pdf), Java Source (.java), or Text (.txt)</div>
         </div>
 
-        <button class="ide-action-btn primary" style="justify-content: center; padding: 10px 16px; font-size: 13px;" onclick="applyUploadedFile()">
-          Attach &amp; Load File Directly Into Cloud Workspace
-        </button>
+        <div class="upload-preview-box" id="uploadPreviewBox">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span id="previewFileIcon" style="font-size: 20px;">📄</span>
+            <div>
+              <div id="previewFileName" style="font-weight: 700; font-size: 13.5px; color: var(--text-main);">sample.docx</div>
+              <div id="previewFileSize" style="font-size: 11.5px; color: var(--text-muted);">0 KB</div>
+            </div>
+          </div>
+          <span style="font-size: 11.5px; font-weight: 700; color: #16a34a; background: #dcfce7; padding: 3px 10px; border-radius: 999px;">Ready</span>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 6px;">
+          <button class="btn-chunky primary" style="flex: 1; justify-content: center;" onclick="applyUploadedFile()">
+            Attach &amp; Load File Directly Into Website
+          </button>
+        </div>
+
+        <div style="font-size: 12px; color: var(--text-subtle); line-height: 1.5; background: var(--blue-light); padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-blue);">
+          💡 <strong>Direct File Integration:</strong> Uploaded documents and code files attach directly to your selected week and subprograms, allowing instant viewing, execution simulation, and downloading.
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- TOAST NOTIFICATION -->
-  <div class="toast-notice" id="toastNotice">
-    <svg class="svg-icon stroke" style="stroke: #10b981;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <!-- Toast Notification -->
+  <div class="toast" id="toastNotice">
+    <svg class="svg-icon stroke" style="stroke: #ffffff;" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
     <span id="toastMessage">Copied to clipboard!</span>
   </div>
 
-  <!-- CORE SCRIPTS -->
-  <script src="data.js?v=18.0"></script>
-  <script src="script.js?v=18.0"></script>
+  <!-- Core Scripts -->
+  <script src="data.js?v=20.0"></script>
+  <script src="script.js?v=20.0"></script>
 </body>
 </html>
