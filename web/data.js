@@ -676,6 +676,103 @@ const weeks = [
         "output": null
       }
     ]
+  },
+  {
+    "id": 12,
+    "title": "Week 12",
+    "subtitle": "Multithreading & Lambda Expressions Lab",
+    "programs": [
+      {
+        "title": "Thread Priorities — MIN_PRIORITY, NORM_PRIORITY, and MAX_PRIORITY",
+        "description": "Create multiple threads and demonstrate different thread priorities using MIN_PRIORITY, NORM_PRIORITY, and MAX_PRIORITY.",
+        "code": "class MyThread extends Thread {\n    public void run() {\n        System.out.println(getName() + \" priority: \" + getPriority());\n    }\n}\n\npublic class Lab1 {\n    public static void main(String[] args) {\n        MyThread t1 = new MyThread();\n        MyThread t2 = new MyThread();\n        MyThread t3 = new MyThread();\n\n        t1.setPriority(Thread.MIN_PRIORITY);\n        t2.setPriority(Thread.NORM_PRIORITY);\n        t3.setPriority(Thread.MAX_PRIORITY);\n\n        t1.start();\n        t2.start();\n        t3.start();\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Thread Priorities and Execution Order",
+        "description": "Create three threads with different priorities and observe their execution order.",
+        "code": "class MyThread extends Thread {\n    MyThread(String name) {\n        super(name);\n    }\n    public void run() {\n        System.out.println(getName() + \" (priority \" + getPriority() + \") is running\");\n    }\n}\n\npublic class Lab2 {\n    public static void main(String[] args) {\n        MyThread t1 = new MyThread(\"Thread A\");\n        MyThread t2 = new MyThread(\"Thread B\");\n        MyThread t3 = new MyThread(\"Thread C\");\n\n        t1.setPriority(Thread.MIN_PRIORITY);\n        t2.setPriority(Thread.NORM_PRIORITY);\n        t3.setPriority(Thread.MAX_PRIORITY);\n\n        t1.start();\n        t2.start();\n        t3.start();\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Synchronization Using Synchronized Method",
+        "description": "Demonstrate synchronization using a synchronized method for accessing a shared counter.",
+        "code": "class Counter {\n    int count = 0;\n    synchronized void increment() {\n        count++;\n    }\n}\n\nclass MyThread extends Thread {\n    Counter counter;\n    MyThread(Counter c) {\n        counter = c;\n    }\n    public void run() {\n        for (int i = 0; i < 1000; i++) {\n            counter.increment();\n        }\n    }\n}\n\npublic class Lab3 {\n    public static void main(String[] args) throws InterruptedException {\n        Counter counter = new Counter();\n        MyThread t1 = new MyThread(counter);\n        MyThread t2 = new MyThread(counter);\n\n        t1.start();\n        t2.start();\n        t1.join();\n        t2.join();\n\n        System.out.println(\"Final count: \" + counter.count);\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Synchronization Using Synchronized Block",
+        "description": "Demonstrate synchronization using a synchronized block.",
+        "code": "class Counter {\n    int count = 0;\n    void increment() {\n        synchronized (this) {\n            count++;\n        }\n    }\n}\n\nclass MyThread extends Thread {\n    Counter counter;\n    MyThread(Counter c) {\n        counter = c;\n    }\n    public void run() {\n        for (int i = 0; i < 1000; i++) {\n            counter.increment();\n        }\n    }\n}\n\npublic class Lab4 {\n    public static void main(String[] args) throws InterruptedException {\n        Counter counter = new Counter();\n        MyThread t1 = new MyThread(counter);\n        MyThread t2 = new MyThread(counter);\n\n        t1.start();\n        t2.start();\n        t1.join();\n        t2.join();\n\n        System.out.println(\"Final count: \" + counter.count);\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Race Condition and Elimination Using Synchronization",
+        "description": "Demonstrate a race condition and eliminate it using synchronization.",
+        "code": "class Counter {\n    int count = 0;\n    void increment() {\n        count++; // not synchronized, may cause race condition\n    }\n    synchronized void safeIncrement() {\n        count++; // synchronized, no race condition\n    }\n}\n\nclass MyThread extends Thread {\n    Counter counter;\n    boolean safe;\n    MyThread(Counter c, boolean safe) {\n        counter = c;\n        this.safe = safe;\n    }\n    public void run() {\n        for (int i = 0; i < 1000000; i++) {\n            if (safe) {\n                counter.safeIncrement();\n            } else {\n                counter.increment();\n            }\n        }\n    }\n}\n\npublic class Lab5 {\n    public static void main(String[] args) throws InterruptedException {\n        // Without synchronization\n        Counter c1 = new Counter();\n        MyThread a1 = new MyThread(c1, false);\n        MyThread a2 = new MyThread(c1, false);\n        a1.start(); a2.start();\n        a1.join(); a2.join();\n        System.out.println(\"Without synchronization, count = \" + c1.count);\n\n        // With synchronization\n        Counter c2 = new Counter();\n        MyThread b1 = new MyThread(c2, true);\n        MyThread b2 = new MyThread(c2, true);\n        b1.start(); b2.start();\n        b1.join(); b2.join();\n        System.out.println(\"With synchronization, count = \" + c2.count);\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Synchronized Ticket-Booking System",
+        "description": "Implement a synchronized ticket-booking system where multiple threads attempt to book tickets simultaneously.",
+        "code": "class TicketCounter {\n    int tickets = 3;\n    synchronized void bookTicket(String name) {\n        if (tickets > 0) {\n            tickets--;\n            System.out.println(name + \" booked a ticket. Remaining: \" + tickets);\n        } else {\n            System.out.println(name + \" could not book a ticket.\");\n        }\n    }\n}\n\nclass Customer extends Thread {\n    TicketCounter counter;\n    String name;\n    Customer(TicketCounter c, String name) {\n        counter = c;\n        this.name = name;\n    }\n    public void run() {\n        counter.bookTicket(name);\n    }\n}\n\npublic class Lab6 {\n    public static void main(String[] args) throws InterruptedException {\n        TicketCounter counter = new TicketCounter();\n        Customer c1 = new Customer(counter, \"Customer 1\");\n        Customer c2 = new Customer(counter, \"Customer 2\");\n        Customer c3 = new Customer(counter, \"Customer 3\");\n        Customer c4 = new Customer(counter, \"Customer 4\");\n\n        c1.start();\n        c2.start();\n        c3.start();\n        c4.start();\n\n        c1.join();\n        c2.join();\n        c3.join();\n        c4.join();\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Functional Interface with Lambda Expressions",
+        "description": "Introduce lambda expressions by implementing a functional interface for addition, subtraction, multiplication, and division.",
+        "code": "interface Operation {\n    int calculate(int a, int b);\n}\n\npublic class Lab7 {\n    public static void main(String[] args) {\n        Operation add = (a, b) -> a + b;\n        Operation sub = (a, b) -> a - b;\n        Operation mul = (a, b) -> a * b;\n        Operation div = (a, b) -> a / b;\n\n        System.out.println(\"Addition: \" + add.calculate(10, 5));\n        System.out.println(\"Subtraction: \" + sub.calculate(10, 5));\n        System.out.println(\"Multiplication: \" + mul.calculate(10, 5));\n        System.out.println(\"Division: \" + div.calculate(10, 5));\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Single and Multiple Parameter Lambda Expressions",
+        "description": "Demonstrate a lambda expression with a single parameter and multiple parameters.",
+        "code": "interface Square {\n    int find(int a);\n}\n\ninterface Add {\n    int find(int a, int b);\n}\n\npublic class Lab8 {\n    public static void main(String[] args) {\n        Square sq = a -> a * a;\n        Add add = (a, b) -> a + b;\n\n        System.out.println(\"Square: \" + sq.find(5));\n        System.out.println(\"Sum: \" + add.find(5, 10));\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Block Lambda Expression with Multiple Statements",
+        "description": "Demonstrate a block lambda expression containing multiple statements.",
+        "code": "interface Check {\n    void test(int n);\n}\n\npublic class Lab9 {\n    public static void main(String[] args) {\n        Check check = (n) -> {\n            System.out.println(\"Number: \" + n);\n            if (n % 2 == 0) {\n                System.out.println(\"Even\");\n            } else {\n                System.out.println(\"Odd\");\n            }\n        };\n\n        check.test(7);\n        check.test(10);\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Block Lambda Expression to Return Largest Number",
+        "description": "Use a block lambda expression to find the largest of two numbers and return the result.",
+        "code": "interface Max {\n    int find(int a, int b);\n}\n\npublic class Lab10 {\n    public static void main(String[] args) {\n        Max max = (a, b) -> {\n            if (a > b) {\n                return a;\n            } else {\n                return b;\n            }\n        };\n\n        System.out.println(\"Largest: \" + max.find(20, 35));\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Generic Functional Interface with Lambda Expressions",
+        "description": "Create a generic functional interface and implement it using lambda expressions for different data types.",
+        "code": "interface Show<T> {\n    void display(T value);\n}\n\npublic class Lab11 {\n    public static void main(String[] args) {\n        Show<Integer> showInt = n -> System.out.println(\"Integer: \" + n);\n        Show<String> showStr = s -> System.out.println(\"String: \" + s);\n\n        showInt.display(100);\n        showStr.display(\"Hello\");\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Generic Functional Interface with Two Parameters",
+        "description": "Create a generic functional interface that accepts two values and performs an operation using a lambda expression.",
+        "code": "interface Operation<T> {\n    T apply(T a, T b);\n}\n\npublic class Lab12 {\n    public static void main(String[] args) {\n        Operation<Integer> add = (a, b) -> a + b;\n        Operation<String> concat = (a, b) -> a + b;\n\n        System.out.println(\"Sum: \" + add.apply(10, 20));\n        System.out.println(\"Concat: \" + concat.apply(\"Hello \", \"World\"));\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Lambda Expressions with ArrayList forEach",
+        "description": "Use lambda expressions to display and filter elements of an ArrayList.",
+        "code": "import java.util.ArrayList;\n\npublic class Lab13 {\n    public static void main(String[] args) {\n        ArrayList<Integer> list = new ArrayList<>();\n        list.add(1);\n        list.add(2);\n        list.add(3);\n        list.add(4);\n        list.add(5);\n\n        System.out.println(\"All elements:\");\n        list.forEach(n -> System.out.println(n));\n\n        System.out.println(\"Even elements:\");\n        list.forEach(n -> {\n            if (n % 2 == 0) {\n                System.out.println(n);\n            }\n        });\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Sorting ArrayList Using Lambda Expressions",
+        "description": "Sort a list of integers and strings using lambda expressions.",
+        "code": "import java.util.ArrayList;\n\npublic class Lab14 {\n    public static void main(String[] args) {\n        ArrayList<Integer> numbers = new ArrayList<>();\n        numbers.add(40);\n        numbers.add(10);\n        numbers.add(30);\n        numbers.add(20);\n\n        ArrayList<String> names = new ArrayList<>();\n        names.add(\"Banana\");\n        names.add(\"Apple\");\n        names.add(\"Cherry\");\n\n        numbers.sort((a, b) -> a - b);\n        names.sort((a, b) -> a.compareTo(b));\n\n        System.out.println(\"Sorted numbers: \" + numbers);\n        System.out.println(\"Sorted names: \" + names);\n    }\n}",
+        "output": null
+      },
+      {
+        "title": "Thread Execution Using Lambda Expression",
+        "description": "Create and execute a thread using a lambda expression.",
+        "code": "public class Lab15 {\n    public static void main(String[] args) {\n        Runnable task = () -> {\n            System.out.println(\"Thread is running using lambda expression\");\n        };\n\n        Thread t = new Thread(task);\n        t.start();\n    }\n}",
+        "output": null
+      }
+    ]
   }
 ];
 
@@ -780,6 +877,22 @@ const generatedOutputs = {
   "11-9": "1. Before start()   -> isAlive(): false\n2. After start()    -> isAlive(): true\nMain thread is waiting for WorkerThread to finish...\n[Worker] Thread has started executing...\n[Worker] Thread is finishing its task.\n3. After completion -> isAlive(): false",
   "11-10": "[Main] Initializing system...\n[Main] Starting the download thread.\n[Main] Calling join(). Main thread will now wait...\n[Downloader] Starting file download...\n[Downloader] File download complete.\n[Main] Download confirmed. Resuming main thread operations.",
   "11-11": "[Main] Starting Thread-1.\n[Main] Is Thread-1 alive? true\n[Main] Waiting for Thread-1 to finish before starting others...\n[Thread-1] is executing.\n[Thread-1] has completed.\n[Main] Is Thread-1 alive now? false\n\n[Main] Thread-1 finished. Now starting Thread-2 and Thread-3 concurrently.\n[Main] Waiting for Thread-2 and Thread-3 to finish...\n[Thread-2] is executing.\n[Thread-3] is executing.\n[Thread-3] has completed.\n[Thread-2] has completed.\n\n[Main] All worker threads are dead. Main thread safely exiting."
+,
+  "12-0": "Thread-2 priority: 10\nThread-1 priority: 5\nThread-0 priority: 1",
+  "12-1": "Thread C (priority 10) is running\nThread A (priority 1) is running\nThread B (priority 5) is running",
+  "12-2": "Final count: 2000",
+  "12-3": "Final count: 2000",
+  "12-4": "Without synchronization, count = 1941166\nWith synchronization, count = 2000000",
+  "12-5": "Customer 1 booked a ticket. Remaining: 2\nCustomer 4 booked a ticket. Remaining: 1\nCustomer 3 booked a ticket. Remaining: 0\nCustomer 2 could not book a ticket.",
+  "12-6": "Addition: 15\nSubtraction: 5\nMultiplication: 50\nDivision: 2",
+  "12-7": "Square: 25\nSum: 15",
+  "12-8": "Number: 7\nOdd\nNumber: 10\nEven",
+  "12-9": "Largest: 35",
+  "12-10": "Integer: 100\nString: Hello",
+  "12-11": "Sum: 30\nConcat: Hello World",
+  "12-12": "All elements:\n1\n2\n3\n4\n5\nEven elements:\n2\n4",
+  "12-13": "Sorted numbers: [10, 20, 30, 40]\nSorted names: [Apple, Banana, Cherry]",
+  "12-14": "Thread is running using lambda expression"
 };
 
 function getGeneratedOutput(weekId, index) {

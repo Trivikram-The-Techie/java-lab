@@ -198,7 +198,7 @@ function renderHome() {
           ${Icons.code()}
         </div>
         <div class="stat-info">
-          <div class="stat-num">11</div>
+          <div class="stat-num">${weeks.length}</div>
           <span class="stat-label">Lab Weeks</span>
           <span class="stat-sub">Complete Curriculum</span>
         </div>
@@ -980,7 +980,7 @@ function openUploadModal(defaultWeekId = null) {
   const modal = document.getElementById("uploadModal");
   if (!modal) return;
   const select = document.getElementById("uploadWeekSelect");
-  if (select && defaultWeekId && [1, 2, 3, 6, 7, 8, 9, 10, 11].includes(Number(defaultWeekId))) {
+  if (select && defaultWeekId && [1, 2, 3, 6, 7, 8, 9, 10, 11, 12].includes(Number(defaultWeekId))) {
     select.value = String(defaultWeekId);
   }
   resetUploadModal();

@@ -1,0 +1,33 @@
+class Counter {
+    int count = 0;
+    synchronized void increment() {
+        count++;
+    }
+}
+
+class MyThread extends Thread {
+    Counter counter;
+    MyThread(Counter c) {
+        counter = c;
+    }
+    public void run() {
+        for (int i = 0; i < 1000; i++) {
+            counter.increment();
+        }
+    }
+}
+
+public class Lab3 {
+    public static void main(String[] args) throws InterruptedException {
+        Counter counter = new Counter();
+        MyThread t1 = new MyThread(counter);
+        MyThread t2 = new MyThread(counter);
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+
+        System.out.println("Final count: " + counter.count);
+    }
+}
