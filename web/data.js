@@ -350,7 +350,7 @@ const weeks = [
       {
         "title": "Using super Keyword",
         "description": "Write a Java program to demonstrate the use of the super keyword for accessing superclass variables, methods, and constructors.",
-        "code": "class Employee {\n    String name = \"Unknown\";\n    double salary;\n\n    Employee() {\n        System.out.println(\"Employee constructor called\");\n    }\n\n    Employee(String name, double salary) {\n        this.name = name;\n        this.salary = salary;\n        System.out.println(\"Parameterized Employee constructor called\");\n    }\n\n    void display() {\n        System.out.println(\"Name: \" + name);\n        System.out.println(\"Salary: \" + salary);\n    }\n}\n\nclass Manager extends Employee {\n    String name = \"Manager Name\";\n    double bonus;\n\n    Manager(String empName, double salary, double bonus) {\n        super(empName, salary);\n        this.bonus = bonus;\n        System.out.println(\"Manager constructor called\");\n    }\n\n    void displayManager() {\n        System.out.println(\"Superclass name (via super): \" + super.name);\n        super.display();\n        System.out.println(\"Bonus: \" + bonus);\n    }\n}\n\npublic class SuperKeywordDemo {\n    public static void main(String[] args) {\n        Manager m1 = new Manager(\"Anita\", 60000, 8000);\n        System.out.println();\n        m1.displayManager();\n    }\n}",
+        "code": "class Employee {\n    String name = \"Unknown\";\n    double salary;\n\n    Employee() {\n        System.out.println(\"Employee constructor called\");\n    }\n\n    Employee(String name, double salary) {\n        this.name = name;\n        this.salary = salary;\n        System.out.println(\"Parameterized Employee constructor called\");\n    }\n\n    void display() {\n        System.out.println(\"Name: \" + name);\n        System.out.println(\"Salary: \" + salary);\n    }\n}\n\nclass Manager extends Employee {\n    String name = \"Manager Name\";\n    double bonus;\n\n    Manager(String empName, double salary, double bonus) {\n        super(empName, salary);\n        this.bonus = bonus;\n        System.out.println(\"Manager constructor called\");\n    }\n\n    void displayManager() {\n        System.out.println(\"Superclass name (via super): \" + super.name);\n        super.display();\n        System.out.println(\"Bonus: \" + bonus);\n    }\n}\n\npublic class SuperKeywordDemo {\n    public static void main(String[] args) {\n        Manager m1 = new Manager(\"Trivikram\", 100000, 10000);\n        System.out.println();\n        m1.displayManager();\n    }\n}",
         "output": null
       }
     ]
@@ -825,7 +825,7 @@ const generatedOutputs = {
   "6-27": "Book Title: The Great Gatsby\nAvailable at: City Central Library\n-------------\nBook Title: 1984\nAvailable at: City Central Library",
   "7-0": "s1 (literal): Hello Java\ns2 (new String()): Hello Java\ns3 (from char array): Java\ns4 (from byte array): Hello\n\ns1 == s2: false\ns1.equals(s2): true\ns1 == s5: true",
   "7-1": "Original: Hello\nAfter append: Hello World\nAfter insert: Hello Java World\nAfter replace: Hi Java World\nAfter delete: Java World\nAfter reverse: dlroW avaJ\nLength: 10\nCapacity: 21",
-  "7-2": "Enter a sentence: my name is tasleema\n\n--- Tokens (default delimiter) ---\nmy\nname\nis\ntasleema\nTotal tokens: 4\n\nEnter a custom delimiter (e.g. , or -): ,\n\n--- Tokens (custom delimiter) ---\nmy name is tasleema\nTotal tokens: 1",
+  "7-2": "Enter a sentence: Hi my name is Trivikram\n\n--- Tokens (default delimiter) ---\nHi\nmy\nname\nis\nTrivikram\nTotal tokens: 5\n\nEnter a custom delimiter (e.g. , or -): .\n\n--- Tokens (custom delimiter) ---\nHi my name is Trivikram\nTotal tokens: 1",
   "8-0": "Name is Prazod\nAge is 18\nRoll Number: 98\nBranch : AIML",
   "8-1": "Inside Vehicle class\nModel: Sedan\nSpeed: 100",
   "8-2": "Name: John\nID: 101\nDept: IT",
@@ -837,7 +837,7 @@ const generatedOutputs = {
   "8-8": "Creating GraduateStudent object:\nPerson constructor executed.\nStudent constructor executed.\nGraduateStudent constructor executed.",
   "8-9": "--- Savings Account ---\nDeposited: 500, New Balance: 1500\nWithdrawn: 200, New Balance: 1300\nSavings Account gets 5% interest.\n\n--- Current Account ---\nDeposited: 1000, New Balance: 2000\nCurrent Account gets 0% interest.",
   "7-3": "Name: Rahul\nAge: 20\nRoll Number: 101\nBranch: CSE",
-  "7-4": "Parameterized Employee constructor called\nManager constructor called\n\nSuperclass name (via super): Anita\nName: Anita\nSalary: 60000.0\nBonus: 8000.0",
+  "7-4": "Parameterized Employee constructor called\nManager constructor called\n\nSuperclass name (via super): Trivikram\nName: Trivikram\nSalary: 100000.0\nBonus: 10000.0",
   "9-0": "Name : Sathwika\nRoll Number : 101\nMarks : 92.5",
   "9-1": "Running TestSpecificImport:\nStudent class from college package\n\nRunning TestWildcardImport:\nStudent class from college package\nFaculty class from college package",
   "9-2": "Accessing from same class:\nPublic : 10\nPrivate : 20\nProtected : 30\nDefault : 40\n\nAccessing from another class in same package:\nPublic : 10\nProtected : 30\nDefault : 40\n\nAccessing from a class in a different package:\nPublic : 10\nProtected (via inheritance) : 30",

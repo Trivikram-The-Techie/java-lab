@@ -37,7 +37,7 @@ class Manager extends Employee {
 
 public class SuperKeywordDemo {
     public static void main(String[] args) {
-        Manager m1 = new Manager("Anita", 60000, 8000);
+        Manager m1 = new Manager("Trivikram", 100000, 10000);
         System.out.println();
         m1.displayManager();
     }
